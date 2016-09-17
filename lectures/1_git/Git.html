@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code { font-size: 1.2em; }, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Git
+
+---
+
+# Ez egy verziókezelő
+
+1. Kód megosztása
+2. Tegnap működött, ma már nem
+3. Miért néz ki úgy a kód ahogy
+4. Mikor romlott el?
+5. Ki csinálta?
+
+---
+class: center, middle
+
+Linus Torvalds
+
+2005
+
+---
+
+# Amire nem jó
+- Nagy fájlok kezelése
+
+---
+
+# Kliensek
+
+# Command line kliens (ez jó)
+### Source tree (nem jó)
+### Git kraken (nem ismerem)
+
+--
+
+Help
+
+**git _command_ --help**
+
+---
+
+# Start
+```bash
+git init
+git status
+```
+
+--
+
+A **git status** a barátunk
+
+---
+
+# Workflow
+ - **git add**
+   - Ez stage-re teszi
+ - **git commit**
+   - Ez commitot csinál a stage-elt változásokból
+```bash
+echo asdsad > text.txt
+git add text.txt
+git commit -m "First commit!"
+...
+```
+
+--
+
+Ez most hiányolja, hogy a user.name-et és a user.email-t.
+
+Adjuk meg!
+
+---
+
+# Változások
+
+```bash
+git diff
+```
+
+# Stage-elt változások
+
+```bash
+git diff --cached
+```
+
+---
+
+# Változások eldobása
+
+
+```bash
+git checkout -- .
+```
+
+---
+
+# Log
+
+```bash
+git log
+```
+
+--
+
+Gitben nem verziószámok vannak hanem hashek
+
+--
+
+Egy commitot külön is meg lehet nézni
+
+```bash
+git show HASH
+```
+
+---
+
+# Hasheket nehéz megjegyezni.
+
+### Tag: Megjegyezhető nevet lehet adni commitoknak
+
+```bash
+git tag CIMKE
+```
+
+A HEAD is csak egy cimke
+
+---
+
+# Stash
+Lokálisan el lehet tenni a változtatásokat igazi commit nélkül
+```bash
+git stash
+git stash show
+git stash pop
+```
+
+--
+
+Mi van stashelve?
+
+--
+
+```bash
+git show stash
+```
+
+---
+
+# Branch-ek
+
+Létrehozás
+```bash
+git branch <branchnév>
+```
+
+Váltás
+```bash
+git checkout <branchnév>
+```
+
+Váltás és létrehozás
+```bash
+git branch -b <branchnév>
+```
+
+---
+
+# Távoli repository
+
+Valamilyen szerveren van a kód
+- github
+- bitbucket
+- gitlab
+
+( A házi feladatok githubon kellenek )
+
+---
+
+## Remote hozzáadása
+
+Bármi lehet
+Lehet akár fájlrendszeren is
+
+
+```bash
+git remote add origin <...>
+git remote push origin master
+```
+
+--
+
+Honnan tudja, hogy van-e jogom?
+
+---
+
+# SSH azonosítás
+
+```bash
+ssh-keygen
+```
+
+~/.ssh/id-rsa.pub
+
+TODO kép
+
+---
+
+# Kód lehúzása remoteról
+
+Minden kliens mindig tudja az összes remote állapotát
+
+```bash
+git fetch <remote>
+```
+
+--
+
+```bash
+git pull <remote> <branch>
+```
+Ez pull = fetch + merge
+
+# Kód feltolása remotera
+
+```bash
+git push <remote> <branch>
+```
+
+--
+
+Mi van ha nincs jogunk?
+
+---
+
+# Pull request
+
+- Maga a pull request nincs benne a gitben
+
+
+---
+Pimpelt log
+```bash
+alias gl='git log --all --graph --decorate --pretty=oneline --abbrev-commit'
+```
+
+---
+
+# Rebase/merge?
+    TODO Képek csúnya repóról
+    TODO Képek szép repóról
+---
+
+---
+
+# Rebase
+```bash
+git stash
+git fetch
+git rebase origin/master
+git stash pop
+git push origin master
+```
+
+---
+
+# Konfliktusok
+
+
+---
+
+# Fejlesztési flowk
+Single trunk
+- Csak master, nincsenek branchek
+- Feature switchek
+- Sok teszt kell
+- Nem másznak szét a branchek
+- Nehéz követni, hogy mikor romlott el valami
+- Nehezebb átlátni a kód struktúrális elfolyását
+
+---
+
+# Fejlesztési flowk
+Branchek + pull requestek
+- Kis, rövid életű branchek
+
+- A pull requesteknél struktúrálisan is át lehet tekinteni a változást
+- Hajlamosak naggyá nőni, nagyon sokáig tart a branch
+- Konfliktusok a branchek között
+
+
+---
+
+# Hogy állunk vissza
+```bash
+git reset --soft <címke>
+git reset <címke>
+git reset --hard <címke>
+```
+---
+
+# Advanced features
+
+git reflog
+git add -i
+
+--
+
+Interactive add
+
+--
+
+Interactive rebase
+
+---
+
+git cherrypick
+
+---
+
+git bisect
+
+---
+
+# Házi feladat
+
+Mindenkinek legyen saját github accountja
+
+Előadás  anyaga itt: 	https://github.com/jitsi/jitsi-videobridge.git
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
