@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>Git</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -27,23 +27,24 @@ class: center, middle
 
 # Ez egy verziókezelő
 
-1. Kód megosztása
+1. Kód megosztása, biztonsági másolat
 2. Tegnap működött, ma már nem
 3. Miért néz ki úgy a kód ahogy
 4. Mikor romlott el?
 5. Ki csinálta?
 
 ---
-class: center, middle
 
 Linus Torvalds
 
 2005
 
+Kellett egy rendes verziókövető a linux kernelhez
+
 ---
 
 # Amire nem jó
-- Nagy fájlok kezelése
+- Nagy bináris fájlok kezelése
 
 ---
 
@@ -114,6 +115,8 @@ git diff --cached
 git checkout -- .
 ```
 
+- A checkout valamire rááll
+
 ---
 
 # Log
@@ -133,6 +136,9 @@ Egy commitot külön is meg lehet nézni
 ```bash
 git show HASH
 ```
+--
+
+** alias gl='git log --all --graph --decorate --pretty=oneline --abbrev-commit' **
 
 ---
 
@@ -187,7 +193,35 @@ git branch -b <branchnév>
 
 ---
 
-# Távoli repository
+class: center, middle
+# Remote
+
+
+---
+
+# Remote = távoli repository
+
+Egy URIval van azonosítva
+
+Bármi lehet
+- SSH
+- HTTP
+- Lehet akár fájlrendszeren is
+
+- Lehet egy központi szerveren
+ - a backup és megosztás miatt
+- Lehet egy másik fejlesztői gépen
+ - hogy kipróbáljuk ott fordul-e
+
+---
+
+# Remote
+
+Az összes remote állapota megvan a helyi gépen
+
+---
+
+# 3rd party szolgáltatók
 
 Valamilyen szerveren van a kód
 - github
@@ -196,22 +230,31 @@ Valamilyen szerveren van a kód
 
 ( A házi feladatok githubon kellenek )
 
+--
+
+- LFS - Large File Storage
+- Pull request
+
 ---
 
-## Remote hozzáadása
-
-Bármi lehet
-Lehet akár fájlrendszeren is
-
+# Remote hozzáadása
 
 ```bash
-git remote add origin <...>
+git remote add origin URI
+# Felöltés
 git remote push origin master
 ```
 
---
+# Kód átvétele remoteról
 
-Honnan tudja, hogy van-e jogom?
+```bash
+git clone URI
+```
+
+---
+
+class: center, middle
+# Github account !
 
 ---
 
@@ -223,26 +266,29 @@ ssh-keygen
 
 ~/.ssh/id-rsa.pub
 
-TODO kép
+--
+
+###Ilyesmi
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzZmjRJXx/ohCbcyb/0LNKrP/bk/0YgF1rURlOnz5DJ9xY+V3hyuEKD7mLLisjSJIAO9zN6Lk6SyGCBwm9/ufVCLAa1TnAjTa3z/LkWlXmyQJfWV6JQskufomZSMOhaYuHv2TJZ6U4mqU1NW3+zrhFnOY536KxjV16SmODbJPOh9kvB5sJRMVOh6+S+SbkxhBiKHOd5h2arusgzYdamjJz1xk4w3BFW9iV6EaX873Oo/0f1Y3ytGOpc+S3sx6HO6rza63bpNFPUJnkG4RevgiHoqBOHX6fr36OUFUer3C0e3h3vWUt4GfPouFAT2eBDnXNMaEDQPEfooGfIIe+p5xn root@varrocs-laptop
 
 ---
 
-# Kód lehúzása remoteról
+# Kód lehúzása remote-ról
 
-Minden kliens mindig tudja az összes remote állapotát
 
 ```bash
 git fetch <remote>
 ```
+### Minden kliens mindig tudja az összes remote állapotát
 
 --
 
 ```bash
 git pull <remote> <branch>
 ```
-Ez pull = fetch + merge
+pull = fetch + merge
 
-# Kód feltolása remotera
+# Kód feltolása remote-ra
 
 ```bash
 git push <remote> <branch>
@@ -258,19 +304,32 @@ Mi van ha nincs jogunk?
 
 - Maga a pull request nincs benne a gitben
 
-
 ---
-Pimpelt log
-```bash
-alias gl='git log --all --graph --decorate --pretty=oneline --abbrev-commit'
-```
+
+# Rebase / merge
+
+### Rebase
+
+- Nincs új commit
+Az eddigi commitokat pakolja át
+
+### Merge
+
+- Új merge commit
 
 ---
 
 # Rebase/merge?
-    TODO Képek csúnya repóról
-    TODO Képek szép repóról
+###  Rebase
+
+![Default-aligned image](git_with_rebase.png)
+
 ---
+
+# Rebase/merge?
+# Merge
+
+![Default-aligned image](git_with_merge.png)
 
 ---
 
@@ -287,6 +346,15 @@ git push origin master
 
 # Konfliktusok
 
+### Merge
+ - Felold és commit
+
+### Rebase
+ - Add és rebase --continue
+ - Minden kommitnál, amit áttesz lehet konfliktus
+
+### Stash
+ - Git add és ennyi
 
 ---
 
@@ -301,7 +369,7 @@ Single trunk
 
 ---
 
-# Fejlesztési flowk
+# Fejlesztési flow-k
 Branchek + pull requestek
 - Kis, rövid életű branchek
 
@@ -313,33 +381,63 @@ Branchek + pull requestek
 ---
 
 # Hogy állunk vissza
+
+```bash
+git revert <commit>
+```
+
+Megcsinálja egy commit ellentétét
+
+---
+
+# Hogy állunk vissza
 ```bash
 git reset --soft <címke>
 git reset <címke>
 git reset --hard <címke>
 ```
+
 ---
 
 # Advanced features
 
+```bash
 git reflog
-git add -i
+```
 
---
+Az összes helyi rendszeren lévő valaha volt commit itt van
+
+---
 
 Interactive add
+```bash
+git add -i
+```
 
---
+---
 
 Interactive rebase
 
 ---
 
-git cherrypick
+# git cherrypick
+Egy commitot lehet egy branchből átvenni egy másik branchbe
+
+```bash
+git cherry-pick <commit>
+```
+
 
 ---
 
-git bisect
+# git bisect
+# git submodule
+
+---
+
+# .gitignore
+
+Melyik fájlokat nem akarjuk kezelni
 
 ---
 
@@ -347,7 +445,9 @@ git bisect
 
 Mindenkinek legyen saját github accountja
 
-Előadás  anyaga itt: 	https://github.com/jitsi/jitsi-videobridge.git
+Küldjétek el ide az accountot: varrocs@gmail.com
+
+Előadás  anyaga itt:
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
