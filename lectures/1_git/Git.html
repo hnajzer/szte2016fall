@@ -232,8 +232,9 @@ Valamilyen szerveren van a kód
 
 --
 
-- LFS - Large File Storage
+- Forkok
 - Pull request
+- LFS - Large File Storage
 
 ---
 
@@ -245,10 +246,16 @@ git remote add origin URI
 git remote push origin master
 ```
 
-# Kód átvétele remoteról
+# Kód lemásolása remoteról
 
 ```bash
 git clone URI
+```
+
+# Remote-ok listázása
+
+```bash
+git remote -v
 ```
 
 ---
@@ -358,6 +365,46 @@ git push origin master
 
 ---
 
+# Hogy állunk vissza
+
+```bash
+git revert <commit>
+```
+
+Megcsinálja egy commit ellentétét
+
+---
+
+# Hogy állunk vissza
+```bash
+git reset --soft <címke>
+git reset <címke>
+git reset --hard <címke>
+```
+
+---
+
+###https://github.com/varrocs/gitesora
+
+Klónozni
+
+---
+
+1. Feloldani a branchek közötti konfliktusokat rebase-zel
+
+2. Feloldani a branchek közötti konfliktusokat merge-dzsel
+
+---
+
+Házi feladat
+1. Forkoljátok le
+2. Remote-ként hozzá kell adni a forkot
+3. A névsorba írjátok be magatokat. Commit, push a forkba
+4. Pull request névvel
+
+
+---
+
 # Fejlesztési flowk
 Single trunk
 - Csak master, nincsenek branchek
@@ -377,25 +424,6 @@ Branchek + pull requestek
 - Hajlamosak naggyá nőni, nagyon sokáig tart a branch
 - Konfliktusok a branchek között
 
-
----
-
-# Hogy állunk vissza
-
-```bash
-git revert <commit>
-```
-
-Megcsinálja egy commit ellentétét
-
----
-
-# Hogy állunk vissza
-```bash
-git reset --soft <címke>
-git reset <címke>
-git reset --hard <címke>
-```
 
 ---
 
