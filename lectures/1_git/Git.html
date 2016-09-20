@@ -13,6 +13,7 @@
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
+      li { margin: 10px; 0;}
       .remark-code { font-size: 1.2em; }, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
   </head>
@@ -46,6 +47,10 @@ Kellett egy rendes verziókövető a linux kernelhez
 # Amire nem jó
 - Nagy bináris fájlok kezelése
 
+### .gitignore
+
+
+Melyik fájlokat nem akarjuk kezelni
 ---
 
 # Kliensek
@@ -276,7 +281,7 @@ ssh-keygen
 --
 
 ###Ilyesmi
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzZmjRJXx/ohCbcyb/0LNKrP/bk/0YgF1rURlOnz5DJ9xY+V3hyuEKD7mLLisjSJIAO9zN6Lk6SyGCBwm9/ufVCLAa1TnAjTa3z/LkWlXmyQJfWV6JQskufomZSMOhaYuHv2TJZ6U4mqU1NW3+zrhFnOY536KxjV16SmODbJPOh9kvB5sJRMVOh6+S+SbkxhBiKHOd5h2arusgzYdamjJz1xk4w3BFW9iV6EaX873Oo/0f1Y3ytGOpc+S3sx6HO6rza63bpNFPUJnkG4RevgiHoqBOHX6fr36OUFUer3C0e3h3vWUt4GfPouFAT2eBDnXNMaEDQPEfooGfIIe+p5xn root@varrocs-laptop
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzZmjRJXx/ohCbcyb/0LNKrP/bk/0YgF1rURlOnz5DJ9xY+V3hyuEKD7mLLisjSJIAO9zN6Lk6SyGCBwm9/ufVCLAa1TnAjTa3z/LkWlXmyQJfWV6JQskufomZSMOhaYuHv2TJZ6U4mqU1NW3+zrhFnOY536KxjV16SmODbJPOh9kvB5sJRMVOh6+S+SbkxhBiKHOd5h2arusgzYdamjJz1xk4w3BFW9iV6EaX873Oo/0f1Y3ytGOpc+S3sx6HO6rza63bpNFPUJnkG4RevgiHoqBOHX6fr36OUFUer3C0e3h3vWUt4GfPouFAT2eBDnXNMaEDQPEfooGfIIe+p5xn hello@varrocs-laptop
 
 ---
 
@@ -309,7 +314,8 @@ Mi van ha nincs jogunk?
 
 # Pull request
 
-- Maga a pull request nincs benne a gitben
+- Maga a pull request nincs benne a gitben, online szolgáltatók szokták hozzáadni
+- Push egy saját forkba utána pull request a szerzőnek
 
 ---
 
@@ -318,7 +324,7 @@ Mi van ha nincs jogunk?
 ### Rebase
 
 - Nincs új commit
-Az eddigi commitokat pakolja át
+- Az eddigi commitokat pakolja át
 
 ### Merge
 
@@ -326,14 +332,14 @@ Az eddigi commitokat pakolja át
 
 ---
 
-# Rebase/merge?
+# Rebase / merge?
 ###  Rebase
 
 ![Default-aligned image](git_with_rebase.png)
 
 ---
 
-# Rebase/merge?
+# Rebase / merge?
 # Merge
 
 ![Default-aligned image](git_with_merge.png)
@@ -346,6 +352,12 @@ git stash
 git fetch
 git rebase origin/master
 git stash pop
+git push origin master
+```
+
+# Merge
+```bash
+git pull origin master
 git push origin master
 ```
 
@@ -382,25 +394,24 @@ git reset <címke>
 git reset --hard <címke>
 ```
 
+Eltűntet commitokat
+
 ---
 
 ###https://github.com/varrocs/gitesora
 
-Klónozni
+1. Klónozni
+
+2. Feloldani a branchek közötti konfliktusokat rebase-zel
+
+3. Feloldani a branchek közötti konfliktusokat merge-dzsel
 
 ---
 
-1. Feloldani a branchek közötti konfliktusokat rebase-zel
-
-2. Feloldani a branchek közötti konfliktusokat merge-dzsel
-
----
-
-Házi feladat
+# Házi feladat
 1. Forkoljátok le
-2. Remote-ként hozzá kell adni a forkot
-3. A névsorba írjátok be magatokat. Commit, push a forkba
-4. Pull request névvel
+2. A névsorba írjátok be magatokat.
+3. Pull request névvel
 
 
 ---
@@ -424,7 +435,6 @@ Branchek + pull requestek
 - Hajlamosak naggyá nőni, nagyon sokáig tart a branch
 - Konfliktusok a branchek között
 
-
 ---
 
 # Advanced features
@@ -446,6 +456,10 @@ git add -i
 
 Interactive rebase
 
+```bash
+git rebase -i
+```
+
 ---
 
 # git cherrypick
@@ -455,25 +469,15 @@ Egy commitot lehet egy branchből átvenni egy másik branchbe
 git cherry-pick <commit>
 ```
 
-
 ---
+
+class: middle
 
 # git bisect
 # git submodule
 
----
-
-# .gitignore
-
-Melyik fájlokat nem akarjuk kezelni
 
 ---
-
-# Házi feladat
-
-Mindenkinek legyen saját github accountja
-
-Küldjétek el ide az accountot: varrocs@gmail.com
 
 Előadás  anyaga itt:
     </textarea>
