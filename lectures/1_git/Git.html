@@ -294,7 +294,8 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzZmjRJXx/ohCbcyb/0LNKrP/bk/0YgF1rURlOnz5D
 
 
 ```bash
-git fetch <remote>
+git fetch <remote> # állapot lehúzása
+git merge <remote/branch> # a két ág összeolvasztása
 ```
 ### Minden kliens mindig tudja az összes remote állapotát
 
@@ -317,16 +318,22 @@ Mi van ha nincs jogunk?
 
 ---
 
-# Pull request
+# Mi van ha nincs jogunk?
+
+## Pull request
 
 - Maga a pull request nincs benne a gitben, a szolgáltatók szokták hozzáadni
 - Push egy saját forkba utána pull request a szerzőnek
 
-# Fork
+## Fork
 
 - Egy repository másolata, hogy legyen hozzá jogunk
 
+---
+
 # Közreműködési flow
+
+Akkor van rá szügség ha egy repositoryba nincs jogunk pusholni
 
 - Saját forkba mennek a változások
 - Pull request az eredeti repositoryba
@@ -342,7 +349,7 @@ Mi van ha nincs jogunk?
 
 ### Merge
 
-- Új merge commit
+- Új merge commit (kivéve fast forwardnál)
 
 ---
 
