@@ -36,6 +36,8 @@ class: center, middle
 
 ---
 
+# Git
+
 Linus Torvalds
 
 2005
@@ -44,11 +46,12 @@ Kellett egy rendes verziókövető a linux kernelhez
 
 ---
 
-# Amire nem jó
+# Git
+
+## Amire nem jó
 - Nagy bináris fájlok kezelése
 
 ### .gitignore
-
 
 Melyik fájlokat nem akarjuk kezelni
 ---
@@ -68,6 +71,9 @@ Help
 ---
 
 # Start
+
+Új repository
+
 ```bash
 git init
 git status
@@ -81,7 +87,7 @@ A **git status** a barátunk
 
 # Workflow
  - **git add**
-   - Ez stage-re teszi
+   - Ez stage-re tesz egy változtatást
  - **git commit**
    - Ez commitot csinál a stage-elt változásokból
 ```bash
@@ -201,7 +207,6 @@ git branch -b <branchnév>
 class: center, middle
 # Remote
 
-
 ---
 
 # Remote = távoli repository
@@ -314,8 +319,17 @@ Mi van ha nincs jogunk?
 
 # Pull request
 
-- Maga a pull request nincs benne a gitben, online szolgáltatók szokták hozzáadni
+- Maga a pull request nincs benne a gitben, a szolgáltatók szokták hozzáadni
 - Push egy saját forkba utána pull request a szerzőnek
+
+# Fork
+
+- Egy repository másolata, hogy legyen hozzá jogunk
+
+# Közreműködési flow
+
+- Saját forkba mennek a változások
+- Pull request az eredeti repositoryba
 
 ---
 
@@ -474,12 +488,17 @@ git cherry-pick <commit>
 class: middle
 
 # git bisect
+
+A mostani verzió rossz és van egy régi verziónk, ami jó. Felezgetve meg lehet keresni, hogy hol romlott el.
+
 # git submodule
+
+Más git repositorykat tudunk belinkelni a mostani repository alá
 
 
 ---
 
-Előadás  anyaga itt:
+Előadás  anyaga itt: Majd a coospace-en
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
