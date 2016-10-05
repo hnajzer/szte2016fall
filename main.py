@@ -1,6 +1,6 @@
-def greet(name):
-    print 'Hello, %s!' % name
-    return;
+def main():
+  print "Nagyon egyszeru script, ami talan le is fut..."
 
-name = raw_input('Hogy hivnak?\n')
-greet(name)
+
+if __name__ == '__main__':
+  main()
