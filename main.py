@@ -1,17 +1,17 @@
-from flask import Flask
+#from flask import Flask
 import os
 
-from blueprints.movies import movies
-from model.movies import Movies
+#from blueprints.movies import movies
+#from model.movies import Movies
 
 #app = Flask(__name__)
 
 #app.movies = Movies()
 
 
-@app.route('/')
+#@app.route('/')
 def hello_proba():
-    print 'Ha ezt látod, akkor minden jó!'
+    print 'Ha ezt latod, akkor minden jo!'
     return;
 
 hello_proba()
