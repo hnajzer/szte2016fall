@@ -1,4 +1,6 @@
-import os
+#import os
+
+print "Content-type: text/html"
 
 def main():
   print "Nagyon egyszeru script, ami talan le is fut..."
