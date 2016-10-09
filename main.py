@@ -13,7 +13,6 @@ app.movies = Movies()
 def hello_world():
     return 'Hello, World!'
 
-
 app.register_blueprint(movies, url_prefix='/movies')
 
 if __name__ == '__main__':

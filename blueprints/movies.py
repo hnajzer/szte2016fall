@@ -1,5 +1,4 @@
-from flask import Blueprint, current_app, jsonify, request
-
+from flask import Blueprint, current_app, jsonify, request, json
 movies = Blueprint('movies', __name__)
 
 
@@ -35,6 +34,21 @@ def get_movie(movie_id):
     if not movie:
         return not_found()
     return jsonify(movie)
+
+
+@movies.route('/setup', methods=['GET'])
+def setup():
+    movie_data = parse_movie({"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"})
+    current_app.movies.create_movie(movie_data)
+    movie_data = parse_movie({"title": "Frankenweenie", "year": 2012, "director": "Tim Burton"})
+    current_app.movies.create_movie(movie_data)
+    movie_data = parse_movie({"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"})
+    current_app.movies.create_movie(movie_data)
+    movie_data = parse_movie({"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"})
+    current_app.movies.create_movie(movie_data)
+    movie_data = parse_movie({"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"})
+    current_app.movies.create_movie(movie_data)
+    return 'Success'
 
 
 @movies.route('/', methods=['POST'])

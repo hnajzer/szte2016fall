@@ -11,6 +11,10 @@ from model.movies import Movies
 class MainTest(unittest.TestCase):
     def setUp(self):
         self.a_movie_data = {"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}
+        self.b_movie_data = {"title": "Frankenweenie", "year": 2012, "director": "Tim Burton"}
+        self.c_movie_data = {"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"}
+        self.d_movie_data = {"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"}
+        self.e_movie_data = {"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"}
 
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
@@ -20,13 +24,25 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert "Hello, World!" in rv.data
+        assert b"Hello, World!" in rv.data
 
-    def test_get_movie_nonexisting(self):
+    def test_get_movies_nonexisting(self):
         response = self.app.get('/movies/1')
         assert response.status_code == 404
 
-    def test_get_movie_existing(self):
+        response = self.app.get('/movies/2')
+        assert response.status_code == 404
+
+        response = self.app.get('/movies/3')
+        assert response.status_code == 404
+
+        response = self.app.get('/movies/4')
+        assert response.status_code == 404
+
+        response = self.app.get('/movies/5')
+        assert response.status_code == 404
+
+    def test_get_movie_1_existing(self):
         self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
@@ -35,6 +51,71 @@ class MainTest(unittest.TestCase):
 
         assert response.status_code == 200
         assert json_data['title'] == "Interstellar"
+
+    def test_get_movie_2_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.b_movie_data)
+                      , content_type='application/json')
+        response = self.app.get('/movies/1')
+        json_data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert json_data['title'] == "Frankenweenie"
+
+    def test_get_movie_3_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.c_movie_data)
+                      , content_type='application/json')
+        response = self.app.get('/movies/1')
+        json_data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert json_data['title'] == "Donnie Darko"
+
+    def test_get_movie_4_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.d_movie_data)
+                      , content_type='application/json')
+        response = self.app.get('/movies/1')
+        json_data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert json_data['title'] == "Planet of the Apes"
+        assert json_data['year'] == 2001
+
+    def test_get_movie_5_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.e_movie_data)
+                      , content_type='application/json')
+        response = self.app.get('/movies/1')
+        json_data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert json_data['title'] == "Planet of the Apes"
+        assert json_data['year'] == 1968
+
+    def test_get_all_movies_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.a_movie_data)
+                      , content_type='application/json')
+        self.app.post('/movies/'
+                      , data=json.dumps(self.b_movie_data)
+                      , content_type='application/json')
+        self.app.post('/movies/'
+                      , data=json.dumps(self.c_movie_data)
+                      , content_type='application/json')
+        self.app.post('/movies/'
+                      , data=json.dumps(self.d_movie_data)
+                      , content_type='application/json')
+        self.app.post('/movies/'
+                      , data=json.dumps(self.e_movie_data)
+                      , content_type='application/json')
+        response = self.app.get('/movies/5')
+        json_data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert json_data['title'] == "Planet of the Apes"
+        assert json_data['year'] == 1968
 
     def test_get_movie_existing_without_post(self):
         self.app.application.movies.movies[1] = self.a_movie_data
