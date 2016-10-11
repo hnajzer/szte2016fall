@@ -1,5 +1,3 @@
-import requests
-
 class Movies():
     def __init__(self):
         self.movies = {}
@@ -32,9 +30,5 @@ class Movies():
     def delete_movie(self, id):
         if not self._does_movie_exist(id):
             return False
-
         del self.movies[id]
         return True
-
-    def add_imdb_id(self, id):
-        self.create_movie(requests.get('http://www.omdbapi.com/?i=' + id + '&plot=short&r=json', auth=('', '')).json()['Title'])

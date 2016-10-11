@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+import requests
 
 from blueprints.movies import movies
 from model.movies import Movies
@@ -8,11 +9,11 @@ app = Flask(__name__)
 
 app.movies = Movies()
 
-app.movies.add_imdb_id('tt1142977')
-app.movies.add_imdb_id('tt0246578')
-app.movies.add_imdb_id('tt0816692')
-app.movies.add_imdb_id('tt0133152')
-app.movies.add_imdb_id('tt0063442')
+app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt1142977&plot=short&r=json', auth=('', '')).json())
+app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt0246578&plot=short&r=json', auth=('', '')).json())
+app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt0816692&plot=short&r=json', auth=('', '')).json())
+app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt0133152&plot=short&r=json', auth=('', '')).json())
+app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt0063442&plot=short&r=json', auth=('', '')).json())
 
 @app.route('/')
 def hello_world():
