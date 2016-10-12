@@ -1,5 +1,6 @@
 from behave import given, when, then
 from assertpy import assert_that
+from model.movies import Movies
 
 import main
 
@@ -11,6 +12,11 @@ def step_impl(context):
 
 
 @given(u'I have no movies in the database')
+def step_impl(context):
+    context.app.application.movies = Movies()
+
+
+@given(u'I have movies in the database')
 def step_impl(context):
     pass
 

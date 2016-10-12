@@ -26,19 +26,23 @@ class MainTest(unittest.TestCase):
         rv = self.app.get('/')
         assert b"Hello, World!" in rv.data
 
-    def test_get_movies_nonexisting(self):
+    def test_get_default_movie_1_nonexisting(self):
         response = self.app.get('/movies/1')
         assert response.status_code == 404
 
+    def test_get_default_movie_2_nonexisting(self):
         response = self.app.get('/movies/2')
         assert response.status_code == 404
 
+    def test_get_default_movie_3_nonexisting(self):
         response = self.app.get('/movies/3')
         assert response.status_code == 404
 
+    def test_get_default_movie_4_nonexisting(self):
         response = self.app.get('/movies/4')
         assert response.status_code == 404
 
+    def test_get_default_movie_5_nonexisting(self):
         response = self.app.get('/movies/5')
         assert response.status_code == 404
 
@@ -111,7 +115,7 @@ class MainTest(unittest.TestCase):
                       , data=json.dumps(self.e_movie_data)
                       , content_type='application/json')
         response = self.app.get('/movies/5')
-        #Ha létezik 5-ös ID alatt film, akkor az alatta levő 4 ID-n is létezik film
+        #Ha létezik 5-ös ID-val film, akkor az alatta levő 4 ID-n is létezik film
         json_data = json.loads(response.data)
 
         assert response.status_code == 200

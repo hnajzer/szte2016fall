@@ -37,3 +37,9 @@ Feature: Movie database handling
     When I request the movie with ID 5
     Then I receive a 200 status code response
 
+  Scenario: Request a non existing movie by id
+    Given The app is running
+    And I have movies in the database
+    When I request the movie with ID 6
+    Then I receive a 404 status code response
+
