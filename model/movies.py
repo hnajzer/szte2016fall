@@ -7,7 +7,7 @@ class Movies():
         return id in self.movies
 
     def _get_next_id(self):
-        self.id = self.id + 1
+        self.id += 1
         return self.id
 
     def create_movie(self, data):
@@ -17,21 +17,21 @@ class Movies():
         self.movies[nextId] = data
         return self.movies[nextId]
 
-    def get_movie(self, id):
-        if self._does_movie_exist(id):
-            return self.movies[id]
+    def get_movie(self, identify):
+        if self._does_movie_exist(identify):
+            return self.movies[identify]
         return False
 
-    def update_movie(self, id, data):
-        if not self._does_movie_exist(id):
+    def update_movie(self, identify, data):
+        if not self._does_movie_exist(identify):
             return False
 
-        self.movies[id] = data
-        return self.movies[id]
+        self.movies[identify] = data
+        return self.movies[identify]
 
-    def delete_movie(self, id):
-        if not self._does_movie_exist(id):
+    def delete_movie(self, identify):
+        if not self._does_movie_exist(identify):
             return False
 
-        del self.movies[id]
+        del self.movies[identify]
         return True

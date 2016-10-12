@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, jsonify, request, json
+from flask import Blueprint, current_app, jsonify, request
 movies = Blueprint('movies', __name__)
 
 
@@ -36,21 +36,6 @@ def get_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('/setup', methods=['GET'])
-def setup():
-    movie_data = parse_movie({"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"})
-    current_app.movies.create_movie(movie_data)
-    movie_data = parse_movie({"title": "Frankenweenie", "year": 2012, "director": "Tim Burton"})
-    current_app.movies.create_movie(movie_data)
-    movie_data = parse_movie({"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"})
-    current_app.movies.create_movie(movie_data)
-    movie_data = parse_movie({"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"})
-    current_app.movies.create_movie(movie_data)
-    movie_data = parse_movie({"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"})
-    current_app.movies.create_movie(movie_data)
-    return 'Success'
-
-
 @movies.route('/', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
@@ -78,5 +63,5 @@ def delete_movie(movie_id):
 
 
 @movies.app_errorhandler(500)
-def page_not_found(e):
+def page_not_found():
     return get_error('Internal server error', 500)
