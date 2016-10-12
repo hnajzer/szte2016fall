@@ -12,3 +12,27 @@ Feature: Movie database handling
     And I have a movie called "Interstellar", 2014 directed by "Christopher Nolan" under ID 1
     When I request the movie with ID 1
     Then I receive a 200 status code response
+
+  Scenario: Request an existing movie by id
+    Given The app is running
+    And I have a movie called "Planet of the Apes", 1698 directed by "Franklin J. Schaffner" under ID 2
+    When I request the movie with ID 1
+    Then I receive a 200 status code response
+
+  Scenario: Request an existing movie by id
+    Given The app is running
+    And I have a movie called "Planet of the Apes", 2001 directed by "Tim Burton" under ID 3
+    When I request the movie with ID 1
+    Then I receive a 200 status code response
+
+  Scenario: Request an existing movie by id
+    Given The app is running
+    And I have a movie called "Frankenweenie - Ebcsont beforr", 2012 directed by "Tim Burton" under ID 4
+    When I request the movie with ID 1
+    Then I receive a 200 status code response
+
+  Scenario: Request an existing movie by id
+    Given The app is running
+    And I have a movie called "Donnie Darko", 2001 directed by "Richard Kelly" under ID 5
+    When I request the movie with ID 1
+    Then I receive a 200 status code response
