@@ -15,7 +15,7 @@ def step_impl(context):
     pass
 
 
-@given(u'I have a movie called "{title}" ({year:d}) directed by "{director}" under ID {movie_id}')
+@given(u'I have a movie called "{title}", {year:d} directed by "{director}" under ID {movie_id}')
 def step_impl(context, title, year, director, movie_id):
     data = {
         "title": title,
