@@ -115,7 +115,7 @@ class MainTest(unittest.TestCase):
                       , data=json.dumps(self.e_movie_data)
                       , content_type='application/json')
         response = self.app.get('/movies/5')
-        #Ha létezik 5-ös ID-val film, akkor az alatta levő 4 ID-n is létezik film
+        #Ha letezik 5-os ID-val film, akkor az alatta levo 4 ID-n is letezik film
         json_data = json.loads(response.data)
 
         assert response.status_code == 200
