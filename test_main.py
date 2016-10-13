@@ -21,7 +21,7 @@ class MainTest(unittest.TestCase):
 
     def tearDown(self):
         self.app.application.movies = Movies()
-        
+
     def test_get_default_movie_1_nonexisting(self):
         response = self.app.get('/movies/1')
         assert response.status_code == 404
