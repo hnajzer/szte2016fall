@@ -10,11 +10,6 @@ class MoviesModelTest(unittest.TestCase):
         self.a_movie_data = {}
         self.other_movie_data = {}
         self.movie_model = Movies()
-        self.movie_model.add_imdb_id('tt1142977')
-        self.movie_model.add_imdb_id('tt0246578')
-        self.movie_model.add_imdb_id('tt0816692')
-        self.movie_model.add_imdb_id('tt0133152')
-        self.movie_model.add_imdb_id('tt0063442')
 
     def tearDown(self):
         pass
@@ -39,8 +34,6 @@ class MoviesModelTest(unittest.TestCase):
         assert_that(moviedata).does_not_contain_key('id')
 
     #def test_get_movie_id_1(self):
-
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -12,3 +12,4 @@ Feature: Movie database handling
     And I have a movie called "Interstellar", 2014 directed by "Christopher Nolan" under ID 1
     When I request the movie with ID 1
     Then I receive a 200 status code response
+
