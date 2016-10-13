@@ -1,1 +1,1 @@
-web: python main.py
+web: gunicorn piank.hello:app

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 from blueprints.movies import movies
@@ -16,8 +16,13 @@ app.movies.create_movie({"title": "Planet of the Apes", "year": 1968, "director"
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def home():
+    return render_template('home.html')
+	
+
+@app.route('/about/')
+def about():
+    return render_template('about.html')	
 
 app.register_blueprint(movies, url_prefix='/movies')
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heroku Python App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+  {% extends "style.html" %}
+  {% block content %}
+   <div class="home">
+    <h1>My Heroku Python app</h1>
+    <p>Welcome!</p>
+   </div>
+   {% endblock %}
+  </body>
+</html>
