@@ -2,7 +2,6 @@ language: python
 python:
   - "2.6"
   - "2.7"
-  - "3.5"
 install: "pip install -r requirements.txt"
 script: py.test
 deploy:
@@ -12,4 +11,4 @@ deploy:
   app: $HEROKU_APP_NAME
   on:
     branch: heroku_prod
-    condition: $TRAVIS_PYTHON_VERSION = 3.5
+    condition: $TRAVIS_PYTHON_VERSION = 2.7
