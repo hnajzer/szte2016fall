@@ -1,13 +1,19 @@
-language: python
+# This is a Travis CI configuration file
+
+language: python # here is the language specification
 python:
-  - "2.6"
+  - "2.6"  # all about the versions
   - "2.7"
+# install the dependecies from the imported txt
 install: "pip install -r requirements.txt"
+# the test running command
 script: py.test
+ # here is some Heroku configuration
 deploy:
   provider: heroku
   api_key:
-    secure: $HEROKU_KEY
+  # never use local variables for the secure keys
+    secure: $HEROKU_KEY # Heroku env variable
   app: $HEROKU_APP_NAME
   on:
     branch: production
