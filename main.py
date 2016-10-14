@@ -16,12 +16,12 @@ app.movies.create_movie({"title": "Planet of the Apes", "year": 1968, "director"
 
 
 @app.route('/')
-def home():
+def hello_world():
     return 'Hello continuous delivery!'
 	
 	
 @app.route('/home/')
-def about():
+def home():
     return render_template('home.html')	
 	
 
