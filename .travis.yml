@@ -7,8 +7,8 @@ script: py.test
 deploy:
   provider: heroku
   api_key:
-    secure: $HEROKU_KEY
+    secure: $HEROKU_API_KEY
   app: $HEROKU_APP_NAME
   on:
-    branch: production
+    branch: master
     condition: $TRAVIS_PYTHON_VERSION = 2.7
