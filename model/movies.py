@@ -7,13 +7,11 @@ class Movies():
         return id in self.movies
 
     def _get_next_id(self):
-        self.id = self.id + 1
+        self.id += 1
         return self.id
 
     def create_movie(self, data):
         nextId = self._get_next_id()
-        data = data.copy()
-        data['id'] = nextId
         self.movies[nextId] = data
         return self.movies[nextId]
 
@@ -32,6 +30,5 @@ class Movies():
     def delete_movie(self, id):
         if not self._does_movie_exist(id):
             return False
-
         del self.movies[id]
         return True
