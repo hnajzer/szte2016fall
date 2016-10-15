@@ -19,7 +19,7 @@ class MainTest(unittest.TestCase):
         self.app.application.movies = Movies()
 
     def test_hello(self):
-        self.assertNotEqual(main.hello_world(), 'Hello, World!')
+        self.assertEqual(main.hello_world(), 'Hello continuous delivery')
 
     def test_get_movie_nonexisting(self):
         response = self.app.get('/movies/1')
