@@ -1,13 +1,21 @@
-import os
+
 from flask import Flask
+import os
+
+from blueprints.movies import movies
+from model.movies import Movies
 
 app = Flask(__name__)
 
+app.movies = Movies()
+
+
 @app.route('/')
-def hello():
-    return 'Hali!'
+def hello_world():
+    return 'Hello, World!'
+
+
+app.register_blueprint(movies, url_prefix='/movies')
 
 if __name__ == '__main__':
-    # Bind to PORT if defined, otherwise default to 5000.
-    port = int(os.environ.get('PORT', 5000))
-app.run(host='0.0.0.0', port=port)
+  app.run(host='0.0.0.0', port=os.getenv('PORT', None))
