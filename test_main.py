@@ -40,8 +40,8 @@ class MainTest(unittest.TestCase):
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
 
-    # def tearDown(self):
-    #     self.app.application.movies = Movies()
+    def tearDown(self):
+        self.app.application.movies = Movies()
 
     def test_hello(self):
         rv = self.app.get('/')
@@ -113,7 +113,7 @@ class MainTest(unittest.TestCase):
             self.app.application.movies = Mock()
             self.app.application.movies.create_movie = Mock(return_value=movie)
 
-            print movie
+            # print movie
             self.app.post('/movies/'
                           , data=json.dumps(movie)
                           , content_type='application/json')
