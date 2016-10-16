@@ -1,4 +1,5 @@
-Flask
-Jinja2
-Werkzeug
-wsgiref
+assertpy
+flask
+pytest
+behave
+mock
