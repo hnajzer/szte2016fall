@@ -1,6 +1,6 @@
 -from flask import Flask
  -import os
- +return 'Hello, World!'
+ 
   
  -from blueprints.movies import movies
  -from model.movies import Movies
