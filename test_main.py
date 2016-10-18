@@ -105,21 +105,15 @@ class MainTest(unittest.TestCase):
         assert response.status_code == 200
 
     def test_create_new_movie_with_mock(self):
-        i = 0
-        while True:
-            movie = self.movies.get_movie(i+1)
-            if movie is False:
-                break
-            self.app.application.movies = Mock()
-            self.app.application.movies.create_movie = Mock(return_value=movie)
+        self.app.application.movies = Mock()
+        self.app.application.movies.create_movie = Mock(return_value=self.movie_data[0])
 
-            # print movie
-            self.app.post('/movies/'
-                          , data=json.dumps(movie)
-                          , content_type='application/json')
+        # print movie
+        self.app.post('/movies/'
+                      , data=json.dumps(self.movie_data[0])
+                      , content_type='application/json')
 
-            self.app.application.movies.create_movie.assert_called_once_with(movie)
-            i = i + 1
+        self.app.application.movies.create_movie.assert_called_once_with(self.movie_data[0])
 
 
 if __name__ == '__main__':
