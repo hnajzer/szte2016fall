@@ -11,4 +11,4 @@ deploy:
   app: $HEROKU_APP_NAME
   on:
     branch: production
-    condition: $TRAVIS_PYTHON_VERSION = 2.7
+    build_pack: node
