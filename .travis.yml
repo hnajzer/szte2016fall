@@ -10,5 +10,4 @@ deploy:
     secure: $HEROKU_KEY
   app: $HEROKU_APP_NAME
   on:
-    branch: master
-    buildpack: node
+    branch: production
