@@ -26,7 +26,7 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert "Hello, World!" in rv.data
+        assert "Hello, continuous delivery!" in rv.data
 
     ####################################################################################################################
     #   Get movie tests
