@@ -6,12 +6,13 @@ from model.movies import Movies
 
 app = Flask(__name__)
 
+
 app.movies = Movies()
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Hello continuous delivery!'
 
 
 app.register_blueprint(movies, url_prefix='/movies')
