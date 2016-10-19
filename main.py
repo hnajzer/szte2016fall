@@ -6,6 +6,7 @@ from model.movies import Movies
 
 app = Flask(__name__)
 
+
 app.movies = Movies()
 
 
