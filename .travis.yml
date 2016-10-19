@@ -10,4 +10,4 @@ deploy:
     secure: $HEROKU_KEY
   app: $HEROKU_APP_NAME
   on:
-    branch: production
+    branch: master
