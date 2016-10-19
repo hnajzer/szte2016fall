@@ -3,6 +3,41 @@ class Movies():
         self.movies = {}
         self.id = 0
 
+        # http://www.imdb.com/title/tt1142977/
+        self.create_movie({
+            "title": "Frankenweenie",
+            "year": 2012,
+            "director": "Tim Burton"
+        })
+
+        # http://www.imdb.com/title/tt0246578/
+        self.create_movie({
+            "title": "Donnie Darko",
+            "year": 2001,
+            "director": "Richard Kelly"
+        })
+
+        # http://www.imdb.com/title/tt0816692/
+        self.create_movie({
+            "title": "Interstellar",
+            "year": 2014,
+            "director": " Christopher Nolan "
+        })
+
+        # http://www.imdb.com/title/tt0133152/
+        self.create_movie({
+            "title": "Planet of the Apes",
+            "year": 2001,
+            "director": "Tim Burton"
+        })
+
+        # http://www.imdb.com/title/tt0063442/
+        self.create_movie({
+            "title": "Planet of the Apes",
+            "year": 1968,
+            "director": "Franklin J. Schaffner"
+        })
+
     def _does_movie_exist(self, id):
         return id in self.movies
 
