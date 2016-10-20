@@ -30,37 +30,11 @@ class MainTest(unittest.TestCase):
         self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        response = self.app.get('/movies/2')
+        response = self.app.get('/movies/1')
         json_data = json.loads(response.data)
 
         assert response.status_code == 200
-        response = self.app.get('/movies/3')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-
-        response = self.app.get('/movies/4')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-
-        response = self.app.get('/movies/5')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-
-        response = self.app.get('/movies/6')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-
-        response = self.app.get('/movies/7')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-
-
-
+        assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
         self.app.application.movies.movies[1] = self.a_movie_data
