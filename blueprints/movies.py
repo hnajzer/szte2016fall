@@ -1,5 +1,4 @@
 from flask import Blueprint, current_app, jsonify, request
-
 movies = Blueprint('movies', __name__)
 
 
@@ -64,5 +63,5 @@ def delete_movie(movie_id):
 
 
 @movies.app_errorhandler(500)
-def page_not_found(e):
+def page_not_found():
     return get_error('Internal server error', 500)

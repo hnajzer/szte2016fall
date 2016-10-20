@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heroku Python App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+  {% extends "style.html" %}
+  {% block content %}
+   <div class="about">
+		<h1>About this app</h1>
+		<p>This app was started as a personal project for LogMeIn's course, 2016 Fall</p>
+		<p>Created by Burik Aurel</p>
+   </div>
+   {% endblock %}
+  </body>
+</html>
