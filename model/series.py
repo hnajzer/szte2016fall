@@ -25,6 +25,8 @@ class Series():
     def update_series(self, id, data):
         if not self._does_series_exist(id):
             return False
+        if 'id' not in data:
+            data['id'] = self.series[id]['id']
         if 'title' not in data:
             data['title'] = self.series[id]['title']
         if 'summary' not in data:
