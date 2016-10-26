@@ -38,13 +38,22 @@ def get_series(series_id):
 
 
 @seriesBP.route('/', methods=['GET'], strict_slashes=False)
-def get_mainpage_series():
-    return jsonify({})
+def get_all_series():
+    series = []
+    i = 1
+    while i <= current_app.series.id:
+        resp = current_app.series.get_series(i)
+        if resp:
+            series.append(resp)
+        i += 1
+    return jsonify(series)
 
 
 @seriesBP.route('/', methods=['POST'], strict_slashes=False)
 def post_series():
     series_data = parse_series(request.get_json())
+    if 'title' not in series_data or 'summary' not in series_data or 'seasons' not in series_data:
+        return get_error('Bad Request', 400)
     series = current_app.series.create_series(series_data)
     if not series:
         return existing()
@@ -62,7 +71,13 @@ def patch_series(series_id):
 
 @seriesBP.route('/', methods=['DELETE'])
 def delete_all_series():
-        return get_error('Success', 200)
+    i = 1
+    while i <= current_app.series.id:
+        resp = current_app.series.get_series(i)
+        if resp:
+            current_app.series.delete_series(i)
+        i += 1
+    return jsonify({})
 
 
 @seriesBP.route('/<int:series_id>', methods=['DELETE'])

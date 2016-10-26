@@ -22,12 +22,18 @@ class Series():
             return self.series[id]
         return False
 
-    def update_series(self, ident, data):
-        if not self._does_series_exist(ident):
+    def update_series(self, id, data):
+        if not self._does_series_exist(id):
             return False
+        if 'title' not in data:
+            data['title'] = self.series[id]['title']
+        if 'summary' not in data:
+            data['summary'] = self.series[id]['summary']
+        if 'seasons' not in data:
+            data['seasons'] = self.series[id]['seasons']
 
-        self.series[ident] = data
-        return self.series[ident]
+        self.series[id] = data
+        return self.series[id]
 
     def delete_series(self, id):
         if not self._does_series_exist(id):
