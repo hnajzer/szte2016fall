@@ -19,28 +19,6 @@ app.movies.create_movie(requests.get('http://www.omdbapi.com/?i=tt0063442&plot=s
 @app.route('/')
 def hello_world():
     return 'Hello continuous delivery'
-    #
-    #return """
-    #<!DOCTYPE html>
-    #<html>
-    #<head>
-    #    <meta charset="utf-8">
-    #</head>
-    #<body>
-    #    <h3>Filmek</h3>
-    #    <ul>
-    #        <li><a href="http://szte-numichi-pinkapp.herokuapp.com/movies/1">Frankenweenie</a></li>
-    #        <li><a href="http://szte-numichi-pinkapp.herokuapp.com/movies/2">Donnie Darko</a></li>
-    #        <li><a href="http://szte-numichi-pinkapp.herokuapp.com/movies/3">Interstellar</a></li>
-    #        <li><a href="http://szte-numichi-pinkapp.herokuapp.com/movies/4">Planet of the Apes</a></li>
-    #        <li><a href="http://szte-numichi-pinkapp.herokuapp.com/movies/5">Planet of the Apes</a></li>
-    #    </ul>
-    #    <br>
-    #    A feladathoz egy nem hivatalos json api-t hasznaltam: http://omdbapi.com/
-    #</body>
-    #</html>"""
-
-
 
 app.register_blueprint(movies, url_prefix='/movies')
 
