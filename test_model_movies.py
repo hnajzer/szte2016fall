@@ -17,12 +17,12 @@ class MoviesModelTest(unittest.TestCase):
 
     def test_get_movie_nonexisting(self):
         result = self.movie_model.get_movie(1)
-        self.assertIsNone(result)
+        assert_that(result).is_equal_to(None)
 
     def test_get_movie_existing_false(self):
         self.movie_model.create_movie(self.a_movie_data)
         result = self.movie_model.get_movie(1)
-        self.assertIsNotNone(result)
+        assert_that(result).is_not_equal_to(None)
 
     def test_create_movie_different_ids(self):
         a_movie = self.movie_model.create_movie(self.a_movie_data)

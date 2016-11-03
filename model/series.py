@@ -1,6 +1,3 @@
-from collections import Counter
-
-
 class Series():
     def __init__(self):
         self.data = []
