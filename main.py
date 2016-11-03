@@ -40,5 +40,4 @@ app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(series, url_prefix='/series')
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0', port = os.getenv('PORT', None))
-    app.run(host='127.0.0.1', port = os.getenv('PORT', None))
+    app.run(host='0.0.0.0', port = os.getenv('PORT', None))

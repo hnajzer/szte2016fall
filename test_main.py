@@ -19,7 +19,6 @@ class MainTest(unittest.TestCase):
         self.app.application.movies = Movies()
 
     def test_hello(self):
-        print type(main.hello_world())
         self.assertTrue(type(main.hello_world()) is str)
 
     def test_get_movie_nonexisting(self):
