@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, jsonify, request
-from model.atom.film import Film
 
+from model.film import Film
 
 series = Blueprint('series', __name__)
 
