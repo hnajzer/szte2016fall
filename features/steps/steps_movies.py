@@ -1,4 +1,3 @@
-import requests
 from behave import given, when, then
 from assertpy import assert_that
 
@@ -35,8 +34,3 @@ def step_impl(context, movie_id):
 @then(u'I receive a {code:d} status code response')
 def step_impl(context, code):
     assert_that(context.response.status_code).is_equal_to(code)
-
-
-@given(u'{imdbId} will be added movie via online IMDB API under ID {movie_id}')
-def step_impl(context, imdbId, movie_id):
-    context.app.application.movies.create_movie(requests.get('http://www.omdbapi.com/?i=' + imdbId + '&plot=short&r=json', auth=('', '')).json())
