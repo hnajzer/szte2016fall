@@ -4,13 +4,11 @@ python:
   - "2.7"
 install: "pip install -r requirements.txt"
 script: py.test
-after_deploy: ./acceptance_test.sh https://$HEROKU_APP_NAME
 deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_API_KEY
   app: $HEROKU_APP_NAME
-  run: ./acceptance_test.sh https://$HEROKU_APP_NAME.herokuapp.com
   on:
     branch: master
     condition: $TRAVIS_PYTHON_VERSION = 2.7

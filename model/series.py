@@ -51,3 +51,7 @@ class Series():
 
     def get_data_lenght(self):
         return len(self.data)
+
+    def delete_all(self):
+        self.data = []
+        self.id = 0

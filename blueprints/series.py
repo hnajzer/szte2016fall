@@ -1,5 +1,4 @@
 from flask import Blueprint, current_app, jsonify, request
-
 from model.film import Film
 
 series = Blueprint('series', __name__)
@@ -18,6 +17,10 @@ def existing():
 
 def not_found():
     return get_error('Movie not found!', 404)
+
+
+def error_400():
+    return get_error('Error: 400', 400)
 
 
 def data2obj(data):
@@ -39,49 +42,67 @@ def data2obj(data):
 
 def obj2data(FilmObj):
     series = {}
-    series['id'] = FilmObj.id
-    series['director'] = FilmObj.director
-    series['title'] = FilmObj.name
-    series['year'] = FilmObj.year
-    series['summary'] = FilmObj.summary
-    series['description'] = FilmObj.description
+    series["id"] = FilmObj.id
+    series["director"] = FilmObj.director
+    series["title"] = FilmObj.name
+    series["year"] = FilmObj.year
+    series["summary"] = FilmObj.summary
+    series["description"] = FilmObj.description
+    series["seasons"] = FilmObj.seasons
     return series
 
 
-def obj2json(FilmObj):
-    return jsonify(obj2data(FilmObj))
+@series.route('/', methods=['GET'], strict_slashes = False)
+def get_all_series():
+    ret = []
+    for index in range(current_app.series.get_data_lenght()):
+        ret.append(current_app.series.data[index].name)
+    json = {"ezalista": ret}
+    return jsonify(json)
 
 
 @series.route('/<int:id>', methods=['GET'], strict_slashes = False)
-def get_movie(id):
+def get_id_series(id):
     film = current_app.series.get_series(id)
-    if not film or film.id == None:
+    if film == False:
         return not_found()
-    return obj2json(film)
+    return jsonify(obj2data(film))
 
 
 @series.route('/', methods=['POST'], strict_slashes = False)
-def post_movie():
-    film = current_app.series.create_series(data2obj(request.get_json()))
-    if not film:
-        return existing()
-    return obj2json(film)
+def post_a_series():
+    film = data2obj(request.get_json())
+    film = current_app.series.create_series(film)
+    ret = {"id": film.id}
+    if film.summary == "null" or film.seasons == "null":
+        current_app.series.delete_series(film.id)
+        return error_400()
+    return jsonify(ret)
 
 
-@series.route('/<int:id>', methods=['PATCH'], strict_slashes = False)
-def patch_movie(id):
-    film = current_app.seriesupdate_series(id, data2obj(request.get_json()))
-    if not film:
+@series.route('/<int:id>', methods=['PATCH'])
+def patch_series(id):
+    json = request.get_json()
+    film = current_app.series.get_series(id)
+    if film == False:
         return not_found()
-    return obj2json(film)
+    if "summary" in json:
+        film.summary = json["summary"]
+    return "success"
+
+
+@series.route('/', methods=['DELETE'], strict_slashes = False)
+def delete_all_series():
+    current_app.series.delete_all()
+    return jsonify({})
 
 
 @series.route('/<int:id>', methods=['DELETE'], strict_slashes = False)
-def delete_movie(movie_id):
-    film = current_app.series.delete_series(id)
-    if not film:
+def delete_a_series(id):
+    if current_app.series.delete_series(id):
+        return jsonify({})
+    else:
         return not_found()
-    return jsonify({})
 
 
 @series.app_errorhandler(500)
