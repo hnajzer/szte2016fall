@@ -23,9 +23,9 @@ def parse_serie(data):
     if 'title' in data:
         serie['title'] = data['title']
     if 'start_year' in data:
-        serie['start_year'] = data['start_year']
+        serie['summary'] = data['summary']
     if 'type' in data:
-        serie['type'] = data['type']
+        serie['seasons'] = data['seasons']
     return serie
 
 
@@ -63,6 +63,6 @@ def delete_serie(serie_id):
     return jsonify({})
 
 
-@movies.app_errorhandler(500)
+@series.app_errorhandler(500)
 def page_not_found(e):
     return get_error('Internal server error', 500)
