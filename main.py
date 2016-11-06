@@ -13,6 +13,8 @@ app.movies = Movies()
 def hello_world():
     return 'Hello continuous delivery'
 
+def asd():
+	return '\n asd'
 
 app.register_blueprint(movies, url_prefix='/movies')
 
