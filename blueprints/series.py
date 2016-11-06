@@ -11,54 +11,54 @@ def get_error(message, code):
 
 
 def existing():
-    return get_error('Serie already exists!', 409)
+    return get_error('Series already exists!', 409)
 
 
 def not_found():
-    return get_error('Serie not found!', 404)
+    return get_error('Series not found!', 404)
 
 
-def parse_serie(data):
-    serie = {}
+def parse_series(data):
+    series = {}
     if 'title' in data:
-        serie['title'] = data['title']
+        series['title'] = data['title']
     if 'start_year' in data:
-        serie['summary'] = data['summary']
+        series['summary'] = data['summary']
     if 'type' in data:
-        serie['seasons'] = data['seasons']
-    return serie
+        series['seasons'] = data['seasons']
+    return series
 
 
-@series.route('/<int:serie_id>', methods=['GET'])
-def get_serie(serie_id):
-    serie = current_app.series.get_serie(serie_id)
-    if not serie:
+@series.route('/<int:series_id>', methods=['GET'])
+def get_series(series_id):
+    series = current_app.series.get_series(series_id)
+    if not series:
         return not_found()
-    return jsonify(serie)
+    return jsonify(series)
 
 
 @series.route('/', methods=['POST'])
-def post_serie():
-    serie_data = parse_serie(request.get_json())
-    sreie = current_app.series.create_serie(serie_data)
-    if not serie:
+def post_series():
+    series_data = parse_series(request.get_json())
+    series = current_app.series.create_series(series_data)
+    if not series:
         return existing()
-    return jsonify(serie)
+    return jsonify(series)
 
 
-@series.route('/<int:serie_id>', methods=['PATCH'])
-def patch_movie(serie_id):
-    serie_data = parse_serie(request.get_json())
-    serie = current_app.series.update_serie(serie_id, serie_data)
-    if not serie:
+@series.route('/<int:series_id>', methods=['PATCH'])
+def patch_movie(series_id):
+    series_data = parse_series(request.get_json())
+    series = current_app.series.update_series(series_id, series_data)
+    if not series:
         return not_found()
-    return jsonify(serie)
+    return jsonify(series)
 
 
-@series.route('/<int:serie_id>', methods=['DELETE'])
-def delete_serie(serie_id):
-    serie = current_app.series.delete_serie(serie_id)
-    if not serie:
+@series.route('/<int:series_id>', methods=['DELETE'])
+def delete_series(series_id):
+    series = current_app.series.delete_series(series_id)
+    if not series:
         return not_found()
     return jsonify({})
 
