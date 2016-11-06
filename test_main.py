@@ -34,7 +34,7 @@ class MainTest(unittest.TestCase):
         json_data = json.loads(response.data)
 
         assert response.status_code == 200
-        assert json_data['title'] == "Interstellar"
+        assert json_data['title'] == self.a_movie_data['title']
 
     def test_get_movie_existing_without_post(self):
         self.app.application.movies.movies[1] = self.a_movie_data
