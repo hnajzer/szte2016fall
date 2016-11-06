@@ -13,7 +13,7 @@ app.series = Series()
 
 @app.route('/')
 def hello_world():
-    return 'Hello, Worlddsadas!'
+    return 'Hello, continuous delivery!'
 
 
 app.register_blueprint(movies, url_prefix='/movies')
