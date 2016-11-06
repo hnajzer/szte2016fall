@@ -26,7 +26,7 @@ class Movies():
         if not self._does_movie_exist(id):
             return False
 
-        self.movies[id] = data
+        self.movies[id].update( (i, j) for i, j in data.iteritems() if i is not 'id')
         return self.movies[id]
 
     def delete_movie(self, id):

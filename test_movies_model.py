@@ -7,8 +7,8 @@ from model.movies import Movies
 
 class MoviesModelTest(unittest.TestCase):
     def setUp(self):
-        self.a_movie_data = {}
-        self.other_movie_data = {}
+        self.a_movie_data = {"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"}
+        self.other_movie_data = {"title": "Frankenweenie - Ebcsont beforr", "year": 2012, "director": "Tim Burton"}
         self.movie_model = Movies()
 
     def tearDown(self):
@@ -37,6 +37,27 @@ class MoviesModelTest(unittest.TestCase):
 
         assert_that(moviedata).does_not_contain_key('id')
 
+	def testUpdateMovieWhatNotnExists(self):
+        result = self.movie_model.update_movie(1, self.a_movie_data)
+
+        assert_that(result).is_false()
+
+    def testUpdateMovieWhatExists(self):
+        self.movie_model.create_movie(self.a_movie_data)
+        result = self.movie_model.update_movie(1, self.other_movie_data)
+        del result['id']
+
+        assert_that(result).is_equal_to(self.other_movie_data)
+
+    def testDeleteMovieWhatNotExists(self):
+        result = self.movie_model.delete_movie(1)
+
+        assert_that(result).is_false()
+
+    def testDeleteMovieWhatExists(self):
+        self.movie_model.create_movie(self.a_movie_data)
+
+        assert_that(self.movie_model.delete_movie(1)).is_true()
 
 if __name__ == '__main__':
     unittest.main()
