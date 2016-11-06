@@ -49,7 +49,7 @@ def get_series(series_id):
         return not_found()
     return jsonify(series)
 
-@series.route('/', methods=['POST'], strict_slashes=False)
+@series.route('/', methods=['POST'])
 def post_series():
     series_data = parse_series(request.get_json())
     if 'summary' not in series_data:

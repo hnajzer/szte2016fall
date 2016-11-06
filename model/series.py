@@ -35,8 +35,9 @@ class Series():
     def update_series(self, id, data):
         if not self._does_series_exist(id):
             return False
-
-        self.series[id] = data
+        for key, value in data.items():
+            self.series[id][key] = data[key]
+        #self.series[id] = data
         return self.series[id]
 
     def delete_series(self, id):
