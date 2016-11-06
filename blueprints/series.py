@@ -17,6 +17,8 @@ def existing():
 def not_found():
     return get_error('series not found!', 404)
 
+def asked_error():
+    return get_error('asked error!', 400)
 
 def parse_series(data):
     series = {}
@@ -30,8 +32,14 @@ def parse_series(data):
 
 
 @series.route('/', methods=['GET'])
-def get_series2():
-    series = current_app.series.get_series2()
+def get_all_series():
+    series = []
+    i = 1
+    while i <= current_app.series.id:
+        asd = current_app.series.get_series(i)
+        if asd:
+            series.append(asd)
+        i += 1
     return jsonify(series)
 
 @series.route('/<int:series_id>', methods=['GET'])
@@ -41,24 +49,16 @@ def get_series(series_id):
         return not_found()
     return jsonify(series)
 
-
-@series.route('/', methods=['GET'], strict_slashes = False)
-def get_all_series():
-     ret = []
-     for index in range(current_app.series.get_data_lenght()):
-        ret.append(current_app.series.data[index].name)
-     json = {"wtf": ret}
-     return jsonify(json)
-
-@series.route('/', methods=['POST'])
+@series.route('/', methods=['POST'], strict_slashes=False)
 def post_series():
     series_data = parse_series(request.get_json())
+    if 'summary' not in series_data:
+       return asked_error()
     series = current_app.series.create_series(series_data)
     if not series:
-        return existing()
+       return existing()
     return jsonify(series)
-
-
+    
 @series.route('/<int:series_id>', methods=['PATCH'])
 def patch_series(series_id):
     series_data = parse_series(request.get_json())
