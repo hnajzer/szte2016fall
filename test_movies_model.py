@@ -37,7 +37,7 @@ class MoviesModelTest(unittest.TestCase):
 
         assert_that(moviedata).does_not_contain_key('id')
 
-	def testUpdateMovieWhatNotnExists(self):
+	def testUpdateMovieWhatNotExists(self):
         result = self.movie_model.update_movie(1, self.a_movie_data)
 
         assert_that(result).is_false()
