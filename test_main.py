@@ -1,3 +1,4 @@
+# coding=utf-8
 import unittest
 
 from assertpy import assert_that
@@ -10,7 +11,7 @@ from model.movies import Movies
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.a_movie_data = {"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}
+        self.a_movie_data = {"title": "Interstellar", "year": 2001, "director": "Tim Burton"}
 
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
@@ -20,7 +21,7 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert "Hello continuous delivery!!" in rv.data
+        assert "Hello continuous delivery" in rv.data
 
     def test_get_movie_nonexisting(self):
         response = self.app.get('/movies/1')

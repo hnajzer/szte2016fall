@@ -8,7 +8,7 @@ python:
 install: "pip install -r requirements.txt"
 # the test running command
 script: py.test
- # here is some Heroku configuration
+# here is some Heroku configuration
 deploy:
   provider: heroku
   api_key:
