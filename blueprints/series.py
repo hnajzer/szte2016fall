@@ -32,22 +32,16 @@ def parse_serie(data):
     serie = {}
     if 'title' in data:
         serie['title'] = data['title']
-    else:
-        return False
     if 'summary' in data:
         serie['summary'] = data['summary']
-    else:
-        return False
     if 'seasons' in data:
         serie['seasons'] = data['seasons']
-    else:
-        return False
     return serie
 
 
 @series.route('/', methods=['GET'])
-def get_serie_count():
-    return jsonify([current_app.series._count()])
+def get_serie_all():
+    return jsonify(current_app.series._get_all())
 
 
 @series.route('/<int:id>', methods=['GET'])
@@ -61,8 +55,10 @@ def get_serie(id):
 @series.route('/', methods=['POST'])
 def post_serie():
     serie_data = parse_serie(request.get_json())
-    if not serie_data:
+    if (not 'title' in serie_data or not 'summary' in serie_data or not 'seasons' in serie_data):
         return incomplete()
+#    if not serie_data:
+#        return incomplete()
     serie = current_app.series.create_serie(serie_data)
     if not serie:
         return existing()
@@ -81,7 +77,8 @@ def patch_serie(id):
 
 
 @series.route('/', methods=['DELETE'])
-def delete_serie_anone():
+def delete_serie_all():
+    current_app.series._dump()
     return ok()
 
 

@@ -10,8 +10,11 @@ class Series():
         self.id = self.id + 1
         return self.id
 
-    def _count(self):
-        return len(self.series)
+    def _get_all(self):
+        return self.series.items()
+
+    def _dump(self):
+        self.series = {}
 
     def create_serie(self, data):
         nextId = self._get_next_id()
