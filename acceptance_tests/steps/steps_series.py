@@ -14,9 +14,9 @@ def step_impl(context):
 @given(u'I create a series called "{title}" with summary "{summary}" and with {seasons:d} seasons')
 @when(u'I create a series called "{title}" with summary "{summary}" and with {seasons:d} seasons')
 def step_impl(context, title, summary, seasons):
-     payload = {'title': title, 'summary': summary, 'seasons': seasons}
-     context.response = requests.post(context.url + '/series', json=payload)
-     context.lastSeriesId = str(context.response.json()['id'])
+    payload = {'title': title, 'summary': summary, 'seasons': seasons}
+    context.response = requests.post(context.url + '/series', json=payload)
+    context.lastSeriesId = str(context.response.json()['id'])
 
 @when(u'I create a series called "{title}"')
 def step_impl(context, title):

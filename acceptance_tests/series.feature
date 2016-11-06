@@ -5,7 +5,8 @@ Feature: Series database handling
     Given the database is empty
     When I request all series
     Then I receive a 200 status code response
-    
+    And there are 0 series
+
   Scenario: Create a new series with missing data
     Given the database is empty
     When I create a series called "Black mirror"
