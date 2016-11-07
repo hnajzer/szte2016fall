@@ -12,3 +12,10 @@ Feature: Movie database handling
     And I have a movie called "Interstellar", 2014 directed by "Christopher Nolan" under ID 1
     When I request the movie with ID 1
     Then I receive a 200 status code response
+
+  Scenario: Try to update an existing movie and request by id
+    Given The app is running
+    And I have a movie called "Interstellar", 2014 directed by "Christopher Nolan" under ID 1
+    And I update a movie with ID 1 to "Frankenweenie - Ebcsont beforr", 2012, "Tim Burton"
+    When I request the movie with ID 1
+    Then I receive a 200 status code response
