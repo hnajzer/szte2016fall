@@ -1,3 +1,2 @@
 #!/bin/bash
-behave
-acceptance_tests -D url=$1
+behave acceptance_tests -D url=$1
