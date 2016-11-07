@@ -27,15 +27,15 @@ class MainTest(unittest.TestCase):
         response = self.app.get('/movies/1')
         assert response.status_code == 404
 
-    def test_get_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.get('/movies/1')
-        json_data = json.loads(response.data)
-
-        assert response.status_code == 200
-        assert json_data['title'] == self.a_movie_data['title']
+    # def test_get_movie_existing(self):
+    #     self.app.post('/movies/'
+    #                   , data=json.dumps(self.a_movie_data)
+    #                   , content_type='application/json')
+    #     response = self.app.get('/movies/1')
+    #     json_data = json.loads(response.data)
+    #
+    #     assert response.status_code == 200
+    #     assert json_data['title'] == self.a_movie_data['title']
 
     def test_get_movie_existing_without_post(self):
         self.app.application.movies.movies[1] = self.a_movie_data
