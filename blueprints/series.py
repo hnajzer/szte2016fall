@@ -23,20 +23,20 @@ def error_400():
     return get_error('Error: 400', 400)
 
 
-def data2obj(data):
+def data2obj(dict):
     film = Film()
-    if 'title' in data:
-        film.name = data['title']
-    if 'year' in data:
-        film.year = data['year']
-    if 'director' in data:
-        film.director = data['director']
-    if 'summary' in data:
-        film.summary = data['summary']
-    if 'seasons' in data:
-        film.seasons = data['seasons']
-    if 'description' in data:
-        film.description = data['description']
+    if 'title' in dict:
+        film.name = dict['title']
+    if 'year' in dict:
+        film.year = dict['year']
+    if 'director' in dict:
+        film.director = dict['director']
+    if 'summary' in dict:
+        film.summary = dict['summary']
+    if 'seasons' in dict:
+        film.seasons = dict['seasons']
+    if 'description' in dict:
+        film.description = dict['description']
     return film
 
 
@@ -64,7 +64,7 @@ def get_all_series():
 @series.route('/<int:id>', methods=['GET'], strict_slashes = False)
 def get_id_series(id):
     film = current_app.series.get_series(id)
-    if film == False:
+    if film == None:
         return not_found()
     return jsonify(obj2data(film))
 
@@ -80,11 +80,11 @@ def post_a_series():
     return jsonify(ret)
 
 
-@series.route('/<int:id>', methods=['PATCH'])
+@series.route('/<int:id>', methods=['PATCH'], strict_slashes = False)
 def patch_series(id):
     json = request.get_json()
     film = current_app.series.get_series(id)
-    if film == False:
+    if film == None:
         return not_found()
     if "summary" in json:
         film.summary = json["summary"]

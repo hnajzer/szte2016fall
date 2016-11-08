@@ -7,7 +7,7 @@ class Series():
         for index in range(len(self.data)):
             if self.data[index].id == id:
                 return index
-        return False
+        return -1
 
     def _inc_id(self):
         self.id += 1
@@ -20,13 +20,13 @@ class Series():
 
     def get_series(self, id):
         index = self._does_series_exist(id)
-        if type(index) is int:
-            return self.data[index]
-        return False
+        if index < 0:
+            return None
+        return self.data[index]
 
     def update_series(self, id, FilmObj):
         index = self._does_series_exist(id)
-        if type(index) is bool:
+        if index < 0:
             return False
         if not self.data[index].director == FilmObj.director:
             self.data[index].director = FilmObj.director
@@ -44,7 +44,7 @@ class Series():
 
     def delete_series(self, id):
         index = self._does_series_exist(id)
-        if type(index) is bool:
+        if index < 0:
             return False
         del self.data[index]
         return True

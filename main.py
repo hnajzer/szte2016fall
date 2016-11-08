@@ -35,7 +35,6 @@ def hello_world():
     </html>
     """
 
-
 app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(series, url_prefix='/series')
 

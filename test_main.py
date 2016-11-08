@@ -29,16 +29,14 @@ class MainTest(unittest.TestCase):
         self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        response = self.app.get('/movies/1')
+        response = self.app.get('/movies/6')
         json_data = json.loads(response.data)
-
         assert response.status_code == 200
         assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
-        self.app.application.movies.movies[1] = self.a_movie_data
-        response = self.app.get('/movies/1')
-
+        self.app.application.movies.create_movie(self.a_movie_data)
+        response = self.app.get('/movies/6')
         assert_that(response.status_code).is_equal_to(200)
 
     def test_get_movie_existing_with_mock(self):
