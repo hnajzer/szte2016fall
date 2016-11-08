@@ -20,7 +20,7 @@ class MainTest(unittest.TestCase):
         self.assertTrue(type(main.hello_world()) is str)
 
     def test_get_movie_nonexisting(self):
-        response = self.app.get('/movies/1')
+        response = self.app.get('/movies/6')
         assert response.status_code == 404
 
     def test_get_movie_existing(self):
