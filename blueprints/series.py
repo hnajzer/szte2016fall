@@ -33,10 +33,10 @@ def post_series():
     s_data = parse_series(request.get_json())
     if len(s_data) != 3:
         return wrong_parameters()
-    serias = current_app.series.create_series(s_data)
-    if not serias:
+    se = current_app.series.create_series(s_data)
+    if not se:
         return existing()
-    return jsonify(serias)
+    return jsonify(se)
 
 def parse_series(adat):
     film = {}
@@ -59,10 +59,10 @@ def get_series(series_id):
 @series.route('/<int:series_id>', methods=['PATCH'])
 def patch_series(s_id):
     s_data = parse_series(request.get_json())
-    serias = current_app.series.update_series(s_id, s_data)
-    if not serias:
+    se = current_app.series.update_series(s_id, s_data)
+    if not se:
         return not_found()
-    return jsonify(serias)
+    return jsonify(se)
 
 @series.route('/', methods=['DELETE'])
 def delete_all_series():
@@ -71,8 +71,8 @@ def delete_all_series():
 
 @series.route('/<int:series_id>', methods=['DELETE'])
 def delete_series(s_id):
-    serias = current_app.series.delete_series(s_id)
-    if not serias:
+    se = current_app.series.delete_series(s_id)
+    if not se:
         return not_found()
     return jsonify({})
 
