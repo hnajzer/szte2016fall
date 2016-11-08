@@ -7,7 +7,7 @@ python:
 # install the dependecies from the imported txt
 install: "pip install -r requirements.txt"
 # the test running command
-script: py.test
+script: 
 # here is some Heroku configuration
 deploy:
   provider: heroku
