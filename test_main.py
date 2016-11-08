@@ -10,8 +10,7 @@ from model.movies import Movies
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.movies_data = [{"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}, {"title": "Frankenweenie", "year": 2012, "director":"Tim Burton"}, {"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"}, {"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"}, {"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"}]
-        self.a_movie_data = self.movies_data[0]
+        self.a_movie_data = {"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}
 
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
@@ -21,7 +20,7 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert b"Hello, Continous Integration!" in rv.data
+        assert "Hello, World!" in rv.data
 
     def test_get_movie_nonexisting(self):
         response = self.app.get('/movies/1')
@@ -66,33 +65,6 @@ class MainTest(unittest.TestCase):
 
         self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
 
-    def test_delete_movie_nonexisting(self):
-        response = self.app.delete('/movies/1')
-        response.status_code == 404
-
-    def test_delete_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.delete('/movies/1')
-        assert response.status_code == 200
-
-    def test_update_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.patch('/movies/1'
-                                  , data=json.dumps(self.movies_data[3])
-                                  , content_type='application/json')
-        json_data = json.loads(response.data)
-        assert response.status_code == 200
-        assert json_data['title'] == "Planet of the Apes"
-
-    def test_update_movie_nonexisting(self):
-        response = self.app.patch('/movies/1'
-                                  , data=json.dumps(self.movies_data[3])
-                                  , content_type='application/json')
-        assert response.status_code == 404
 
 if __name__ == '__main__':
     unittest.main()
