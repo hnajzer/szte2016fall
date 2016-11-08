@@ -1,10 +1,8 @@
-import unittest
+import sys, os, unittest, main
 
 from assertpy import assert_that
 from flask import json
 from mock import Mock
-
-import main
 from model.movies import Movies
 
 

@@ -1,8 +1,6 @@
-import json
-import unittest
+import sys, os, json, unittest
 
 from assertpy import assert_that
-
 from model.movies import Movies
 
 
