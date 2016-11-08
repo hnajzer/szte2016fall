@@ -62,7 +62,7 @@ def get_movie(movie_id):
         lock.release()
     if not movie:
         return not_found()
-    toCache(movie)
+    toCache(movie, movie_id)
     return jsonify(movie)
 
 
@@ -123,9 +123,9 @@ def page_not_found(e):
     return get_error('Internal server error', 500)
 
 
-def toCache(movie):
+def toCache(movie, movie_id):
     global cache_current, cache_limit, mcache
-    if not getCachedMovie(movie['id']):
+    if not getCachedMovie(movie_id):
         if cache_current == cache_limit:
             cache_current = 1
         mcache[cache_current] = movie
@@ -133,7 +133,7 @@ def toCache(movie):
     else:
         i = 1
         while i <= cache_limit:
-            if mcache[i]['id'] == movie['id']:
+            if mcache[i]['id'] == movie_id:
                 mcache[i] = movie
                 return
             i += 1
@@ -159,3 +159,10 @@ def removeCached(movie_id):
             return
         i += 1
     return
+
+
+def clearCached():
+    global mcache, cinit
+    mcache = {}
+    cinit = False
+

@@ -1,7 +1,8 @@
-
+from blueprints.movies import init_cache
 
 class Movies():
     def __init__(self):
+        init_cache()
         self.movies = {}
         self.id = 0
 
