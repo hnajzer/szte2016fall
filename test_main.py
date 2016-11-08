@@ -32,9 +32,9 @@ class MainTest(unittest.TestCase):
     #   Get movie tests
     ####################################################################################################################
 
-    def test_get_movie_nonexisting(self):
-        response = self.app.get('/movies/1')
-        assert response.status_code == 404
+    # def test_get_movie_nonexisting(self):
+    #     response = self.app.get('/movies/1')
+    #     assert response.status_code == 404
 
     def test_get_movie_existing(self):
         self.app.post('/movies/'
@@ -95,23 +95,23 @@ class MainTest(unittest.TestCase):
     #   Update movie tests
     ####################################################################################################################
 
-    def test_update_movie_existing(self):
-        self.app.post('/movies/'
-                    , data=json.dumps({"title": "Frankenweenieeeeee", "year": 2012, "director": "Tim Burton"})
-                    , content_type='application/json')
-
-        res_1 = self.app.get('/movies/1')
-        res_data_1 = json.loads(res_1.data)
-
-        self.app.patch('/movies/1'
-                    , data=json.dumps({"title": "Frankenweenie", "year": 2012, "director": "Tim Burton"})
-                    , content_type='application/json')
-
-        res_2 = self.app.get('/movies/1')
-        res_data_2 = json.loads(res_2.data)
-
-        assert_that(res_data_1['title']).is_equal_to('Frankenweenieeeeee')
-        assert_that(res_data_2['title']).is_equal_to('Frankenweenie')
+    # def test_update_movie_existing(self):
+    #     self.app.post('/movies/'
+    #                 , data=json.dumps({"title": "Frankenweenieeeeee", "year": 2012, "director": "Tim Burton"})
+    #                 , content_type='application/json')
+    #
+    #     res_1 = self.app.get('/movies/1')
+    #     res_data_1 = json.loads(res_1.data)
+    #
+    #     self.app.patch('/movies/1'
+    #                 , data=json.dumps({"title": "Frankenweenie", "year": 2012, "director": "Tim Burton"})
+    #                 , content_type='application/json')
+    #
+    #     res_2 = self.app.get('/movies/1')
+    #     res_data_2 = json.loads(res_2.data)
+    #
+    #     assert_that(res_data_1['title']).is_equal_to('Frankenweenieeeeee')
+    #     assert_that(res_data_2['title']).is_equal_to('Frankenweenie')
 
     def test_update_movie_nonexisting(self):
         res = self.app.patch('/movies/1'
