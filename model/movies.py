@@ -1,3 +1,5 @@
+
+
 class Movies():
     def __init__(self):
         self.movies = {}
@@ -7,7 +9,7 @@ class Movies():
         return id in self.movies
 
     def _get_next_id(self):
-        self.id = self.id + 1
+        self.id += 1
         return self.id
 
     def create_movie(self, data):
