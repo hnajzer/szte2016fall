@@ -15,17 +15,7 @@ app.series = Series()
 
 @app.route('/')
 def hello_world():
-    return """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Richardson35 házi</title>
-    </head>
-    <body>
-        <p>TesztTeszt</p>
-    </body>
-    </html>
-    """
+    return '5. hazi lecci'
 
 app.register_blueprint(movies, url_prefix='/movies')
 
