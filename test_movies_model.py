@@ -37,6 +37,23 @@ class MoviesModelTest(unittest.TestCase):
 
         assert_that(moviedata).does_not_contain_key('id')
 
+    def test_delete_movie_existing(self):
+        self.movie_model.create_movie(self.a_movie_data)
+        result = self.movie_model.delete_movie(1)
+        assert_that(result).is_true()
+
+    def test_delete_movie_nonexisting(self):
+        result = self.movie_model.delete_movie(1)
+        assert_that(result).is_false()
+
+    def test_update_movie_existing(self):
+        original = self.movie_model.create_movie(self.a_movie_data)
+        result = self.movie_model.update_movie(original['id'], original)
+        assert_that(result['id']).is_equal_to(original['id'])
+
+    def test_update_movie_nonexisting(self):
+        result = self.movie_model.update_movie(1, self.a_movie_data)
+        assert_that(result).is_false()
 
 if __name__ == '__main__':
     unittest.main()
