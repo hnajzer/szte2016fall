@@ -54,7 +54,7 @@ def get_movie(movie_id):
 def post_movie():
     movie_data = parse_movie(request.get_json())
 
-    #ObjectId(' ... ') -ből kinyerjük stringként az azonosítót:
+    #ObjectId(' ... ') -bol kinyerjuk stringkent az azonositot:
     movie_id = str(current_app.movies.create_movie(movie_data))
 
     if not movie_id:
