@@ -1,10 +1,10 @@
 from pymongo import MongoClient
 
-class Movies():
+class Mongo():
 
     def __init__(self):
         client = MongoClient('ds011495.mlab.com', 11495)
-        client['szte2016falasdl'].authenticate('ricsi', 'ricsi123')
+        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
         db = client['szte2016fall']
         self.movies = db.movies
 
@@ -19,25 +19,7 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
-	
-class Series():
-    def __init__(self):
-        client = MongoClient('ds011495.mlab.com', 11495)
-        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
-        db = client['szte2016fall']
-        self.seriesf = db.series
 
-    def create_series(self, data):
-        return self.series.insert_one(data).inserted_id
-
-    def get_series(self, id):
-        return self.series.find_one({'_id': id})
-
-    def update_series(self, id, data):
-        return self.series.find_one_and_replace({'_id': id}, data)
-
-    def delete_series(self, id):
-        return self.series.delete_one({'_id': id})
 
 
 # Only for testing
