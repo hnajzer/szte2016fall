@@ -1,8 +1,3 @@
-
-import threading
-import requests
-from cache.movie import MovieCache
-
 class Movies():
     def __init__(self):
         self.movies = {}
