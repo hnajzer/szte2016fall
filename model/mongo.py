@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-class Mongo():
+class Movies():
 
     def __init__(self):
         client = MongoClient('ds011495.mlab.com', 11495)
