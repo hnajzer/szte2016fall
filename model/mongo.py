@@ -4,7 +4,7 @@ class Movies():
 
     def __init__(self):
         client = MongoClient('ds011495.mlab.com', 11495)
-        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+        client['szte2016falasdl'].authenticate('ricsi', 'ricsi123')
         db = client['szte2016fall']
         self.movies = db.movies
 
