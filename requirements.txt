@@ -1,5 +1,6 @@
 assertpy
 flask
+pymongo
 pytest
 behave
 mock
