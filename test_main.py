@@ -21,7 +21,7 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert b"5. hazi lecci" in rv.data
+        assert b"6. hazi mongo db" in rv.data
 
     def test_get_movie_nonexisting(self):
         response = self.app.get('/movies/1')
