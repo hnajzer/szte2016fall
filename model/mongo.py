@@ -20,6 +20,7 @@ class Movies():
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
 
+
 # Only for testing
 if __name__ == "__main__":
     movies = Movies()
