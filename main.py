@@ -3,7 +3,7 @@ import os
 
 from blueprints.movies import movies
 from blueprints.series import series
-from model.mongo import Movies
+from model.movies import Movies
 from model.series import Series
 
 app = Flask(__name__)
