@@ -1,10 +1,13 @@
 import time
 from flask import Blueprint, current_app, jsonify, request
+import threading
 
 movies = Blueprint('movies', __name__)
 movies_cache = {}
 movies_cache_timestamps = {}
 movies_cache_time_frame = 60000
+
+lock = threading.Lock()
 
 
 def get_error(message, code):
@@ -42,21 +45,26 @@ def reset_movies():
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
     # movie = current_app.movies.get_movie(movie_id)
+    global lock
+    lock.acquire()
 
-    cached_movie = check_movies_cache(movie_id)
+    try:
+        cached_movie = check_movies_cache(movie_id)
 
-    if cached_movie:
-        print 'it was in the cache'
-        movie = cached_movie
-    elif current_app.movies.get_movie(movie_id):
-        print 'it was not in the cache'
-        movie = current_app.movies.get_movie(movie_id)
-        cache_movie(movie_id, movie)
-    else:
-        print 'it was not found'
-        return not_found()
+        if cached_movie:
+            print 'it was in the cache'
+            movie = cached_movie
+        elif current_app.movies.get_movie(movie_id):
+            print 'it was not in the cache'
+            movie = current_app.movies.get_movie(movie_id)
+            cache_movie(movie_id, movie)
+        else:
+            print 'it was not found'
+            return not_found()
 
-    return jsonify(movie)
+        return jsonify(movie)
+    finally:
+        lock.release()
 
 
 def cache_movie(movie_id, movie):
@@ -100,31 +108,43 @@ def post_movie():
 
 @movies.route('/<int:movie_id>', methods=['PATCH'])
 def patch_movie(movie_id):
-    movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.update_movie(movie_id, movie_data)
+    global lock
+    lock.acquire()
 
-    cached_movie = check_movies_cache(movie_id)
-    if cached_movie:
-        print 'the modified movie was in the cache, now it is removed'
-        un_cache_movie(movie_id)
+    try:
+        movie_data = parse_movie(request.get_json())
+        movie = current_app.movies.update_movie(movie_id, movie_data)
 
-    if not movie:
-        return not_found()
-    return jsonify(movie)
+        cached_movie = check_movies_cache(movie_id)
+        if cached_movie:
+            print 'the modified movie was in the cache, now it is removed'
+            un_cache_movie(movie_id)
+
+        if not movie:
+            return not_found()
+        return jsonify(movie)
+    finally:
+        lock.release()
 
 
 @movies.route('/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
-    movie = current_app.movies.delete_movie(movie_id)
+    global lock
+    lock.acquire()
 
-    cached_movie = check_movies_cache(movie_id)
-    if cached_movie:
-        print 'the deleted movie was in the cache, now it is removed'
-        un_cache_movie(movie_id)
+    try:
+        movie = current_app.movies.delete_movie(movie_id)
 
-    if not movie:
-        return not_found()
-    return jsonify({})
+        cached_movie = check_movies_cache(movie_id)
+        if cached_movie:
+            print 'the deleted movie was in the cache, now it is removed'
+            un_cache_movie(movie_id)
+
+        if not movie:
+            return not_found()
+        return jsonify({})
+    finally:
+        lock.release()
 
 
 @movies.app_errorhandler(500)

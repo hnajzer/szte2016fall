@@ -1,11 +1,7 @@
-import threading
-
-
 class Movies():
     def __init__(self):
         self.movies = {}
         self.id = 0
-        self.lock = threading.Lock()
 
     def _does_movie_exist(self, id):
         return id in self.movies
@@ -51,21 +47,13 @@ class Movies():
         if not self._does_movie_exist(id):
             return False
 
-        self.lock.acquire()
-        try:
-            data["id"] = id
-            self.movies[id] = data
-        finally:
-            self.lock.release()
+        data["id"] = id
+        self.movies[id] = data
         return self.movies[id]
 
     def delete_movie(self, id):
         if not self._does_movie_exist(id):
             return False
 
-        self.lock.acquire()
-        try:
-            del self.movies[id]
-        finally:
-            self.lock.release()
+        del self.movies[id]
         return True
