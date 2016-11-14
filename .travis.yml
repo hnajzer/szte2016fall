@@ -4,6 +4,10 @@ python:
   - "2.7"
 install: "pip install -r requirements.txt"
 script: py.test
+<<<<<<< HEAD
+=======
+# here is some Heroku configuration
+>>>>>>> 0e341aa
 deploy:
   provider: heroku
   api_key:
