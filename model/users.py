@@ -12,4 +12,7 @@ class Users():
         return self.users.insert_one(user).inserted_id
 
     def get_user(self, name):
-        return self.users.find_one({'user': name}) # str!!
+        return self.users.find_one({'user': name})
+
+    def get_user_with_pwd(self, name, pwd):
+        return self.users.find_one({'user': name, 'pwd': pwd} )
