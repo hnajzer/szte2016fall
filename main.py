@@ -11,7 +11,7 @@ app.movies = Movies()
 
 @app.route('/')
 def hello_world():
-    return 'Hello continuous delivery!'
+    return 'Hello, World!'
 
 
 app.register_blueprint(movies, url_prefix='/movies')
