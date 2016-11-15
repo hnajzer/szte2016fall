@@ -3,9 +3,9 @@ from pymongo import MongoClient
 class Movies():
 
     def __init__(self):
-        client = MongoClient('ds013456.mlab.com', 13456)
-        client['piank-test'].authenticate('test', 'test')
-        db = client['piank-test']
+        client = MongoClient('ds155097.mlab.com', 55097)
+        client['sztefall'].authenticate('zoltanbogar', 'asddsa123')
+        db = client['sztefall']
         self.movies = db.movies
 
     def create_movie(self, data):
