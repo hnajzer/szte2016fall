@@ -45,7 +45,6 @@ Cookie:"PHPSESSID=3rqf0186spggo3evc2ged0p4p7"
 
 ### Mi van ha ellopják?
 
-
 ---
 
 # Mi van ha ellopják a cookie-t?
@@ -140,18 +139,35 @@ Ha valami user által beadott tartalom megjelenik a visszaadott oldalban
 
 Megoldás: Mindent escape-elni kell, ami megjelenik
 
+---
+
+# SQL injection
+
+``` python
+username=request.form['username']
+hash=hex(hash(request.form['password']))
+query="SELECT * FROM users WHERE username='"
+     + username + "' and hash='" + hash +"'"
+```
+
+--
+
+```python
+
+username="' OR 'a'='a' -- "
+query="SELECT * FROM users WHERE username=''
+       OR 'a'='a' -- 'and hash='...'
+```
 
 ---
 
-# SQL injection TODO
-
---
+# SQL injection
 
 Megoldás: Használjunk API-kat
 Ha stringeket konkatenálunk, az már eleve gyanús
 ---
 
-# MongoDb injection demo
+# MongoDb injection
 
 ---
 
@@ -162,7 +178,7 @@ Más nevében küldetünk egy kérést
 ---
 
 class: center, middle
-# Megbíznék ebben az egészben?
+# Megbíznék a kódban, amit csináltam?
 
 ---
 
@@ -170,30 +186,32 @@ class: center, middle
 # Nem!
 
 ---
+
+# Fontos
+
+## Ne csinálj saját cryptót
+### Pl side channel támadások
+## Ne csinálj saját cryptót
+### Mert úgyis elrontod
+## Ellenőrizd a bejövő paramétereket
+
+---
+
+# Fontos
+
+## Ne csinálj saját cryptót
+### Pl side channel támadások
+## Ne csinálj saját cryptót
+### Mert úgyis elrontod
+## Ellenőrizd a bejövő paramétereket
+
+---
+
 class: center, middle
 
 #OWASP
 owasp.org
 ![OWASP TOP 10](OWASP_TOP_10.png)
----
-
-# Fontos
-
-## Ne csinálj saját cryptót
-### Pl side channel támadások
-## Ne csinálj saját cryptót
-### Mert úgyis elrontod
-## Ellenőrizd a bejövő paramétereket
-
----
-
-# Fontos
-
-## Ne csinálj saját cryptót
-### Pl side channel támadások
-## Ne csinálj saját cryptót
-### Mert úgyis elrontod
-## Ellenőrizd a bejövő paramétereket
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
