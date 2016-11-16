@@ -56,7 +56,7 @@ def login_user():
         if 'loggedin' in session: del session['loggedin']
         return "Can't find user or bad password\n"
 
-###########################################
+########################################### UNSAFE PARTS
 
 @users.route('/json_login_user', methods=['POST'])
 def login_user_json():

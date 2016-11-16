@@ -52,26 +52,18 @@ Cookie:"PHPSESSID=3rqf0186spggo3evc2ged0p4p7"
 
 - Lehallgatással
 - XSSsel (később)
-- Ki tudja még mivel
-
----
-
-# Cookie lopás DEMO
-
-varrocs_sztekurzus
-123456
-
+- Ki tudja még mivel ( heartbleed )
 
 ---
 
 # SSL/TLS
-- Lehallhatás ellen + azonosítja a túloldalt
+- Lehallgatás ellen + azonosítja a szervert
 - Asszimetrikus titkosításon alapszik
-- A szerver oldal hitelesítve van
-- Titkosítva van a kapcsolat
 - A szerver privát kulcsa nélkül nem lehet visszafejteni (vagy még azzal sem)
-![SSL handshake](https://zoompf.com/wp-content/uploads/2014/10/handshake.png)
 
+![SSL handshake](https://zoompf.com/wp-content/uploads/2014/10/handshake.png)
+---
+# Mi van ha ellopják a certficate-et?
 ---
 
 # Usernév / jelszó
@@ -103,15 +95,19 @@ Hasheljünk, hogy ne derüljön ki mi a jelszó
 # Brute force ellen
 
 Megfelelő nehézségű hash
-- bcrypt (néhány linux disztribúció is ezt használja)
-- scrypt (paraméterezhető CPU és memória költség)
+- bcrypt
+        - néhány linux disztribúció is ezt használja
+        - paraméterezhető az iterációszám
+- scrypt
+        - jobban paraméterezhető
+        - CPU
+        - memória
 
 ---
 
-# Szivárványtábla ellen
+# Salt
 
-Salt
-- cleartextben van az adatbázisban
+- a salt cleartextben van az adatbázisban
 - hash(password+salt)
 - Ha két usernek ugyanaz a jelszava, akkor ez nem fog látszani
 - Az előre legyártott táblázatok kevesebbet fognak érni
@@ -142,15 +138,17 @@ Ha valami user által beadott tartalom megjelenik a visszaadott oldalban
 
 --
 
-Megoldás: Mindent escape-elni kell
-
----
+Megoldás: Mindent escape-elni kell, ami megjelenik
 
 
 ---
 
-# SQL injection demo
+# SQL injection TODO
 
+--
+
+Megoldás: Használjunk API-kat
+Ha stringeket konkatenálunk, az már eleve gyanús
 ---
 
 # MongoDb injection demo
@@ -159,6 +157,7 @@ Megoldás: Mindent escape-elni kell
 
 # CSRF
 
+Más nevében küldetünk egy kérést
 
 ---
 
@@ -175,7 +174,7 @@ class: center, middle
 
 #OWASP
 owasp.org
-
+![OWASP TOP 10](OWASP_TOP_10.png)
 ---
 
 # Fontos
