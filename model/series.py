@@ -2,10 +2,13 @@ from pymongo import MongoClient
 
 class Series():
     def __init__(self):
+        self.series = {}
+        self.id = 0
+
+    def db_init(self):
         client = MongoClient('mongodb://szroli-piank:Eerie2eizeex@ds155747.mlab.com:55747/szroli-piank')
         db = client['szroli-piank']
         self.series = db.series
-        self.id = 0
 
     def _does_serie_exist(self, id):
         return id in self.series
@@ -54,15 +57,21 @@ class Series():
         return True
 
     def create_serie(self, data):
-        return self.series.insert_one(data).inserted_id
+        self.db_init()
+#        return self.series.insert_one(data).inserted_id
+        res = self.series.insert_one(data).inserted_id
+        return str(res)
 
     def get_serie(self, id):
+        self.db_init()
         return self.series.find_one({'_id': id})
 
     def update_serie(self, id, data):
+        self.db_init()
         return self.series.find_one_and_replace({'_id': id}, data)
 
     def delete_serie(self, id):
+        self.db_init()
         return self.series.delete_one({'_id': id})
 
 
