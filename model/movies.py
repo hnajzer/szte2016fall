@@ -1,42 +1,12 @@
+from pymongo import MongoClient
+
 class Movies():
     def __init__(self):
-        self.movies = {}
+        client = MongoClient('mongodb://szroli-piank:Eerie2eizeex@ds155747.mlab.com:55747/szroli-piank')
+        db = client['szroli-piank']
+        self.movies = db.movies
+#        self.movies = {}
         self.id = 0
-
-        # http://www.imdb.com/title/tt1142977/
-        self.create_movie({
-            "title": "Frankenweenie",
-            "year": 2012,
-            "director": "Tim Burton"
-        })
-
-        # http://www.imdb.com/title/tt0246578/
-        self.create_movie({
-            "title": "Donnie Darko",
-            "year": 2001,
-            "director": "Richard Kelly"
-        })
-
-        # http://www.imdb.com/title/tt0816692/
-        self.create_movie({
-            "title": "Interstellar",
-            "year": 2014,
-            "director": " Christopher Nolan "
-        })
-
-        # http://www.imdb.com/title/tt0133152/
-        self.create_movie({
-            "title": "Planet of the Apes",
-            "year": 2001,
-            "director": "Tim Burton"
-        })
-
-        # http://www.imdb.com/title/tt0063442/
-        self.create_movie({
-            "title": "Planet of the Apes",
-            "year": 1968,
-            "director": "Franklin J. Schaffner"
-        })
 
     def _does_movie_exist(self, id):
         return id in self.movies
@@ -45,28 +15,44 @@ class Movies():
         self.id = self.id + 1
         return self.id
 
+#    def create_movie(self, data):
+#        existing = self.movies.find_one({'_id': id})
+#        if existing:
+#            return existing
+#
+#        nextId = self._get_next_id()
+#        data = data.copy()
+#        data['id'] = nextId
+#        self.movies[nextId] = data
+#        return self.movies[nextId]
+
+#    def get_movie(self, id):
+#        if self._does_movie_exist(id):
+#            return self.movies[id]
+#        return False
+
+#    def update_movie(self, id, data):
+#        if not self._does_movie_exist(id):
+#            return False
+#
+#        self.movies[id] = data
+#        return self.movies[id]
+
+#    def delete_movie(self, id):
+#        if not self._does_movie_exist(id):
+#            return False
+#
+#        del self.movies[id]
+#        return True
+
     def create_movie(self, data):
-        nextId = self._get_next_id()
-        data = data.copy()
-        data['id'] = nextId
-        self.movies[nextId] = data
-        return self.movies[nextId]
+        return self.movies.insert_one(data).inserted_id
 
     def get_movie(self, id):
-        if self._does_movie_exist(id):
-            return self.movies[id]
-        return False
+        return self.movies.find_one({'_id': id})
 
     def update_movie(self, id, data):
-        if not self._does_movie_exist(id):
-            return False
-
-        self.movies[id] = data
-        return self.movies[id]
+        return self.movies.find_one_and_replace({'_id': id}, data)
 
     def delete_movie(self, id):
-        if not self._does_movie_exist(id):
-            return False
-
-        del self.movies[id]
-        return True
+        return self.movies.delete_one({'_id': id})

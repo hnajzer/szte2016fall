@@ -1,6 +1,10 @@
+from pymongo import MongoClient
+
 class Series():
     def __init__(self):
-        self.series = {}
+        client = MongoClient('mongodb://szroli-piank:Eerie2eizeex@ds155747.mlab.com:55747/szroli-piank')
+        db = client['szroli-piank']
+        self.series = db.series
         self.id = 0
 
     def _does_serie_exist(self, id):
@@ -16,19 +20,19 @@ class Series():
     def _dump(self):
         self.series = {}
 
-    def create_serie(self, data):
+    def __create_serie(self, data):
         nextId = self._get_next_id()
         data = data.copy()
         data['id'] = nextId
         self.series[nextId] = data
         return self.series[nextId]
 
-    def get_serie(self, id):
+    def __get_serie(self, id):
         if self._does_serie_exist(id):
             return self.series[id]
         return False
 
-    def update_serie(self, id, data):
+    def __update_serie(self, id, data):
         if not self._does_serie_exist(id):
             return False
         if not data:
@@ -42,9 +46,23 @@ class Series():
             self.series[id]['seasons'] = data['seasons']
         return self.series[id]
 
-    def delete_serie(self, id):
+    def __delete_serie(self, id):
         if not self._does_serie_exist(id):
             return False
 
         del self.series[id]
         return True
+
+    def create_serie(self, data):
+        return self.series.insert_one(data).inserted_id
+
+    def get_serie(self, id):
+        return self.series.find_one({'_id': id})
+
+    def update_serie(self, id, data):
+        return self.series.find_one_and_replace({'_id': id}, data)
+
+    def delete_serie(self, id):
+        return self.series.delete_one({'_id': id})
+
+
