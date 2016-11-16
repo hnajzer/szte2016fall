@@ -4,8 +4,8 @@ import requests
 
 @given(u'the database is empty')
 def step_impl(context):
-    response = requests.delete(context.url + '/series')
-    assert_that(response.status_code).is_equal_to(200)
+    context.response = requests.delete(context.url + '/series/')
+    assert_that(context.response.status_code).is_equal_to(200)
 
 @when(u'I request all series')
 def step_impl(context):
@@ -15,13 +15,13 @@ def step_impl(context):
 @when(u'I create a series called "{title}" with summary "{summary}" and with {seasons:d} seasons')
 def step_impl(context, title, summary, seasons):
     payload = {'title': title, 'summary': summary, 'seasons': seasons}
-    context.response = requests.post(context.url + '/series', json=payload)
+    context.response = requests.post(context.url + '/series/', json=payload)
     context.lastSeriesId = str(context.response.json()['id'])
 
 @when(u'I create a series called "{title}"')
 def step_impl(context, title):
     payload = {'title': title}
-    context.response = requests.post(context.url + '/series', json=payload)
+    context.response = requests.post(context.url + '/series/', json=payload)
     if 'id' in context.response.json():
         context.lastSeriesId = str(context.response.json()['id'])
     else:
