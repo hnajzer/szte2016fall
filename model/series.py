@@ -1,21 +1,22 @@
 class Series:
     def __init__(self):
-        self.series = []
+        self.series = {}
+        self.id = 0
     
     def _does_series_exist(self, id):
-        if not self.series[id-1]:
+        if not self.series[id]:
             return False
-        else:
-            return True
+        return True
     
     def create_series(self, data):
-        data['id'] = len(self.series)+1
-        self.series.append(data)
-        return self.series[-1]
+        self.id += 1
+        data['id'] = self.id
+        self.series[self.id] = data
+        return self.series[self.id]
     
     def get_series(self, id):
         if self._does_series_exist(id):
-            return self.series[id-1]
+            return self.series[id]
         return False
 
     def get_all_series(self):
@@ -25,14 +26,15 @@ class Series:
         if not self._does_series_exist(id):
             return False
         for k, v in data.items():
-            self.series[id-1][k] = v
-        return self.series[id-1]
+            self.series[id][k] = v
+        return self.series[id]
     
     def delete_series(self, id):
         if not self._does_series_exist(id):
             return False
-        self.series[id-1] = None
+        del self.series[id]
         return True
 
     def delete_all_series(self):
-        self.series = []
+        self.series = {}
+        return self.series
