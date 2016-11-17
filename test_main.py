@@ -64,7 +64,7 @@ class MainTest(unittest.TestCase):
 
     def test_create_new_movie(self):
         response = self.app.post('/movies/'
-                                 , data=JSONEncoder().encode(selft.a_movie_data)
+                                 , data=JSONEncoder().encode(self.a_movie_data)
                                  , content_type='application/json')
         assert response.status_code == 200
 
@@ -73,7 +73,7 @@ class MainTest(unittest.TestCase):
         self.app.application.movies.create_movie = Mock(return_value=self.a_movie_data)
 
         self.app.post('/movies/'
-                      , data=JSONEncoder().encode(selft.a_movie_data)
+                      , data=JSONEncoder().encode(self.a_movie_data)
                       , content_type='application/json')
 
         self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
