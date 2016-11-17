@@ -24,7 +24,7 @@ class Movies():
 # Only for testing
 if __name__ == "__main__":
     movies = Movies()
-    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
+    new_id = str(movies.create_movie({"title": "Trainspotting", "year": 1995}))
     print ("Created movie:", new_id)
     retrieved_movie = movies.get_movie(new_id)
     print ("Retrieved movie: ", retrieved_movie)
