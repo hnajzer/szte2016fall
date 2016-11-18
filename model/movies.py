@@ -18,7 +18,7 @@ class Movies():
 	data = data.copy()	
         data['id'] = nextId
 	self.movies[nextId] = data
-        return self.moves[nextId]
+        return self.movies[nextId]
 
     def get_movie(self, id):
         return self.movies.find_one({'_id': id})
