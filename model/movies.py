@@ -3,9 +3,6 @@ class Movies():
         self.movies = {}
         self.id = 0
 
-    def not_isset_movie(self, id):
-        return id in self.movies
-
     def movie_next_id(self):
         self.id = self.id + 1
         return self.id   
@@ -19,8 +16,7 @@ class Movies():
 
     def get_movie(self, id):
         #return self.movies.find_one({'_id': id})
-        if self.not_isset_movie(id): return self.movies[id]
-        return False
+        return self.movies[id]
 
     def update_movie(self, id, data):
         #return self.movies.find_one_and_replace({'_id': id}, data)
