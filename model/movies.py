@@ -36,4 +36,3 @@ class Movies():
            return False
         del self.movies[id]
            return True
-        return False
