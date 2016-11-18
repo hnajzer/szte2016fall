@@ -13,10 +13,10 @@ class Movies():
         return str(self.movies.insert_one(data).inserted_id)
 
     def get_movie(self, id):
-        return self.movies.find_one({'_id': ObjectId(id)})
+        return self.movies.find_one({'_id': str(id)})
 
     def update_movie(self, id, data):
-        return self.movies.find_one_and_replace({'_id': ObjectId(id)}, data)
+        return self.movies.find_one_and_replace({'_id': str(id)}, data)
 
     def delete_movie(self, id):
-        return self.movies.delete_one({'_id': ObjectId(id)})
+        return self.movies.delete_one({'_id': str(id)})
