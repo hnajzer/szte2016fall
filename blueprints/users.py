@@ -56,6 +56,9 @@ def register_user():
     user = str(request.form['username'])
     pwd = str(request.form['password'])
 
+    found_user = (current_app.users.get_user(user))
+    if found_user:
+        return "Username already taken.\n"
     salt = str(''.join([random.choice(string.ascii_letters+string.digits) for i in range(10)]))
     hash_params = {'N': 1024, 'r': 1, 'p': 1, 'dkLen': 32}
     hash1 = calculate_scrypt_hash(pwd.encode('ascii'), salt.encode('ascii'), hash_params)
