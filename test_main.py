@@ -36,7 +36,7 @@ class MainTest(unittest.TestCase):
         m_id = self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        response = self.app.get('/movies/' + str(m_id))
+        #bug test response = self.app.get('/movies/' + str(m_id))
         json_data = json.loads(m_id.data)
 
         assert m_id.status_code == 200
@@ -45,7 +45,7 @@ class MainTest(unittest.TestCase):
     def test_get_movie_existing_without_post(self):
       	m_id = str(self.app.application.movies.movies.insert_one(self.a_movie_data).inserted_id)
         response = self.app.get('/movies/' + m_id)
-        assert_that(response.status_code).is_equal_to(200)
+        assert_that(m_id.status_code).is_equal_to(200)
 
     def test_create_new_movie(self):
         response = self.app.post('/movies/'
