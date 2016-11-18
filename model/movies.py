@@ -34,5 +34,3 @@ class Movies():
         #return self.movies.delete_one({'_id': id})
 	if not self.not_isset_movie(id): 
            return False
-        del self.movies[id]
-           return True
