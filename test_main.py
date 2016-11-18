@@ -45,8 +45,7 @@ class MainTest(unittest.TestCase):
     def test_get_movie_existing_without_post(self):
       	m_id = str(self.app.application.movies.movies.insert_one(self.a_movie_data).inserted_id)
         response = self.app.get('/movies/' + m_id)
-	#"AssertionError: Expected <404> to be equal to <200>, but was not." fixed.
-        assert_that(response.status_code).is_equal_to(400)
+        assert_that(response.status_code).is_equal_to(200)
 
     def test_create_new_movie(self):
         response = self.app.post('/movies/'

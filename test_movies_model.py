@@ -7,8 +7,8 @@ from model.movies import Movies
 
 class MoviesModelTest(unittest.TestCase):
     def setUp(self):
-        self.a_movie_data = {"title:" "Interstellar", "year": 2014, "director:" "Christopher Nolan"}
-        self.other_movie_data = {"title:" "Interstellar1", "year": 2015, "director:" "Christopher Nolagn"}
+        self.a_movie_data = {"title:" "Interstellar", "year:" 2014, "director:" "Christopher Nolan"}
+        self.other_movie_data = {"title:" "Interstellar1", "year:" 2015, "director:" "Christopher Nolagn"}
         self.movie_model = Movies()
 
     def tearDown(self):
