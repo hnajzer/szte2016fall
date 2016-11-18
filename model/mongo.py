@@ -18,7 +18,8 @@ class Movies():
     def create_movie(self, data):
         self.id += 1
         data['id'] = str(self.id)
-        return self.movies.insert_one(data).inserted_id
+        self.movies.insert_one(data)
+        return self.movies.find_one(data, projection={'_id': False})
 
     def get_movie(self, id):
         return self.movies.find_one({'id': str(id)}, projection={'_id': False})
@@ -27,4 +28,4 @@ class Movies():
         return self.movies.find_one_and_replace({'id': str(id)}, data)
 
     def delete_movie(self, id):
-        return self.movies.delete_one({'id': str(id)})
+        return self.movies.find_one_and_delete({'id': str(id)}, projection={'_id': False})
