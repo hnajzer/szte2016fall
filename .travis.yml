@@ -16,5 +16,5 @@ deploy:
     secure: $HEROKU_KEY # Heroku env variable
   app: $HEROKU_APP_NAME
   on:
-    branch: production
+    branch: series
     condition: $TRAVIS_PYTHON_VERSION = 2.7
