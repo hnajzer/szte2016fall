@@ -31,7 +31,7 @@ class MainTest(unittest.TestCase):
         self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        response = self.app.get('/movies/1)
+        response = self.app.get('/movies/1')
         json_data = json.loads(response.data)
 
         assert response.status_code == 200
