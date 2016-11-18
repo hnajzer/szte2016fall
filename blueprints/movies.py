@@ -45,8 +45,9 @@ def get_movie(movie_id):
     adat = current_app.movies.get_movie(movie_id)
     if not adat:
         return not_found()
-    movie = parse_movie(data, movie_id)
-    if not movie: return not found()
+    movie = parse_movie_with_id(data, movie_id)
+    if not movie: 
+	return not found()
     return jsonify(movie)
 
 
@@ -58,7 +59,7 @@ def post_movie():
     if not movie:
         return existing()
     completed_create_movie = parse_movie_with_id(current_app.movies.get_movie(movie), movie)
-    return jsonify(movie)
+    return jsonify(completed_create_movie)
 
 
 @movies.route('/<int:movie_id>', methods=['PATCH'])
