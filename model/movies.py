@@ -32,6 +32,8 @@ class Movies():
         #return self.movies.find_one_and_replace({'_id': id}, data)
 	if self.not_isset_movie(id): return self.movies[id]
         return False
+	self.movies[id] = data
+        return self.movies[id]
 
     def delete_movie(self, id):
         #return self.movies.delete_one({'_id': id})

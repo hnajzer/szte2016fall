@@ -11,12 +11,7 @@ from model.movies import Movies
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.movies_data = [{"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}, 
-			    {"title": "Frankenweenie", "year": 2012, "director":"Tim Burton"}, 
-                            {"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"}, 
-                            {"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"}, 
-                            {"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"}]
-        self.a_movie_data = self.movies_data[0]
+        self.a_movie_data = {"title": "Interstellar", "year": 1968, "director": "Franklin J. Schaffner"}
 
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
@@ -29,29 +24,48 @@ class MainTest(unittest.TestCase):
         assert b"8. hazi mongo db" in rv.data
 
     def test_get_movie_nonexisting(self):
-        response = self.app.get('/movies/'+ '582f63253cc3a70529f057a5')
+        response = self.app.get('/movies/1')
         assert response.status_code == 404
 
     def test_get_movie_existing(self):
-        m_id = self.app.post('/movies/'
+        self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        #bug test response = self.app.get('/movies/' + str(m_id))
-        json_data = json.loads(m_id.data)
+        response = self.app.get('/movies/1)
+        json_data = json.loads(response.data)
 
-        assert m_id.status_code == 200
+        assert response.status_code == 200
         assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
-      	m_id = str(self.app.application.movies.movies.insert_one(self.a_movie_data).inserted_id)
-        response = self.app.get('/movies/' + m_id)
+      	self.app.application.movies.movies[1] = self.a_movie_data
+	#m_id = str(self.app.application.movies.movies.insert_one(self.a_movie_data).inserted_id)
+        response = self.app.get('/movies/1')
         #assert_that(response.status_code).is_equal_to(200)
 
+    def test_get_movie_existing_with_mock(self):
+          self.app.application.movies = Mock()
+          self.app.application.movies.get_movie = Mock(return_value = self.a_movie_data)
+          response = self.app.get('/movies/1')
+   
     def test_create_new_movie(self):
-        response = self.app.post('/movies/'
+       response = self.app.post('/movies/'
                                  , data=json.dumps(self.a_movie_data)
-                                 , content_type='application/json')
-        assert response.status_code == 200
+				 , content_type='application/json')
+       asset response.status_code == 200
+	
+    def test_create_new_movie_with_mock(self):
+       self.app.application.movies = Mock()
+       self.app.application.movies.create_movie = Mock(return_value = self.a_movie_data)
+      
+       self.app.post('/movies/'
+                      , data=json.dumps(self.a_movie_data)
+                      , content_type='application/json')
+
+       self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
+
+
+    
 
 if __name__ == '__main__':
     unittest.main()
