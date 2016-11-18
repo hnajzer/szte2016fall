@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, jsonify, request
+from bson.objectid import ObjectId
 
 movies = Blueprint('movies', __name__)
 
@@ -29,9 +30,24 @@ def parse_movie(data):
     return movie
 
 
-@movies.route('/<int:movie_id>', methods=['GET'])
+def retrieve_movie(data, id):
+    movie = {}
+    if 'title' in data:
+        movie['title'] = data['title']
+    if 'year' in data:
+        movie['year'] = data['year']
+    if 'director' in data:
+        movie['director'] = data['director']
+    movie['_id'] = id
+    return movie
+
+
+@movies.route('/<string:movie_id>', methods=['GET'])
 def get_movie(movie_id):
-    movie = current_app.movies.get_movie(movie_id)
+    mdata = current_app.movies.get_movie(movie_id)
+    if not mdata:
+        return not_found()
+    movie = retrieve_movie(mdata, movie_id)
     if not movie:
         return not_found()
     return jsonify(movie)
@@ -40,24 +56,32 @@ def get_movie(movie_id):
 @movies.route('/', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.create_movie(movie_data)
-    if not movie:
+
+    print("movie data:", movie_data)
+    #ObjectId(' ... ') -bol kinyerjuk stringkent az azonositot:
+    movie_id = str(current_app.movies.create_movie(movie_data))
+    print("id: ", movie_id)
+    print(current_app.movies.get_movie(movie_id))
+    if not movie_id:
         return existing()
-    return jsonify(movie)
+    created_movie = retrieve_movie(current_app.movies.get_movie(movie_id), movie_id)
+    return jsonify(created_movie)
 
 
-@movies.route('/<int:movie_id>', methods=['PATCH'])
+@movies.route('/<string:movie_id>', methods=['PATCH'])
 def patch_movie(movie_id):
     movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.update_movie(movie_id, movie_data)
+    current_app.movies.update_movie(ObjectId(movie_id), movie_data)
+
+    movie = retrieve_movie(current_app.movies.get_movie(movie_id), movie_id)
     if not movie:
         return not_found()
     return jsonify(movie)
 
 
-@movies.route('/<int:movie_id>', methods=['DELETE'])
+@movies.route('/<string:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
-    movie = current_app.movies.delete_movie(movie_id)
+    movie = current_app.movies.delete_movie(ObjectId(movie_id))
     if not movie:
         return not_found()
     return jsonify({})
