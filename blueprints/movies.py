@@ -63,7 +63,7 @@ def patch_movie(movie_id):
 
 @movies.route('/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
-    #fontos az ObjectId különben TypeError JSON not serializable error-al elszáll
+    #fontos az ObjectId kulonben TypeError JSON not serializable error-al elszall
     movie = current_app.movies.delete_movie(ObjectId(movie_id))
     if not movie:
         return not_found()
