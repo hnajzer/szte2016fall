@@ -45,7 +45,7 @@ def get_movie(movie_id):
     adat = current_app.movies.get_movie(movie_id)
     if not adat:
         return not_found()
-    movie = parse_movie_with_id(data, movie_id)
+    movie = parse_movie_with_id(adat, movie_id)
     if not movie: 
 	return not found()
     return jsonify(movie)
