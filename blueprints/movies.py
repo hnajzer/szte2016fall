@@ -18,7 +18,7 @@ def not_found():
     return get_error('Movie not found!', 404)
 
 
-def parse_movie(data):
+def parse_movie(data, id):
     movie = {}
     if 'title' in data:
         movie['title'] = data['title']
