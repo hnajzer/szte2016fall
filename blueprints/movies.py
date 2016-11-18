@@ -44,7 +44,10 @@ def retrieve_movie(data, id):
 
 @movies.route('/<string:movie_id>', methods=['GET'])
 def get_movie(movie_id):
-    movie = retrieve_movie(current_app.movies.get_movie(movie_id), movie_id)
+    mdata = current_app.movies.get_movie(movie_id)
+    if not mdata:
+        return not_found()
+    movie = retrieve_movie(mdata, movie_id)
     if not movie:
         return not_found()
     return jsonify(movie)
@@ -54,9 +57,11 @@ def get_movie(movie_id):
 def post_movie():
     movie_data = parse_movie(request.get_json())
 
+    print("movie data:", movie_data)
     #ObjectId(' ... ') -bol kinyerjuk stringkent az azonositot:
     movie_id = str(current_app.movies.create_movie(movie_data))
-
+    print("id: ", movie_id)
+    print(current_app.movies.get_movie(movie_id))
     if not movie_id:
         return existing()
     created_movie = retrieve_movie(current_app.movies.get_movie(movie_id), movie_id)
