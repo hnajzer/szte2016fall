@@ -28,17 +28,17 @@ class MainTest(unittest.TestCase):
         assert b"8. hazi mongo db" in rv.data
 
     def test_get_movie_nonexisting(self):
-        response = self.app.get('/movies/1')
+        response = self.app.get('/movies/'+ '582f63253cc3a70529f057a5')
         assert response.status_code == 404
 
     def test_get_movie_existing(self):
-        self.app.post('/movies/'
+        m_id = self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
-        response = self.app.get('/movies/1')
-        json_data = json.loads(response.data)
+        response = self.app.get('/movies/' + str(m_id))
+        json_data = json.loads(m_id.data)
 
-        assert response.status_code == 200
+        assert m_id.status_code == 200
         assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
