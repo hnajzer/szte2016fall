@@ -3,9 +3,9 @@ from pymongo import MongoClient
 class Movies():
 
     def __init__(self):
-        client = MongoClient('ds013456.mlab.com', 13456)
-        client['piank-test'].authenticate('test', 'test')
-        db = client['piank-test']
+        client = MongoClient('ds011495.mlab.com', 11495)
+        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+        db = client['szte2016fall']
         self.movies = db.movies
 
     def create_movie(self, data):
@@ -19,6 +19,7 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
+
 
 # Only for testing
 if __name__ == "__main__":

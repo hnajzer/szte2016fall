@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, jsonify, request
-
+from bson.objectid import ObjectId
 movies = Blueprint('movies', __name__)
 
 
@@ -28,12 +28,11 @@ def parse_movie(data):
         movie['director'] = data['director']
     return movie
 
-
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
     movie = current_app.movies.get_movie(movie_id)
-    if not movie:
-        return not_found()
+    if not movie: 
+	return not_found()
     return jsonify(movie)
 
 
