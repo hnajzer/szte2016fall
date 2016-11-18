@@ -3,6 +3,7 @@ import unittest
 from assertpy import assert_that
 from flask import json
 from mock import Mock
+from bson.objectid import ObjectId
 
 import main
 from model.movies import Movies
