@@ -1,11 +1,5 @@
-from pymongo import MongoClient
-
 class Movies():
-
     def __init__(self):
-        client = MongoClient('ds011495.mlab.com', 11495)
-        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
-        db = client['szte2016fall']
         self.movies = {}
         self.id = 0
 
@@ -30,12 +24,16 @@ class Movies():
 
     def update_movie(self, id, data):
         #return self.movies.find_one_and_replace({'_id': id}, data)
-	if self.not_isset_movie(id): return self.movies[id]
-        return False
+	if not self.not_isset_movie(id): 
+        	return False
+
 	self.movies[id] = data
         return self.movies[id]
 
     def delete_movie(self, id):
         #return self.movies.delete_one({'_id': id})
-	if self.not_isset_movie(id): return self.movies[id]
+	if not self.not_isset_movie(id): 
+           return False
+        del self.movies[id]
+           return True
         return False
