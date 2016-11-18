@@ -42,7 +42,7 @@ def get_movie(movie_id):
 
 @movies.route('/', methods=['POST'])
 def post_movie():
-    movie_data = parse_movie(request.get_json())
+    movie_data = parse_movie(request.get_json(), '')
     # ide kell azt str() fuggveny a TypeError ObjectId miatt (Tamas help e-mailben)
     movie = str(current_app.movies.create_movie(movie_data))
     if not movie:
@@ -53,7 +53,7 @@ def post_movie():
 
 @movies.route('/<int:movie_id>', methods=['PATCH'])
 def patch_movie(movie_id):
-    movie_data = parse_movie(request.get_json())
+    movie_data = parse_movie(request.get_json(), '')
     current_app.movies.update_movie(ObjectId(movie_id), movie_data)
     movie = parse_movie(current_app.movies.get_movie(movie_id), movie_id)
     if not movie:
