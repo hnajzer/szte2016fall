@@ -9,8 +9,11 @@ class Movies():
         self.movies = db.movies
 
     def create_movie(self, data):
-	if len(data) == 0: return {}
-        return self.movies.insert_one(data).inserted_id
+	nextId = self._get_next_id()
+	data = data.copy()	
+        data['id'] = nextId
+	self.movies[nextId] = data
+        return self.moves[nextId]
 
     def get_movie(self, id):
         return self.movies.find_one({'_id': id})
