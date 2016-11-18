@@ -3,12 +3,12 @@ class Movies():
         self.movies = {}
         self.id = 0
 
-    def movie_next_id(self):
-        self.id = self.id + 1
-        return self.id
-
     def not_isset_movie(self, id):
         return id in self.movies
+
+    def movie_next_id(self):
+        self.id = self.id + 1
+        return self.id   
 
     def create_movie(self, data):
 	nextId = self.movie_next_id()
