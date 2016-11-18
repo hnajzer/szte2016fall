@@ -70,33 +70,7 @@ class MainTest(unittest.TestCase):
 
         self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
 
-    def test_delete_movie_nonexisting(self):
-        response = self.app.delete('/movies/1')
-        response.status_code == 404
 
-    def test_delete_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.delete('/movies/1')
-        assert response.status_code == 200
-
-    def test_update_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.patch('/movies/1'
-                                  , data=json.dumps(self.movies_data[3])
-                                  , content_type='application/json')
-        json_data = json.loads(response.data)
-        assert response.status_code == 200
-        assert json_data['title'] == "Planet of the Apes"
-
-    def test_update_movie_nonexisting(self):
-        response = self.app.patch('/movies/1'
-                                  , data=json.dumps(self.movies_data[3])
-                                  , content_type='application/json')
-        assert response.status_code == 404
 
 if __name__ == '__main__':
     unittest.main()
