@@ -6,10 +6,15 @@ class Movies():
         client = MongoClient('ds011495.mlab.com', 11495)
         client['szte2016fall'].authenticate('ricsi', 'ricsi123')
         db = client['szte2016fall']
-        self.movies = db.movies
+        self.movies = {}
+        self.id = 0
+
+    def movie_next_id(self):
+        self.id = self.id + 1
+        return self.id
 
     def create_movie(self, data):
-	nextId = self._get_next_id()
+	nextId = self.movie_next_id()
 	data = data.copy()	
         data['id'] = nextId
 	self.movies[nextId] = data
