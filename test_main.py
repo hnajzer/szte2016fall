@@ -2,7 +2,6 @@ import unittest
 
 from assertpy import assert_that
 from flask import json
-from bson.objectid import ObjectId
 from mock import Mock
 
 import main
@@ -33,19 +32,18 @@ class MainTest(unittest.TestCase):
         assert response.status_code == 404
 
     def test_get_movie_existing(self):
-        m_id = self.app.post('/movies/'
+        self.app.post('/movies/'
                       , data=json.dumps(self.a_movie_data)
                       , content_type='application/json')
         response = self.app.get('/movies/1')
-        json_data = json.loads(m_id)
+        json_data = json.loads(response.data)
 
         assert response.status_code == 200
         assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
-	#Tamas help alapjan objectId nem number tipusu stringge kell konvertalni
-        m_id = str(self.app.application.movies.movies.insert_one(self.a_movie_data).inserted_id)
-        response = self.app.get('/movies/'+m_id)
+        self.app.application.movies.movies[1] = self.a_movie_data
+        response = self.app.get('/movies/1')
 
         assert_that(response.status_code).is_equal_to(200)
 
@@ -61,6 +59,44 @@ class MainTest(unittest.TestCase):
                                  , data=json.dumps(self.a_movie_data)
                                  , content_type='application/json')
         assert response.status_code == 200
+
+    def test_create_new_movie_with_mock(self):
+        self.app.application.movies = Mock()
+        self.app.application.movies.create_movie = Mock(return_value=self.a_movie_data)
+
+        self.app.post('/movies/'
+                      , data=json.dumps(self.a_movie_data)
+                      , content_type='application/json')
+
+        self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
+
+    def test_delete_movie_nonexisting(self):
+        response = self.app.delete('/movies/1')
+        response.status_code == 404
+
+    def test_delete_movie_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.a_movie_data)
+                      , content_type='application/json')
+        response = self.app.delete('/movies/1')
+        assert response.status_code == 200
+
+    def test_update_movie_existing(self):
+        self.app.post('/movies/'
+                      , data=json.dumps(self.a_movie_data)
+                      , content_type='application/json')
+        response = self.app.patch('/movies/1'
+                                  , data=json.dumps(self.movies_data[3])
+                                  , content_type='application/json')
+        json_data = json.loads(response.data)
+        assert response.status_code == 200
+        assert json_data['title'] == "Planet of the Apes"
+
+    def test_update_movie_nonexisting(self):
+        response = self.app.patch('/movies/1'
+                                  , data=json.dumps(self.movies_data[3])
+                                  , content_type='application/json')
+        assert response.status_code == 404
 
 if __name__ == '__main__':
     unittest.main()
