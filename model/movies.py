@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 class Movies():
-    #m.lab
+
     def __init__(self):
         client = MongoClient('ds011495.mlab.com', 11495)
         client['szte2016fall'].authenticate('ricsi', 'ricsi123')
@@ -19,4 +19,3 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
-
