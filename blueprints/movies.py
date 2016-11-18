@@ -26,23 +26,28 @@ def parse_movie(data):
         movie['year'] = data['year']
     if 'director' in data:
         movie['director'] = data['director']
+    movie['_id'] = id
     return movie
 
 
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
-    movie = current_app.movies.get_movie(movie_id)
-    if not movie:
+    adat = current_app.movies.get_movie(movie_id)
+    if not adat:
         return not_found()
+    movie = parse_movie(data, movie_id)
+    if not movie: return not found()
     return jsonify(movie)
 
 
 @movies.route('/', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.create_movie(movie_data)
+    # ide kell azt str() fuggveny a TypeError ObjectId miatt (Tamas help e-mailben)
+    movie = str(current_app.movies.create_movie(movie_data))
     if not movie:
         return existing()
+    completed_create_movie = parse_movie(current_app.movies.get_movie(movie), movie)
     return jsonify(movie)
 
 
