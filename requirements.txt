@@ -5,9 +5,6 @@ pytest
 behave
 mock
 requests
-<<<<<<< HEAD
 gunicorn
 pytest-cov
 codecov
-=======
->>>>>>> 0e341aa
