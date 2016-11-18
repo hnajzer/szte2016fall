@@ -13,7 +13,7 @@ class HelloTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert "Hello, World!" in rv.data
+        assert b"Hello, World!" in rv.data
 
 
 if __name__ == '__main__':

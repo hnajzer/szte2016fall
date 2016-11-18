@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 
 from blueprints.movies import movies
 from blueprints.users import users, login_required
@@ -10,9 +11,11 @@ app = Flask(__name__)
 app.movies = Movies()
 app.users = Users()
 
+
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
 
 @app.route('/secret')
 @login_required
@@ -26,4 +29,4 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.secret_key = 'secretttt'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=os.getenv('PORT', None))

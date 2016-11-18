@@ -1,11 +1,12 @@
 from flask import Blueprint, abort, current_app, jsonify, request, session, current_app
-import model.users
+
 from functools import wraps
 import random
 import string
 import pyscrypt
 
 users = Blueprint('users', __name__)
+
 
 def login_required(f):
     @wraps(f)
@@ -16,29 +17,54 @@ def login_required(f):
             return "You need to log in first\n"
     return decorated_function
 
+
 def calculate_scrypt_hash(pwd, salt, hash_params):
-    hash = pyscrypt.hash(str(pwd), salt, hash_params['N'], hash_params['r'], hash_params['p'], hash_params['dkLen'])
+    hash = pyscrypt.hash(str(pwd), str(salt), hash_params['N'], hash_params['r'], hash_params['p'], hash_params['dkLen'])
     hash = hash.encode('hex')
     return hash
 
-@users.route('/login', methods = ['GET'])
+
+@users.route('/logout', methods=['POST'])
+def logout():
+    if not session['loggedin']:
+        return "You are not logged in.\n"
+    session['loggedin'] = False
+    return "You are now logged out."
+
+
+@users.route('/login', methods=['POST'])
 def do_login():
+    data = request.get_json()
+    #
+    if 'username' not in data or 'password' not in data:
+        return "Login attempt failure.\n"
+
+    found_user = (current_app.users.get_user(data['username']))
+    if not found_user:
+        return "Login attempt failure.\n"
+
+    hashed_input_pw = calculate_scrypt_hash(data['password'], str(found_user['salt']), found_user['hash_params'])
+    if hashed_input_pw != found_user['hash']:
+        return "Login attempt failure.\n"
+
     session['loggedin'] = True
     return "Logged in\n"
 
-@users.route('/register', methods = ['POST'])
+
+@users.route('/register', methods=['POST'])
 def register_user():
     user = str(request.form['username'])
-    pwd  = str(request.form['password'])
+    pwd = str(request.form['password'])
 
-    salt = ''.join([ random.choice(string.ascii_letters+string.digits) for i in range(10) ])
-    hash_params={'N': 1024, 'r':1, 'p':1, 'dkLen':32}
-    hash = calculate_scrypt_hash(pwd, salt, hash_params)
-    data = {'user': user, 'salt': salt, 'hash': hash, 'hash_params': hash_params}
+    salt = str(''.join([random.choice(string.ascii_letters+string.digits) for i in range(10)]))
+    hash_params = {'N': 1024, 'r': 1, 'p': 1, 'dkLen': 32}
+    hash1 = calculate_scrypt_hash(pwd.encode('ascii'), salt.encode('ascii'), hash_params)
+    data = {'user': user, 'salt': salt, 'hash': hash1, 'hash_params': hash_params}
     current_app.users.create_user(data)
     return "Registered\n"
 
-@users.route('/login_user', methods = ['POST'])
+
+@users.route('/login_user', methods=['POST'])
 def login_user():
     user_name = request.form['username']
     pwd  = request.form['password']
