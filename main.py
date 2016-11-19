@@ -13,7 +13,7 @@ app.series = Series()
 
 @app.route('/')
 def hello_world():
-    return '6. hazi mongo db'
+    return '8. hazi mongo db'
 
 app.register_blueprint(movies, url_prefix='/movies')
 

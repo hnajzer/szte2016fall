@@ -10,13 +10,7 @@ from model.movies import Movies
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.movies_data = [{"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}, 
-			    {"title": "Frankenweenie", "year": 2012, "director":"Tim Burton"}, 
-                            {"title": "Donnie Darko", "year": 2001, "director": "Richard Kelly"}, 
-                            {"title": "Planet of the Apes", "year": 2001, "director": "Tim Burton"}, 
-                            {"title": "Planet of the Apes", "year": 1968, "director": "Franklin J. Schaffner"}]
-        self.a_movie_data = self.movies_data[0]
-
+        self.a_movie_data = {"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
 
