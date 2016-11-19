@@ -3,7 +3,6 @@ import threading, requests, json, time
 from types import NoneType
 
 from cache.movie import MovieCache
-from errors.error import NotExistException
 
 
 class Movies():
