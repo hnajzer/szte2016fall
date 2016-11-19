@@ -31,7 +31,7 @@ def parse_movie(data):
 
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
-    movie = str(current_app.movies.get_movie(movie_id))
+    movie = current_app.movies.get_movie(movie_id)
     if not movie:
         return not_found()
     return jsonify(movie)
@@ -40,7 +40,7 @@ def get_movie(movie_id):
 @movies.route('/', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.create_movie(movie_data)
+    movie = str(current_app.movies.create_movie(movie_data))
     if not movie:
         return existing()
     return jsonify(movie)
