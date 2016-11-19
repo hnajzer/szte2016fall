@@ -1,6 +1,10 @@
 assertpy
 flask
+pymongo
 pytest
 behave
 mock
 requests
+gunicorn
+pytest-cov
+codecov

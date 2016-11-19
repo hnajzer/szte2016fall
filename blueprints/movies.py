@@ -40,7 +40,8 @@ def get_movie(movie_id):
 @movies.route('/', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
-    movie = current_app.movies.create_movie(movie_data)
+    #itt kell az str hogy ne legyen ObjectId TypeError hiba!!
+    movie = str(current_app.movies.create_movie(movie_data))
     if not movie:
         return existing()
     return jsonify(movie)
