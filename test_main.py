@@ -23,9 +23,8 @@ class MainTest(unittest.TestCase):
         assert b"8. hazi mongo db" in rv.data    
 
     def test_create_new_movie(self):
-	self.id = str(self.id)
         response = self.app.post('/movies/'
-                                 , data=json.dumps(self.a_movie_data)
+                                 , data=json.dumps(str(self.a_movie_data))
                                  , content_type='application/json')
         assert response.status_code == 200
 
