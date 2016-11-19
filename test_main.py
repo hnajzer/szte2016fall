@@ -3,6 +3,8 @@ import unittest
 from assertpy import assert_that
 from flask import json
 from mock import Mock
+from bson import BSON
+from bson import json_util
 
 import main
 from model.movies import Movies
@@ -23,7 +25,7 @@ class MainTest(unittest.TestCase):
 
     def test_create_new_movie(self):
         response = str(self.app.post('/movies/'
-                                 , data=json.dumps(self.a_movie_data)
+                                 , data=json.dumps(self.a_movie_data, sort_keys=True, indent=4, default=json_util.default)
                                  , content_type='application/json'))
         assert response.status_code == 200
 
