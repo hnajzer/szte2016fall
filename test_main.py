@@ -21,6 +21,12 @@ class MainTest(unittest.TestCase):
         rv = self.app.get('/')
         assert b"8. hazi mongo db" in rv.data    
 
+    def test_create_new_movie(self):
+        response = str(self.app.post('/movies/'
+                                 , data=json.dumps(self.a_movie_data)
+                                 , content_type='application/json'))
+        assert response.status_code == 200
+
     def test_create_new_movie_with_mock(self):
         self.app.application.movies = Mock()
         self.app.application.movies.create_movie = Mock(return_value=self.a_movie_data)
