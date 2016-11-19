@@ -24,8 +24,7 @@ class MainTest(unittest.TestCase):
 
     def test_create_new_movie(self):
         response = self.app.post('/movies/'
-                                 , data=json.dumps(self.a_movie_data, sort_keys=True, indent=1, default=json_util.default)
-                                 , content_type='application/json')
+                                 , data=str((self.a_movie_data))
         assert response.status_code == 200
 
     def test_create_new_movie_with_mock(self):
