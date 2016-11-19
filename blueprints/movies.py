@@ -31,7 +31,7 @@ def parse_movie(data):
 
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
-    movie = current_app.movies.get_movie(movie_id)
+    movie = current_app.movies.get_movie(str(movie_id))
     if not movie:
         return not_found()
     return jsonify(movie)
