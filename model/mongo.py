@@ -8,7 +8,6 @@ class Mongo():
         client = MongoClient('ds155727.mlab.com', 55727)
         client['piank'].authenticate('dbuser', 'dbpassword')
         db = client['piank']
-        what = 'test'
         self.col = db[what]
 
     def create(self, data):
