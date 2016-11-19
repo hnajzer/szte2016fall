@@ -12,9 +12,8 @@ script: py.test
 deploy:
   provider: heroku
   api_key:
-  # never use local variables for the secure keys
-    secure: $HEROKU_KEY # Heroku env variable
+    secure: $HEROKU_API_KEY
   app: $HEROKU_APP_NAME
   on:
-    branch: production
+    branch: master
     condition: $TRAVIS_PYTHON_VERSION = 2.7

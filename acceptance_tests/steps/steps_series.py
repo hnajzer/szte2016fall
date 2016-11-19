@@ -44,8 +44,9 @@ def step_impl(context, summary):
 @then(u'there are {count:d} series')
 def step_impl(context, count):
     response = requests.get(context.url + '/series')
-    assert_that(response.json()).is_type_of(list)
-    assert_that(response.json()).is_length(count)
+    # Muszály volt ezt módosítani, mert a json már maga "dist" típus és nem "list", tehát json egy eleme ami lista
+    assert_that(response.json()["ezalista"]).is_type_of(list)
+    assert_that(response.json()["ezalista"]).is_length(count)
 
 @then(u'I receive a {code:d} status code response')
 def step_impl(context, code):
