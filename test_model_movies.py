@@ -19,7 +19,7 @@ class MoviesModelTest(unittest.TestCase):
         if type(result) is bool:
             assert_that(result).is_equal_to(False)
         else:
-            assert_that(type(result)).is_equal_to(str)
+            assert_that(type(result)).is_equal_to(dict)
 
     def test_get_movie_existing_false(self):
         self.movie_model.create_movie(self.a_movie_data)
