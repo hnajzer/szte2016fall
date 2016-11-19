@@ -3,4 +3,6 @@ flask
 pytest
 behave
 mock
+pymongo
 requests
+codecov
