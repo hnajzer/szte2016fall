@@ -19,3 +19,19 @@ class Film():
         self.summary = "null"
         self.description = "null"
         self.seasons = "null"
+
+    def getJson(self):
+        rtn = {}
+        rtn["id"] = self.id
+        rtn["director"] = self.director
+        rtn["name"] = self.name
+        rtn["year"] = self.year
+        rtn["summary"] = self.summary
+        rtn["description"] = self.description
+        rtn["seasons"] = self.seasons
+        return rtn
+
+    def isId(self):
+        if self.id is None:
+            return False
+        return True

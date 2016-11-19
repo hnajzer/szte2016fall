@@ -1,57 +1,69 @@
+# coding=utf-8
+import threading
+
 class Series():
-    def __init__(self):
-        self.data = []
-        self.id = 0
+    def __init__(self, mongodb):
+        self.mongodb = mongodb
+        self.lock = threading.Lock()
 
-    def _does_series_exist(self, id):
-        for index in range(len(self.data)):
-            if self.data[index].id == id:
-                return index
-        return -1
-
-    def _inc_id(self):
-        self.id += 1
+    def _get_series_exist(self, id, return_data = False):
+        rtn = None
+        # ===== LOCK =====
+        self.lock.acquire()
+        try:
+            rtn = self.mongodb.get(id)
+        except Exception:
+            print "Nem sikerült lekérni"
+        finally:
+            # ===== UNLOCK =====
+            self.lock.release()
+        if rtn is None:
+            return False
+        elif return_data:
+            return rtn
+        else:
+            return True
 
     def create_series(self, FilmObj):
-        self._inc_id()
-        FilmObj.id = self.id
-        self.data.append(FilmObj)
-        return self.data[-1]
+        exist = False
+        if FilmObj.isId():
+            exist = self._get_series_exist(FilmObj.id)
+
+        # ===== LOCK =====
+        self.lock.acquire()
+        try:
+            if FilmObj.isId() and not exist:
+                self.mongodb.create(FilmObj.getJson())
+            elif FilmObj.isId() and exist:
+                self.mongodb.update(FilmObj.id, FilmObj.getJson())
+        except Exception:
+            print "Nem sikerült hozzáadni/frissíteni törölni"
+        finally:
+            # ===== UNLOCK =====
+            self.lock.release()
+        return FilmObj.id
+
 
     def get_series(self, id):
-        index = self._does_series_exist(id)
-        if index < 0:
-            return None
-        return self.data[index]
+        return self._get_series_exist(id, True)
+
 
     def update_series(self, id, FilmObj):
-        index = self._does_series_exist(id)
-        if index < 0:
-            return False
-        if not self.data[index].director == FilmObj.director:
-            self.data[index].director = FilmObj.director
-        if not self.data[index].name == FilmObj.name:
-            self.data[index].name = FilmObj.name
-        if not self.data[index].year == FilmObj.year:
-            self.data[index].year = FilmObj.year
-        if not self.data[index].summary == FilmObj.summary:
-            self.data[index].summary = FilmObj.summary
-        if not self.data[index].description == FilmObj.description:
-            self.data[index].description = FilmObj.description
-        if not self.data[index].seasons == FilmObj.seasons:
-            self.data[index].seasons = FilmObj.seasons
-        return self.data[index]
+        FilmObj.id = id
+        self.create_series(FilmObj)
+
 
     def delete_series(self, id):
-        index = self._does_series_exist(id)
-        if index < 0:
-            return False
-        del self.data[index]
-        return True
+        # ===== LOCK =====
+        self.lock.acquire()
+        try:
+            self.mongodb.delete(id)
+        except Exception:
+            print "Nem sikerült törölni"
+        finally:
+            # ===== UNLOCK =====
+            self.lock.release()
 
-    def get_data_lenght(self):
-        return len(self.data)
 
     def delete_all(self):
-        self.data = []
-        self.id = 0
+        pass

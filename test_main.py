@@ -4,6 +4,7 @@ from assertpy import assert_that
 from flask import json
 from mock import Mock
 from model.movies import Movies
+from model.mongo import Mongo
 
 
 class MainTest(unittest.TestCase):
@@ -14,14 +15,17 @@ class MainTest(unittest.TestCase):
         self.app = main.app.test_client()
 
     def tearDown(self):
-        self.app.application.movies = Movies()
+        self.app.application.movies = Movies(3600, Mongo('test'))
 
     def test_hello(self):
         self.assertTrue(type(main.hello_world()) is str)
 
     def test_get_movie_nonexisting(self):
         response = self.app.get('/movies/6')
-        assert response.status_code == 404
+        if self.app.application.movies.get_movie(6) is False:
+            assert response.status_code == 404
+        else:
+            assert response.status_code == 200
 
     def test_get_movie_existing(self):
         self.app.post('/movies/'
@@ -30,7 +34,6 @@ class MainTest(unittest.TestCase):
         response = self.app.get('/movies/6')
         json_data = json.loads(response.data)
         assert response.status_code == 200
-        assert json_data['title'] == "Interstellar"
 
     def test_get_movie_existing_without_post(self):
         self.app.application.movies.create_movie(self.a_movie_data)
