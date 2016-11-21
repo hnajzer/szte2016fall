@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-
+import copy
 class Movies():
 
     def __init__(self):
@@ -34,14 +34,14 @@ class Users():
         return self.users.find_one({'_id': id})
 
     def login_user(self, username, password):
-	login = self.users.find_one({'username': username, 'pass': password})
-	if not login:
-          return True
-        else:
+	#login változó: 0 - Ez jelzi azt, hogy valaki jelenleg be van jelentkezve - vagy sem (mint egy SESSION)
+	user_doc = self.users.find_one({'username': username, 'pass': password, 'login': 0})
+	if not user_doc:
           return False
-   
-    def update_user(self, id, data):
-  	return self.users.find_one_and_replace({'_id': id}, data)
+        else:
+	  new_user_doc = copy.deecopy(user_doc)
+          new_user_doc["login"] = 1	
+          return True
 
 #Only for testing
 
