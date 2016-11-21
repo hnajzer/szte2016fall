@@ -12,7 +12,7 @@ from model.mongo import Users
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.a_user_data = {"username": "ricsi123", "password": "123", "login": 0}
+        self.a_user_data = {"username": "ricsi123", "pass": "123", "login": 0}
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
 

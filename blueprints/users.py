@@ -22,10 +22,10 @@ def parse_user(data):
     user = {}
     if 'username' in data:
         user['username'] = data['username']
-    if 'password' in data:
-        user['password'] = user['password']
+    if 'pass' in data:
+        user['pass'] = data['pass']
     if 'login' in data:
-        user['login'] = user['login']
+        user['login'] = data['login']
     return user
 
 
