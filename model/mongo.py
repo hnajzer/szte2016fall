@@ -34,7 +34,7 @@ class Users():
         return self.users.find_one({'_id': id})
 
     def login_user(username, password):
-	return self.users.find_one({'username': 'ricsi123', 'pass': '123'})
+	return self.users.find_one({'username': username, 'pass': password})
 
 # Only for testing
 #if __name__ == "__main__":
