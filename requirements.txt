@@ -3,4 +3,3 @@ flask
 pytest
 behave
 mock
-pymongo
