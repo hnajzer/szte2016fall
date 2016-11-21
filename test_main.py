@@ -29,7 +29,7 @@ class MainTest(unittest.TestCase):
                                  , content_type='application/json')
         #assert response.status_code == 200
 
-    def test_create_new_movie_with_mock(self):
+    def test_create_new_user_with_mock(self):
         self.app.application.users = Mock()
         self.app.application.users.register_user = Mock(return_value=self.a_user_data)
 
