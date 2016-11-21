@@ -29,15 +29,15 @@ class MainTest(unittest.TestCase):
                                  , content_type='application/json')
         #assert response.status_code == 200
 
-    #def test_create_new_movie_with_mock(self):
-    #    self.app.application.movies = Mock()
-    #    self.app.application.movies.create_movie = Mock(return_value=self.a_movie_data)
+    def test_create_new_movie_with_mock(self):
+        self.app.application.users = Mock()
+        self.app.application.users.register_user = Mock(return_value=self.a_user_data)
 
-    #    self.app.post('/movies/'
-    #                  , data=json.dumps(self.a_movie_data)
-    #                  , content_type='application/json')
+        self.app.post('/users/'
+                      , data=json.dumps(self.a_user_data)
+                      , content_type='application/json')
 
-    #   self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
+       self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
 
 if __name__ == '__main__':
