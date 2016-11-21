@@ -3,7 +3,7 @@ import os
 
 from blueprints.movies import movies
 from blueprints.series import series
-from blueprints.ursers import users
+from blueprints.users import users
 from model.mongo import Movies
 from model.series import Series
 
