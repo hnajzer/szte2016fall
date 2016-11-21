@@ -13,6 +13,7 @@ from model.mongo import Users
 class MainTest(unittest.TestCase):
     def setUp(self):
         self.a_user_data = {"username": "ricsi123", "pass": "123", "login": 0}
+	self.login_test_user = {"username": "ricsi123", "pass": "123"}
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
 
@@ -40,7 +41,7 @@ class MainTest(unittest.TestCase):
         self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
     def test_login_users(self):
-        self.app.application.users.login_user('ricsi123', '123')
+        self.app.application.users.login_user(self.login_test_user)
 
 
 if __name__ == '__main__':
