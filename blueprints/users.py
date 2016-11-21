@@ -64,6 +64,6 @@ def post_user():
 #    return jsonify({})
 
 
-@movies.app_errorhandler(500)
+@users.app_errorhandler(500)
 def page_not_found(e):
     return get_error('Internal server error', 500)
