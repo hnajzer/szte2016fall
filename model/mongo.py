@@ -34,7 +34,7 @@ class Users():
         return self.users.find_one({'_id': id})
 
     def login_user(self, username, password):
-	#login változó: 0 - Ez jelzi azt, hogy valaki jelenleg be van jelentkezve - vagy sem (mint egy SESSION)
+	#login valtozo: 0 - ez jelzi azt hogy valaki jelenleg be van jelentkezve - vagy sem (mint egy session)
 	user_doc = self.users.find_one({'username': username, 'pass': password, 'login': 0})
 	if not user_doc:
           return False
