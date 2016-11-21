@@ -2,7 +2,7 @@ from flask import Flask
 import os
 
 from blueprints.movies import movies
-from model.movies import Movies
+from model.mongo import Movies
 
 app = Flask(__name__)
 
