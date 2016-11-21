@@ -3,6 +3,7 @@ import unittest
 from assertpy import assert_that
 from flask import json
 from mock import Mock
+from pymongo import MongoClient
 
 import main
 from model.movies import Movies
