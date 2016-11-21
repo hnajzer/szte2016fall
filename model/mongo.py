@@ -20,14 +20,26 @@ class Movies():
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
 
+class Users():
+    def __init__(self):
+        client = MongoClient('ds011495.mlab.com', 11495)
+        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+        db = client['szte2016fall']
+        self.users = db.users
+
+    def register_user(self, data):
+        return self.users.insert_one(data).inserted_id
+
+    def get_user(self, id):
+        return self.user.find_one({'_id': id})
 
 # Only for testing
-if __name__ == "__main__":
-    movies = Movies()
-    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
-    print ("Created movie:", new_id)
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Retrieved movie: ", retrieved_movie)
-    movies.update_movie(new_id, {"title": "Trainspotting", "year": 1996})
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Updated movie: ", retrieved_movie)
+#if __name__ == "__main__":
+#    movies = Movies()
+#    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
+#    print ("Created movie:", new_id)
+#    retrieved_movie = movies.get_movie(new_id)
+#    print ("Retrieved movie: ", retrieved_movie)
+#    movies.update_movie(new_id, {"title": "Trainspotting", "year": 1996})
+#    retrieved_movie = movies.get_movie(new_id)
+#    print ("Updated movie: ", retrieved_movie)

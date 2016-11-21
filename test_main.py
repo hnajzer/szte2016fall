@@ -20,7 +20,7 @@ class MainTest(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/')
-        assert b"8. hazi mongo db" in rv.data    
+        assert b"9. homework - users, login" in rv.data    
 
     def test_create_new_movie(self):
         response = self.app.post('/movies/'
