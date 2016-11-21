@@ -39,7 +39,7 @@ class Users():
 	if not user_doc:
           return False
         else:
-	  new_user_doc = copy.deecopy(user_doc)
+	  new_user_doc = copy.deepcopy(user_doc)
           new_user_doc["login"] = 1	
           return True
 
