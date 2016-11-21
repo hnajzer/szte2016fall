@@ -42,9 +42,9 @@ class MainTest(unittest.TestCase):
 
     def test_login_users(self):
         login = self.app.application.users.login_user('ricsi123', '123')
-        if login == True
+        if login == Tru:
           print "True"
-        else 
+        else:
           print "False"
 
         

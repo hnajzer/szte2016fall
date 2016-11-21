@@ -35,9 +35,9 @@ class Users():
 
     def login_user(self, username, password):
 	login = self.users.find_one({'username': username, 'pass': password})
-	if login in user
+	if login in user:
           return True
-        else 
+        else:
           return False
    
     def update_user(self, id, data):
