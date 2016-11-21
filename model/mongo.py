@@ -34,7 +34,11 @@ class Users():
         return self.users.find_one({'_id': id})
 
     def login_user(self, username, password):
-	return self.users.find_one({'username': username, 'pass': password})
+	login = self.users.find_one({'username': username, 'pass': password})
+	if login in user
+          return True
+        else 
+          return False
    
     def update_user(self, id, data):
   	return self.users.find_one_and_replace({'_id': id}, data)
