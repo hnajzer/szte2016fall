@@ -31,7 +31,10 @@ class Users():
         return self.users.insert_one(data).inserted_id
 
     def get_user(self, id):
-        return self.user.find_one({'_id': id})
+        return self.users.find_one({'_id': id})
+
+    def login_user(username, password):
+	return self.users.find_one({'username': 'ricsi123', 'pass': '123'})
 
 # Only for testing
 #if __name__ == "__main__":

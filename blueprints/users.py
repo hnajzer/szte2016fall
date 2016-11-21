@@ -46,7 +46,6 @@ def post_user():
         return existing()
     return jsonify(user)
 
-
 #@movies.route('/<int:user_id>', methods=['PATCH'])
 #def patch_movie(movie_id):
 #    movie_data = parse_movie(request.get_json())

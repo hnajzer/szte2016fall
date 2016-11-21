@@ -38,6 +38,7 @@ class MainTest(unittest.TestCase):
                       , content_type='application/json')
 
         self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
+	
 
 
 if __name__ == '__main__':
