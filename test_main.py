@@ -8,7 +8,7 @@ from bson import json_util
 
 import main
 from model.movies import Movies
-from model.mongo import Movies
+from model.mongo import Users
 
 class MainTest(unittest.TestCase):
     def setUp(self):
