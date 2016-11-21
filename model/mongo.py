@@ -35,7 +35,7 @@ class Users():
 
     def login_user(self, username, password):
 	login = self.users.find_one({'username': username, 'pass': password})
-	if login in user:
+	if not login:
           return True
         else:
           return False
