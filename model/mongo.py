@@ -36,8 +36,11 @@ class Users():
     def login_user(self, username, password):
 	return self.users.find_one({'username': username, 'pass': password})
 
-# Only for testing
+#Only for testing
+
 #if __name__ == "__main__":
+#users = Users()
+#log_user = users.login_user(
 #    movies = Movies()
 #    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
 #    print ("Created movie:", new_id)

@@ -41,7 +41,7 @@ class MainTest(unittest.TestCase):
         self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
     def test_login_users(self):
-        self.app.application.users.login_user(self, 'ricsi123', '123')
+        self.app.application.users.login_user('ricsi123', '123')
 
 
 if __name__ == '__main__':
