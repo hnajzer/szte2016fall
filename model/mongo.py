@@ -50,10 +50,11 @@ class Users():
        if not user_doc:
           return False
        else:
-          logout_user = copy.deepcopy(user_dob)
+          logout_user = copy.deepcopy(user_doc)
           logout_user["login"] = 0
           logout_user["_id"] = user_doc["_id"]
           self.users.update({'id': user_doc['_id']}, logout_user)
+	  return True
 
 #Only for testing
 
