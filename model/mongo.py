@@ -41,7 +41,7 @@ class Users():
         else:
 	  new_user_doc = copy.deepcopy(user_doc)
           new_user_doc["login"] = 1
-	  self.users.update({'username': username, 'pass': password}, new_user_doc, safe=True)	
+	  self.users.update({'username': username, 'pass': password}, new_user_doc)	
           return True
 
 #Only for testing
