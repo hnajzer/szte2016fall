@@ -45,7 +45,7 @@ class Users():
 	  self.users.update({'_id': user_doc['_id']}, new_user_doc)	
           return True
 
-   def logout_user(self, username):
+    def logout_user(self, username):
        user_doc = self.users.find_one({'username': username, 'login': 1})
        if not user_doc:
           return False
