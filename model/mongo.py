@@ -34,7 +34,7 @@ class Users():
         return self.users.find_one({'_id': id})
 
     def login_user(self, username, password):
-	#login valtozo: 0 - ez jelzi azt hogy valaki jelenleg be van jelentkezve - vagy sem (mint egy session)
+	#login valtozo: 1 - ez jelzi azt hogy valaki jelenleg be van jelentkezve - 0 vagy sem (mint egy session)
 	user_doc = self.users.find_one({'username': username, 'pass': password, 'login': 0})
 	if not user_doc:
           return False
@@ -44,6 +44,16 @@ class Users():
           new_user_doc["_id"] = user_doc["_id"]
 	  self.users.update({'_id': user_doc['_id']}, new_user_doc)	
           return True
+
+   def logout_user(self, username):
+       user_doc = self.users.find_one({'username': username, 'login': 1})
+       if not user_doc:
+          return False
+       else:
+          logout_user = copy.deepcopy(user_dob)
+          logout_user["login"] = 0
+          logout_user["_id"] = user_doc["_id"]
+          self.users.update({'id': user_doc['_id']}, logout_user)
 
 #Only for testing
 
