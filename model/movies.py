@@ -10,12 +10,33 @@ class Movies():
         self.id = self.id + 1
         return self.id
 
+    def _is_duplicate(self, data):
+        is_duplicate = False
+
+        for key in self.movies:
+            same_title = data['title'] == self.movies[key]['title']
+            same_year = data['year'] == self.movies[key]['year']
+            same_director = data['director'] == self.movies[key]['director']
+
+            is_duplicate = True if same_title and same_year and same_director else is_duplicate
+
+        return is_duplicate
+
+    def reset(self):
+        self.movies = {}
+        self.id = 0
+
     def create_movie(self, data):
-        nextId = self._get_next_id()
-        data = data.copy()
-        data['id'] = nextId
-        self.movies[nextId] = data
-        return self.movies[nextId]
+        is_duplicate = self._is_duplicate(data)
+
+        if is_duplicate:
+            return False
+        else:
+            nextId = self._get_next_id()
+            data = data.copy()
+            data['id'] = nextId
+            self.movies[nextId] = data
+            return self.movies[nextId]
 
     def get_movie(self, id):
         if self._does_movie_exist(id):

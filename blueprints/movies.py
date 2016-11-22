@@ -28,6 +28,10 @@ def parse_movie(data):
         movie['director'] = data['director']
     return movie
 
+@movies.route('/reset', methods=['GET'])
+def reset_movies():
+    current_app.movies.reset();
+    return jsonify({'message': 'all movies has been deleted'})
 
 @movies.route('/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
