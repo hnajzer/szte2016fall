@@ -1,0 +1,21 @@
+Ebbe a fájlba kell majd beleírni mindenkinek a nevét és a github userét
+utána commmitolni és pull requestet küldeni róla.
+Névsorrendben!
+pl.
+Varró Csaba	varrocs
+
+Névsor:
+Bogár Zoltán	zoltanbogar	https://zoltanbogar.herokuapp.com/ https://travis-ci.org/zoltanbogar/szte2016fall
+Burik Aurél	aurell1  https://piank1.herokuapp.com/
+Csongor Donát	Numichi	https://szte-numichi-pinkapp.herokuapp.com/
+Déri Levente	derilevi https://derilevi-nagyvallalatiprog.herokuapp.com/
+Gölöncsér József gojuaat-sze https://piank.herokuapp.com/
+Hegedűs Adrián HegedusAdrian
+Kószó Gábor	kszgbr	https://szte-lmi-project.herokuapp.com/api/test
+Márkus András 	andrasmarkus https://szte-2016-piank1773.herokuapp.com/
+Nagy Richárd Richardson35 https://nagyvallalati-narvact.herokuapp.com/
+Orbán Levente polaroi8d https://python-movie-app.herokuapp.com/
+Papp Máté  matepp
+Szpisják Viktor vektor112 https://nagyvallalati-flasking.herokuapp.com/
+Szűts Roland	knif3	https://szroli-piank.herokuapp.com/
+Varga Attila vargaatt
