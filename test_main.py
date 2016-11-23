@@ -47,12 +47,12 @@ class MainTest(unittest.TestCase):
         else:
           print "False"
 
-    def test_logout_user(self):
-        logout = self.app.application.users.logout_user('ricsi123')
-        if not logout:
-          print "True"
-        else:
-          print "False"
+    #def test_logout_user(self):
+    #    logout = self.app.application.users.logout_user('ricsi123')
+    #    if not logout:
+    #      print "True"
+    #    else:
+    #      print "False"
 
         
 
