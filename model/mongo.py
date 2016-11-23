@@ -35,7 +35,7 @@ class Users():
 
     def login_user(self, username, password):
 	#login valtozo: 1 - ez jelzi azt hogy valaki jelenleg be van jelentkezve - 0 vagy sem (mint egy session)
-	user_doc = self.users.find_one({'username': username, 'pass': password, 'login': 0})
+	user_doc = self.users.find_one({'username': username, 'pass': generate_password_hash(password), 'login': 0})
 	if not user_doc:
           return False
         else:
