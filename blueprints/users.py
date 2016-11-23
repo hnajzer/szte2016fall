@@ -20,6 +20,8 @@ def not_found():
 
 def parse_user(data):
     user = {}
+    if '_id' in data:
+        user['_id'] = data['_id']
     if 'username' in data:
         user['username'] = data['username']
     if 'pass' in data:
