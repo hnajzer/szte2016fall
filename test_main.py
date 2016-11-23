@@ -5,7 +5,6 @@ from flask import json
 from mock import Mock
 from bson import BSON
 from bson import json_util
-from flask.ext.bcrypt import Bcrypt
 
 import main
 from model.movies import Movies
@@ -13,7 +12,7 @@ from model.mongo import Users
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.a_user_data = {"_id": 1, "username": "ricsi123", "pass": bcrypt.generate_password_hash("123"), "login": 0}
+        self.a_user_data = {"_id": 1, "username": "ricsi123", "pass": "123", "login": 0}
 	self.login_test_user = {"username": "ricsi123", "pass": "123"}
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
