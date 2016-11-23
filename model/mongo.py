@@ -42,7 +42,7 @@ class Users():
 	  new_user_doc = copy.deepcopy(user_doc)
           new_user_doc["login"] = 1
           new_user_doc["_id"] = user_doc["_id"]
-	  self.users.update({'_id': user_doc['_id']}, new_user_doc)	
+	  self.users.update({"_id": user_doc["_id"]}, new_user_doc)	
           return True
 
     def logout_user(self, username):
