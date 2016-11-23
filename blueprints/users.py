@@ -1,5 +1,7 @@
 from flask import Blueprint, current_app, jsonify, request
-import sys
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
+
 users = Blueprint('users', __name__)
 
 
@@ -25,7 +27,7 @@ def parse_user(data):
     if 'username' in data:
         user['username'] = data['username']
     if 'pass' in data:
-        user['pass'] = hash_pass(data['pass'])
+        user['pass'] = generate_password_hash(data['pass'])
     if 'login' in data:
         user['login'] = data['login']
     return user
