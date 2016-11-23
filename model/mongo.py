@@ -37,12 +37,9 @@ class Users():
 
     def login_user(self, username, password):
 	#login valtozo: 1 - ez jelzi azt hogy valaki jelenleg be van jelentkezve - 0 vagy sem (mint egy session)
-	user_doc = self.users.find_one({'username': username, 'login': 0})	
-	if not user_doc:
-          return False
-        else:
+	user_doc = self.users.find_one({'username': username, 'login': 0})
           if check_password_hash(user_doc["pass"], password)==True:
-		  new_user_doc = copy.deepcopy(user_doc)
+   		  new_user_doc = copy.deepcopy(user_doc)
 		  new_user_doc["login"] = 1
 		  new_user_doc["_id"] = user_doc["_id"]
 		  self.users.update({"_id": user_doc["_id"]}, new_user_doc)	
