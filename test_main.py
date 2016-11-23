@@ -24,10 +24,10 @@ class MainTest(unittest.TestCase):
         rv = self.app.get('/')
         assert b"9. homework - users, login" in rv.data    
 
-    def test_register_new_user(self):
-        response = self.app.post('/users/'
-                                 , data=json.dumps(self.a_user_data)
-                                 , content_type='application/json')
+    #def test_register_new_user(self):
+    #    response = self.app.post('/users/'
+    #                             , data=json.dumps(self.a_user_data)
+    #                             , content_type='application/json')
         #assert response.status_code == 200
 
     #def test_create_new_user_with_mock(self):
