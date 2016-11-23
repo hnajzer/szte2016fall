@@ -30,15 +30,15 @@ class MainTest(unittest.TestCase):
                                  , content_type='application/json')
         #assert response.status_code == 200
 
-    #def test_create_new_user_with_mock(self):
-    #    self.app.application.users = Mock()
-    #    self.app.application.users.register_user = Mock(return_value=self.a_user_data)
+    def test_create_new_user_with_mock(self):
+        self.app.application.users = Mock()
+        self.app.application.users.register_user = Mock(return_value=self.a_user_data)
 
-    #    self.app.post('/users/'
-    #                  , data=json.dumps(self.a_user_data)
-    #                  , content_type='application/json')
+        self.app.post('/users/'
+                      , data=json.dumps(self.a_user_data)
+                      , content_type='application/json')
 
-    #    self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
+        self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
     def test_login_user(self):
         login = self.app.application.users.login_user('ricsi123', '123')
