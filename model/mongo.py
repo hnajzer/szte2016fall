@@ -53,7 +53,7 @@ class Users():
           out_user = copy.deepcopy(user_doc)
           out_user["login"] = 0
           out_user["_id"] = user_doc["_id"]
-          self.users.update({'id': user_doc['_id']}, out_user)
+          self.users.update({'_id': user_doc['_id']}, out_user)
 	  return True
 
 #Only for testing
