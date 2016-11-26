@@ -27,6 +27,10 @@ class Users(object):
 	def __init__(self, username, password):
 		self.username = username
 		self.set_password(password)
+		client = MongoClient('ds011495.mlab.com', 11495)
+		client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+		db = client['szte2016fall']		
+		self.users = db.users
 
 	def set_password(self, password):
 		self.pw_hash = generate_password_hash(password)
@@ -34,14 +38,8 @@ class Users(object):
 	def check_password(self, password):
 		return check_password_hash(self.pw_hash, password)
 
-	def registration(self):
-		client = MongoClient('ds011495.mlab.com', 11495)
-		client['szte2016fall'].authenticate('ricsi', 'ricsi123')
-		db = client['szte2016fall']		
-		self.users = db.users
-		new_user_doc = {"username": self.username, "password": self.pw_hash}
-		id = users.insert_one(new_user_doc).inserted_id
-		return id
+	def registration(self, data):	
+		return users.insert_one(data).inserted_id
 
 #Only for testing
 

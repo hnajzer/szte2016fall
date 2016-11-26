@@ -22,7 +22,7 @@ def hello_world():
             <title>9. homework</title>
         </head>
     <body>
-        <form method="post" action="/main.py">
+        <form method="post" action="">
             <input type="text" name="username">
             <input type="text" name="password">
             <input type="submit">
@@ -33,8 +33,9 @@ def hello_world():
 username = "ricsi1234"
 password = "password"
 
-user = Users(username, password)
-user.registration
+response = self.app.post('/users/'
+                                , data=json.dumps(self.a_user_data)
+                                , content_type='application/json')
 
 app.register_blueprint(movies, url_prefix='/movies')
 
