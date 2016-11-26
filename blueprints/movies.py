@@ -45,6 +45,10 @@ def post_movie():
         return existing()
     return jsonify(movie)
 
+@movies.route('/', methods=['GET'])
+def get_movies():
+    movie = current_app.movies.getAllMovie()
+    return jsonify(movie)
 
 @movies.route('/<int:movie_id>', methods=['PATCH'])
 def patch_movie(movie_id):

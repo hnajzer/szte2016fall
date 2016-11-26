@@ -22,6 +22,9 @@ class Movies():
             return self.movies[id]
         return False
 
+    def getAllMovie(self):
+        return self.movies
+
     def update_movie(self, id, data):
         if not self._does_movie_exist(id):
             return False
