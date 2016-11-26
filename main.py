@@ -28,9 +28,8 @@ if menu=='L':
 elif menu=='R':
     username = input("Please enter username: ")
     password = input("Please enter password: ")
-    user = Users(username, password)
-    reg = user.registration
-    print(reg)
+    user_reg = Users(username, password)
+    user_reg.registration
 else:
     print("Wrong parameters")
 

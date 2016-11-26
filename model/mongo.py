@@ -37,9 +37,9 @@ class Users(object):
 	def registration(self):
 		client = MongoClient('ds011495.mlab.com', 11495)
 		client['szte2016fall'].authenticate('ricsi', 'ricsi123')
-		db = client['szte2016fall']
-		new_user_doc = {"_id": 1, "username": self.username, "password": self.pw_hash}
+		db = client['szte2016fall']		
 		users = db.users
+		new_user_doc = {"username": self.username, "password": self.pw_hash}
 		id = users.insert_one(new_user_doc).inserted_id
 		return id
 
