@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+import web
 
 from blueprints.movies import movies
 from blueprints.series import series
@@ -10,26 +11,16 @@ from model.series import Series
 
 app = Flask(__name__)
 
+render = web.template.render('templates/')
+
 app.movies = Movies()
 app.series = Series()
 
-@app.route('/')
-def hello_world():
-    return """
-    <html>
-        <head>
-            <title>9. homework</title>
-        </head>
-    <body>
-        <form>
-            <input type="text" name="username">
-            <input type="submit">
-        </form>
-    </body>
-    </html>
-    """
-    
-
+class Index(object):
+    def GET(self):
+        form = web.input(name="Nobody")
+        username = form.username
+        return username
 
 
 app.register_blueprint(movies, url_prefix='/movies')
