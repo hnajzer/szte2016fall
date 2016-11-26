@@ -40,7 +40,7 @@ class Users(object):
 
 	def registration(self):		
 		new_user_doc = {"name": self.username, "pass": self.pw_hash}
-		return users.insert_one(new_user_doc).inserted_id
+		return self.users.insert_one(new_user_doc).inserted_id
 
 #Only for testing
 
