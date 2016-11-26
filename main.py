@@ -33,9 +33,8 @@ def hello_world():
 username = "ricsi1234"
 password = "password"
 
-response = self.app.post('/users/'
-                                , data=json.dumps(self.a_user_data)
-                                , content_type='application/json')
+user = Users(username, password)
+user.registration
 
 app.register_blueprint(movies, url_prefix='/movies')
 

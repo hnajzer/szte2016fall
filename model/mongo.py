@@ -38,8 +38,9 @@ class Users(object):
 	def check_password(self, password):
 		return check_password_hash(self.pw_hash, password)
 
-	def registration(self, data):	
-		return users.insert_one(data).inserted_id
+	def registration(self):		
+		new_user_doc = {"name": self.username, "pass": self.pw_hash}
+		return users.insert_one(new_user_doc).inserted_id
 
 #Only for testing
 
