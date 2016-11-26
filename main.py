@@ -22,7 +22,7 @@ def hello_world():
             <title>9. homework</title>
         </head>
     <body>
-        <form method="POST" action="main.py">
+        <form method="post" action="main.py">
             <input type="text" name="username">
             <input type="text" name="password">
             <input type="submit">
@@ -30,16 +30,11 @@ def hello_world():
     </body>
     </html>
     """
-form = cgi.FieldStorage()
-username = form.getvalue('username')
-password = form.getvalue('password')
+username = "ricsi1234"
+password = "password"
 
 user = Users(username, password)
 user.registration
-
-
-
-
 
 app.register_blueprint(movies, url_prefix='/movies')
 
