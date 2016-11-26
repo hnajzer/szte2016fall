@@ -1,6 +1,6 @@
 from flask import Flask
 import os
-import web
+import cgi
 
 from blueprints.movies import movies
 from blueprints.series import series
@@ -11,16 +11,34 @@ from model.series import Series
 
 app = Flask(__name__)
 
-render = web.template.render('templates/')
-
 app.movies = Movies()
 app.series = Series()
 
-class Index(object):
-    def GET(self):
-        form = web.input(name="Nobody")
-        username = form.username
-        return username
+@app.route('/')
+def hello_world():
+    return """
+    <html>
+        <head>
+            <title>9. homework</title>
+        </head>
+    <body>
+        <form method="POST" action="main.py">
+            <input type="text" name="username">
+            <input type="text" name="password">
+            <input type="submit">
+        </form>
+    </body>
+    </html>
+    """
+form = cgi.FieldStorage()
+username = form.getvalue('username')
+password = form.getvalue('password')
+
+user = Users(username, password)
+user.registration
+
+
+
 
 
 app.register_blueprint(movies, url_prefix='/movies')
