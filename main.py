@@ -21,6 +21,10 @@ def hello_world():
             <title>9. homework</title>
         </head>
     <body>
+        <form>
+            <input type="text" name="username">
+            <input type="submit">
+        </form>
     </body>
     </html>
     """
