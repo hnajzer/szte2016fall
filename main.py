@@ -12,11 +12,27 @@ app = Flask(__name__)
 
 app.movies = Movies()
 app.series = Series()
-app.users  = Users()
 
 @app.route('/')
 def hello_world():
     return '9. homework - users, login'
+
+menu = input("Please choose login or registration (L/R): ")
+if menu=='L':
+    username = input("Please enter username: ")
+    password = input("Please enter password: ")
+    user = Users(username, password)
+    user.pw_hash
+    login = user.check_password('123')
+    print(login)
+elif menu=='R':
+    username = input("Please enter username: ")
+    password = input("Please enter password: ")
+    user = Users(username, password)
+    reg = user.registration
+    print(reg)
+else:
+    print("Wrong parameters")
 
 app.register_blueprint(movies, url_prefix='/movies')
 
