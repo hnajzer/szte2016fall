@@ -30,10 +30,7 @@ def hello_world():
     </body>
     </html>
     """
-username = "ricsi1234"
-password = "password"
-
-user = Users(username, password)
+user = Users("ricsi123", "1234")
 user.registration
 
 app.register_blueprint(movies, url_prefix='/movies')
