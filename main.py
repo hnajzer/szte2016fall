@@ -22,7 +22,7 @@ def hello_world():
             <title>9. homework</title>
         </head>
     <body>
-        <form method="post" action="main.py">
+        <form method="post" action="/main.py">
             <input type="text" name="username">
             <input type="text" name="password">
             <input type="submit">
