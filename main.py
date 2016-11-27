@@ -1,6 +1,10 @@
 from flask import Flask, render_template, session, current_app, jsonify
 import os
 from functools import wraps
+from flask import Flask
+import os
+import cgi
+
 from blueprints.movies import movies
 from blueprints.series import series
 from blueprints.users import users
@@ -18,6 +22,23 @@ app.secret_key = "ezkell"
 @app.route('/')
 def main():
 	return render_template('index.html', output=session)
+
+@app.route('/')
+def hello_world():
+    return """
+    <html>
+        <head>
+            <title>9. homework</title>
+        </head>
+    <body>
+        <form method="post" action="">
+            <input type="text" name="username">
+            <input type="text" name="password">
+            <input type="submit">
+        </form>
+    </body>
+    </html>
+    """
 
 @app.route('/register')
 def register_form():
