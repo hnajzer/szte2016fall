@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, session, current_app, jsonify
 import os
 from functools import wraps
-=======
 from flask import Flask
 import os
 import cgi
