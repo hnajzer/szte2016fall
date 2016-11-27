@@ -27,7 +27,6 @@ def register_form():
 def login_form():
 	return render_template('login.html')
 
-
 app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(series, url_prefix='/series')
 
