@@ -20,9 +20,9 @@ class MainTest(unittest.TestCase):
     def tearDown(self):
         self.app.application.users = Users()
 
-    def test_hello(self):
-        rv = self.app.get('/')
-        assert b"9. homework - users, login" in rv.data    
+    #def test_hello(self):
+    #    rv = self.app.get('/')
+    #    assert b"9. homework - users, login" in rv.data    
 
     #def test_register_new_user(self):
     #    response = self.app.post('/users/'
@@ -40,12 +40,11 @@ class MainTest(unittest.TestCase):
 
     #    self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
-    def test_login_user(self):
-        login = self.app.application.users.login_user('ricsi123', '123')
-        if not login:
-          print "True"
-        else:
-          print "False"
+    #def test_login_user(self):
+    #    login = self.app.application.users.login_user('ricsi123', '123')
+    #    if not login:
+    #      print "True"
+    #    else:
 
     #def test_logout_user(self):
     #    logout = self.app.application.users.logout_user('ricsi123')
