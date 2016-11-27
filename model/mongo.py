@@ -44,3 +44,12 @@ class Users():
 			return True
 		else:
 			return False
+
+class Health():
+	def getDatabaseConn(self):
+		try:
+			client = MongoClient('ds011495.mlab.com', 11495)
+			client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+			return True
+		except:  
+			return False 

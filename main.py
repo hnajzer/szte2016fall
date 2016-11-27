@@ -4,14 +4,17 @@ from functools import wraps
 from blueprints.movies import movies
 from blueprints.series import series
 from blueprints.users import users
+from blueprints.health import health
 from model.mongo import Movies
 from model.mongo import Users
+from model.mongo import Health
 from model.series import Series
 
 app = Flask(__name__)
 app.movies = Movies()
 app.series = Series()
 app.users = Users()
+app.health = Health()
 
 app.secret_key = "ezkell"
 
@@ -30,8 +33,8 @@ def login_form():
 
 app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(series, url_prefix='/series')
-
 app.register_blueprint(users, url_prefix='/users')
+app.register_blueprint(health, url_prefix='/health')
 
 if __name__ == '__main__':
     app.run()
