@@ -22,7 +22,6 @@ app.secret_key = "ezkell"
 @app.route('/')
 def main():
 	return render_template('index.html', output=session)
-=======
 
 @app.route('/')
 def hello_world():
