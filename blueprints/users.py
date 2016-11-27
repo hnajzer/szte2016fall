@@ -1,9 +1,7 @@
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request ,session
 from werkzeug.security import generate_password_hash, \
      check_password_hash
-
 users = Blueprint('users', __name__)
-
 
 def get_error(message, code):
     return jsonify({
@@ -11,61 +9,56 @@ def get_error(message, code):
         'code': code
     }), code
 
+@users.route('/register', methods=['POST'])
+def register():
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-def existing():
-    return get_error('User already exists!', 409)
+    if username=='' or password=='':
+        return get_error("Warning: Wrong parameters", 400)
+    if current_app.users.isset_user(username) is not None:
+        return get_error("Warning: Wrong parameters", 400)
+    if session.get('login') is True and session.get('username') == username:
+        return get_error("Warning: Wrong parameters", 400)
+    
+    user_doc = {"username": username, "password": generate_password_hash(password)}
+    current_app.users.registration(user_doc)
+    return jsonify({ 'message': 'User registration successfull' })
 
+@users.route('/login', methods=['POST'])
+def login():
+    print(session)
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-def not_found():
-    return get_error('User not found!', 404)
+    if username=='' or password=='':
+        return get_error("Warning: Wrong parameters", 400)  
+    if session.get('login') is True and session.get('username') != username:
+        return get_error("Warning: Another user is login.", 400)
+    if session.get('login') is True and session.get('username') == username:
+        return get_error("Warning: You are already login.", 400)
+    if current_app.users.login(username, password) is False:
+        return get_error("Warning: Login failed.", 400)
 
-
-def parse_user(data):
-    user = {}
-    if '_id' in data:
-        user['_id'] = data['_id']
-    if 'username' in data:
-        user['username'] = data['username']
-    if 'pass' in data:
-        user['pass'] = generate_password_hash(data['pass'])
-    if 'login' in data:
-        user['login'] = data['login']
-    return user
-
-
-@users.route('/<int:user_id>', methods=['POST'])
-def get_user(user_id):
-    user = current_app.users.get_user(user_id)
-    if not user:
-        return not_found()
-    return jsonify(user)
-
-
-@users.route('/', methods=['POST'])
-def post_user():
-    user_data = parse_user(request.get_json())
-    #itt kell az str hogy ne legyen ObjectId TypeError hiba!!
-    user = str(current_app.users.register_user(user_data))
-    if not user:
-        return existing()
-    return jsonify(user)
-
-#@movies.route('/<int:user_id>', methods=['PATCH'])
-#def patch_movie(movie_id):
-#    movie_data = parse_movie(request.get_json())
-#    movie = current_app.movies.update_user(movie_id, movie_data)
-#    if not movie:
-#        return not_found()
-#    return jsonify(movie)
+    session['username'] = username
+    session['login'] = True 
+    return jsonify({ 'message': 'login successfull' })
 
 
-#@movies.route('/<int:user_id>', methods=['DELETE'])
-#def delete_movie(user_id):
-#   user = current_app.users.delete_user(movie_id)
-#    if not movie:
-#        return not_found()
-#    return jsonify({})
+@users.route('/logout')
+def logout():
+    username = session["username"]
 
+    if username=='':
+        return get_error("Warning: Wrong parameters", 400)
+    if session.get('login') is True and session.get('username') != username:
+        return get_error("Warning: Can't log out another user")     
+    if session.get('login') is None and session.get('username') == None:
+        return get_error("Warning: Already logged out")
+
+    session.pop('username', None)
+    session.pop('login', None)
+    return jsonify({ 'message': 'Logged out successfull' })
 
 @users.app_errorhandler(500)
 def page_not_found(e):
