@@ -3,67 +3,57 @@ import unittest
 from assertpy import assert_that
 from flask import json
 from mock import Mock
+from bson import BSON
+from bson import json_util
 
 import main
 from model.movies import Movies
-
+from model.mongo import Users
 
 class MainTest(unittest.TestCase):
     def setUp(self):
-        self.a_movie_data = {"title": "Interstellar", "year": 2014, "director": "Christopher Nolan"}
-
+        self.a_user_data = {"_id": 1, "username": "ricsi123", "pass": "123", "login": 0}
+	self.login_test_user = {"username": "ricsi123", "pass": "123"}
         main.app.config['TESTING'] = True
         self.app = main.app.test_client()
 
     def tearDown(self):
-        self.app.application.movies = Movies()
+        self.app.application.users = Users()
 
-    def test_hello(self):
-        rv = self.app.get('/')
-        assert "Hello, World!" in rv.data
+    #def test_hello(self):
+    #    rv = self.app.get('/')
+    #    assert b"9. homework - users, login" in rv.data    
 
-    def test_get_movie_nonexisting(self):
-        response = self.app.get('/movies/1')
-        assert response.status_code == 404
+    #def test_register_new_user(self):
+    #    response = self.app.post('/users/'
+    #                             , data=json.dumps(self.a_user_data)
+    #                             , content_type='application/json')
+        #assert response.status_code == 200
 
-    def test_get_movie_existing(self):
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-        response = self.app.get('/movies/1')
-        json_data = json.loads(response.data)
+    #def test_create_new_user_with_mock(self):
+    #    self.app.application.users = Mock()
+    #    self.app.application.users.register_user = Mock(return_value=self.a_user_data)
 
-        assert response.status_code == 200
-        assert json_data['title'] == "Interstellar"
+    #    self.app.post('/users/'
+    #                  , data=json.dumps(self.a_user_data)
+    #                  , content_type='application/json')
 
-    def test_get_movie_existing_without_post(self):
-        self.app.application.movies.movies[1] = self.a_movie_data
-        response = self.app.get('/movies/1')
+    #    self.app.application.users.register_user.assert_called_once_with(self.a_user_data)
 
-        assert_that(response.status_code).is_equal_to(200)
+    #def test_login_user(self):
+    #    login = self.app.application.users.login_user('ricsi123', '123')
+    #    if not login:
+    #      print "True"
+    #    else:
 
-    def test_get_movie_existing_with_mock(self):
-        self.app.application.movies = Mock()
-        self.app.application.movies.get_movie = Mock(return_value=self.a_movie_data)
-        response = self.app.get('/movies/1')
+    #def test_logout_user(self):
+    #    logout = self.app.application.users.logout_user('ricsi123')
+    #    if not logout:
+    #      print "True"
+    #    else:
+    #      print "False"
 
-        assert_that(response.status_code).is_equal_to(200)
-
-    def test_create_new_movie(self):
-        response = self.app.post('/movies/'
-                                 , data=json.dumps(self.a_movie_data)
-                                 , content_type='application/json')
-        assert response.status_code == 200
-
-    def test_create_new_movie_with_mock(self):
-        self.app.application.movies = Mock()
-        self.app.application.movies.create_movie = Mock(return_value=self.a_movie_data)
-
-        self.app.post('/movies/'
-                      , data=json.dumps(self.a_movie_data)
-                      , content_type='application/json')
-
-        self.app.application.movies.create_movie.assert_called_once_with(self.a_movie_data)
+        
 
 
 if __name__ == '__main__':

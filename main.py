@@ -1,20 +1,37 @@
-from flask import Flask
+from flask import Flask, render_template, session, current_app, jsonify
 import os
-
+from functools import wraps
 from blueprints.movies import movies
-from model.movies import Movies
+from blueprints.series import series
+from blueprints.users import users
+from model.mongo import Movies
+from model.mongo import Users
+from model.series import Series
 
 app = Flask(__name__)
-
 app.movies = Movies()
+app.series = Series()
+app.users = Users()
 
+app.secret_key = "ezkell"
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def main():
+	return render_template('index.html', output=session)
+
+@app.route('/register')
+def register_form():
+	return render_template('register.html')
+
+@app.route('/login')
+def login_form():
+	return render_template('login.html')
 
 
 app.register_blueprint(movies, url_prefix='/movies')
+app.register_blueprint(series, url_prefix='/series')
+
+app.register_blueprint(users, url_prefix='/users')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=os.getenv('PORT', None))
+    app.run()
