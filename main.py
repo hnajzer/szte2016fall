@@ -39,8 +39,6 @@ def hello_world():
     </body>
     </html>
     """
-user = Users("ricsi123", "1234")
-user.registration
 
 @app.route('/register')
 def register_form():
