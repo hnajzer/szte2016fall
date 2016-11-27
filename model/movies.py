@@ -22,11 +22,14 @@ class Movies():
             return self.movies[id]
         return False
 
+    def getAllMovie(self):
+        return self.movies
+
     def update_movie(self, id, data):
         if not self._does_movie_exist(id):
             return False
 
-        self.movies[id] = data
+        self.movies[id].update( (k,v) for k,v in data.iteritems() if k is not 'id')
         return self.movies[id]
 
     def delete_movie(self, id):

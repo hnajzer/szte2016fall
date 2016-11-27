@@ -21,9 +21,18 @@ def step_impl(context, title, year, director, movie_id):
         "title": title,
         "year": year,
         "director": director,
-        "id": movie_id
     }
     context.app.application.movies.create_movie(data)
+
+
+@given(u'I update a movie with ID {movie_id} to "{title}", {year:d}, "{director}"')
+def step_impl(context, movie_id, title, year, director):
+    data = {
+        "title": title,
+        "year": year,
+        "director": director,
+    }
+    context.app.application.movies.update_movie(movie_id,data)
 
 
 @when(u'I request the movie with ID {movie_id}')
