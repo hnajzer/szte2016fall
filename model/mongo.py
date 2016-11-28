@@ -1,11 +1,13 @@
 from pymongo import MongoClient
-
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
+import copy
 class Movies():
 
     def __init__(self):
-        client = MongoClient('ds013456.mlab.com', 13456)
-        client['piank-test'].authenticate('test', 'test')
-        db = client['piank-test']
+        client = MongoClient('ds011495.mlab.com', 11495)
+        client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+        db = client['szte2016fall']
         self.movies = db.movies
 
     def create_movie(self, data):
@@ -20,13 +22,34 @@ class Movies():
     def delete_movie(self, id):
         return self.movies.delete_one({'_id': id})
 
-# Only for testing
-if __name__ == "__main__":
-    movies = Movies()
-    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
-    print ("Created movie:", new_id)
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Retrieved movie: ", retrieved_movie)
-    movies.update_movie(new_id, {"title": "Trainspotting", "year": 1996})
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Updated movie: ", retrieved_movie)
+class Users():
+
+	def __init__(self):
+		client = MongoClient('ds011495.mlab.com', 11495)
+		client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+		db = client['szte2016fall']		
+		self.users = db.users
+
+	def isset_user(self, username):
+		return self.users.find_one({'username': username})
+
+	def registration(self, new_user_doc):
+		return self.users.insert_one(new_user_doc).inserted_id
+
+	def login(self, username, password):
+		user_doc = self.users.find_one({'username': username})
+		if user_doc is None:
+			return False
+		elif check_password_hash(user_doc['password'], password) is True:
+			return True
+		else:
+			return False
+
+class Health():
+	def getDatabaseConn(self):
+		try:
+			client = MongoClient('ds011495.mlab.com', 11495)
+			client['szte2016fall'].authenticate('ricsi', 'ricsi123')
+			return True
+		except:  
+			return False 
