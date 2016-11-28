@@ -14,4 +14,4 @@ def health_is():
 		boolean=False
 	else:
 		boolean=True
-	return jsonify({'health': boolean, 'database_connection': boolean})
+	return jsonify({'health': boolean, 'database_connection': current_app.health.getDatabaseConn()})
