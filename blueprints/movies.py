@@ -33,7 +33,7 @@ def get_database_connection():
     data = current_app.movies.get_database_connection()
     return jsonify({
         "health": data,
-        "database_connection": current_app.movies.get_database_connection(),
+        "database_connection": current_app.movies.get_database_connection()
 })
 
 @movies.route('/<int:movie_id>', methods=['GET'])
