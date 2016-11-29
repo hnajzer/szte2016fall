@@ -4,4 +4,7 @@ pytest
 behave
 mock
 requests
+<<<<<<< HEAD
 pymongo
+=======
+>>>>>>> upstream/master
