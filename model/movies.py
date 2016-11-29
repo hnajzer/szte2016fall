@@ -1,7 +1,19 @@
+from pymongo import MongoClient
+
 class Movies():
     def __init__(self):
         self.movies = {}
         self.id = 0
+
+    @staticmethod
+    def get_database_connection():
+        try:
+            client = MongoClient('ds155727.mlab.com', 55727)
+            client['piank1773'].authenticate('admin', 'admin')
+            db = client['piank1773']
+            return True
+        except  :
+            return False
 
     def _does_movie_exist(self, id):
         return id in self.movies
