@@ -1,0 +1,6 @@
+assertpy
+flask
+pytest
+behave
+mock
+requests
