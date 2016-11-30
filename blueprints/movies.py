@@ -33,7 +33,7 @@ def parse_movie(data):
     return movie
 
 
-@movies.route('/<int:movie_id>', methods=['GET'])
+@movies.route('/<int:movie_id>', methods=['GET'], strict_slashes=False)
 def get_movie(movie_id):
     movie = current_app.movies.get_movie(movie_id)
     if not movie:
@@ -41,7 +41,7 @@ def get_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route("", methods=['POST'])
+@movies.route("", methods=['POST'], strict_slashes=False)
 def post_movie():
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
@@ -50,7 +50,7 @@ def post_movie():
     return jsonify(movie)
 
 
-@movies.route('/<int:movie_id>', methods=['PATCH'])
+@movies.route('/<int:movie_id>', methods=['PATCH'], strict_slashes=False)
 def patch_movie(movie_id):
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.update_movie(movie_id, movie_data)
@@ -59,7 +59,7 @@ def patch_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('/<int:movie_id>', methods=['DELETE'])
+@movies.route('/<int:movie_id>', methods=['DELETE'], strict_slashes=False)
 def delete_movie(movie_id):
     movie = current_app.movies.delete_movie(movie_id)
     if not movie:
@@ -67,7 +67,7 @@ def delete_movie(movie_id):
     return jsonify({})
 
 
-@movies.route('/truncate', methods=['GET'])
+@movies.route('/truncate', methods=['GET'], strict_slashes=False)
 def truncate_movie():
     current_app.movies.truncate()
     return ok()
