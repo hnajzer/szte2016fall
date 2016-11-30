@@ -58,7 +58,15 @@ class Movies():
         return nextId
 
     def get_movie(self, id):
-        return self.movies.find_one({'id': id})
+        doc = self.movies.find_one({'id': id})
+        if not doc:
+            return
+
+        res = {}
+        res['title'] = doc['title']
+        res['year'] = doc['year']
+        res['director'] = doc['director']
+        return res
 
     def update_movie(self, id, data):
         return self.movies.find_one_and_replace({'id': id}, data)
