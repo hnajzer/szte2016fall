@@ -22,6 +22,10 @@ def not_found():
     return get_error('Movie not found!', 404)
 
 
+def login_required():
+    return get_error('Login required!', 403)
+
+
 def parse_movie(data):
     movie = {}
     if data and 'title' in data:
@@ -35,6 +39,8 @@ def parse_movie(data):
 
 @movies.route('/<int:movie_id>', methods=['GET'], strict_slashes=False)
 def get_movie(movie_id):
+    if not current_app.users.check_logged_user():
+        return login_required()
     movie = current_app.movies.get_movie(movie_id)
     if not movie:
         return not_found()
@@ -43,6 +49,8 @@ def get_movie(movie_id):
 
 @movies.route("", methods=['POST'], strict_slashes=False)
 def post_movie():
+    if not current_app.users.check_logged_user():
+        return login_required()
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
     if not movie:
@@ -52,6 +60,8 @@ def post_movie():
 
 @movies.route('/<int:movie_id>', methods=['PATCH'], strict_slashes=False)
 def patch_movie(movie_id):
+    if not current_app.users.check_logged_user():
+        return login_required()
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.update_movie(movie_id, movie_data)
     if not movie:
@@ -61,6 +71,8 @@ def patch_movie(movie_id):
 
 @movies.route('/<int:movie_id>', methods=['DELETE'], strict_slashes=False)
 def delete_movie(movie_id):
+    if not current_app.users.check_logged_user():
+        return login_required()
     movie = current_app.movies.delete_movie(movie_id)
     if not movie:
         return not_found()
