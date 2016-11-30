@@ -46,10 +46,11 @@ class Movies():
 #        return True
 
     def create_movie(self, data):
-        existing = self.movies.find_one({'title': data['title']}, {'_id': False})
         # find_one: { azonositas kulcs-ertek alapjan, _id kizarasa (igy nem hal el a json decode) }
-        if existing:
-            return existing
+        if data and 'title' in data:
+            existing = self.movies.find_one({'title': data['title']}, {'_id': False})
+            if existing:
+                return existing
 
         nextId = self._get_next_id()
         data = data.copy()
