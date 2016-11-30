@@ -17,10 +17,12 @@ class Movies():
 
     def create_movie(self, data):
         # find_one: { azonositas kulcs-ertek alapjan, _id kizarasa (igy nem hal el a json decode) }
-        if not data or not 'title' in data:
-            return False
+        if not data or not 'title' in data or not 'year' in data or not 'director' in data:
+            return {
+                'id': '0'
+            }
 
-        existing = self.movies.find_one({'title': data['title']}, {'_id': False})
+        existing = self.movies.find_one({'title': data['title'], 'year': data['year'], 'director': data['director']}, {'_id': False})
         if existing:
             return existing
 

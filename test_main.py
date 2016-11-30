@@ -24,7 +24,7 @@ class MainTest(unittest.TestCase):
         {
             "title": "Interstellar",
             "year": 2014,
-            "director": " Christopher Nolan "
+            "director": "Christopher Nolan"
         },
         {
             "title": "Planet of the Apes",
@@ -36,6 +36,7 @@ class MainTest(unittest.TestCase):
             "year": 1968,
             "director": "Franklin J. Schaffner"
         }]
+        self.len = len(self.movie_data)
         self.movies = Movies()
 
         main.app.config['TESTING'] = True
@@ -52,6 +53,8 @@ class MainTest(unittest.TestCase):
         i = 0
         Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
+            if self.len == i:
+                break
             movie = self.movies.get_movie(i+1)
             if movie is False:
                 break
@@ -63,6 +66,8 @@ class MainTest(unittest.TestCase):
         i = 0
         Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
+            if self.len == i:
+                break
             movie = self.movies.get_movie(i+1)
             if movie is False:
                 break
@@ -80,6 +85,8 @@ class MainTest(unittest.TestCase):
         i = 0
         Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
+            if self.len == i:
+                break
             movie = self.movies.get_movie(i+1)
             if movie is False:
                 break
@@ -93,6 +100,8 @@ class MainTest(unittest.TestCase):
         i = 0
         Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
+            if self.len == i:
+                break
             movie = self.movies.get_movie(i+1)
             if movie is False:
                 break

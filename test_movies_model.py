@@ -7,8 +7,16 @@ from model.movies import Movies
 
 class MoviesModelTest(unittest.TestCase):
     def setUp(self):
-        self.a_movie_data = {}
-        self.other_movie_data = {}
+        self.a_movie_data = {
+            "title": "Interstellar",
+            "year": 2014,
+            "director": "Christopher Nolan"
+        }
+        self.other_movie_data = {
+            "title": "Mad Max Fury Road",
+            "year": 2015,
+            "director": "George Miller"
+        }
         self.movie_model = Movies()
 
     def tearDown(self):
