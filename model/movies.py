@@ -62,7 +62,7 @@ class Movies():
     def get_movie(self, id):
         doc = self.movies.find_one({'id': id}, {'_id': False})
         if not doc:
-            return
+            return False
 
         return doc
 
