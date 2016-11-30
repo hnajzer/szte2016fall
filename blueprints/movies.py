@@ -1,6 +1,15 @@
 from flask import Blueprint, current_app, jsonify, request
+from functools import wraps
 
 movies = Blueprint('movies', __name__)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if sessions.get('login') is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def get_error(message, code):
@@ -30,6 +39,7 @@ def parse_movie(data):
 
 
 @movies.route('/<int:movie_id>', methods=['GET'])
+@login_required
 def get_movie(movie_id):
     movie = current_app.movies.get_movie(movie_id)
     if not movie:
@@ -38,6 +48,7 @@ def get_movie(movie_id):
 
 
 @movies.route('/', methods=['POST'])
+@login_required
 def post_movie():
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
@@ -47,6 +58,7 @@ def post_movie():
 
 
 @movies.route('/<int:movie_id>', methods=['PATCH'])
+@login_required
 def patch_movie(movie_id):
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.update_movie(movie_id, movie_data)
@@ -56,6 +68,7 @@ def patch_movie(movie_id):
 
 
 @movies.route('/<int:movie_id>', methods=['DELETE'])
+@login_required
 def delete_movie(movie_id):
     movie = current_app.movies.delete_movie(movie_id)
     if not movie:
@@ -64,5 +77,6 @@ def delete_movie(movie_id):
 
 
 @movies.app_errorhandler(500)
+@login_required
 def page_not_found(e):
     return get_error('Internal server error', 500)
