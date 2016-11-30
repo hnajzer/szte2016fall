@@ -14,6 +14,10 @@ def existing():
     return get_error('Movie already exists!', 409)
 
 
+def ok():
+    return get_error('OK', 200)
+
+
 def not_found():
     return get_error('Movie not found!', 404)
 
@@ -37,7 +41,7 @@ def get_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('', methods=['POST'])
+@movies.route("", methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
@@ -61,6 +65,12 @@ def delete_movie(movie_id):
     if not movie:
         return not_found()
     return jsonify({})
+
+
+@movies.route('/truncate', methods=['GET'])
+def truncate_movie():
+    current_app.movies.truncate()
+    return ok()
 
 
 @movies.app_errorhandler(500)

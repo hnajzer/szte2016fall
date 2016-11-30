@@ -46,16 +46,17 @@ class Movies():
 #        return True
 
     def create_movie(self, data):
-        existing = self.movies.find_one({'title': data['title']})
+        existing = self.movies.find_one({'title': data['title']}, {'_id': False})
+        # find_one: { azonosítás kulcs-érték alapján, _id kizárása (így nem hal el a json decode)  }
         if existing:
-            return 
+            return existing
 
         nextId = self._get_next_id()
         data = data.copy()
         data['id'] = nextId
 
         self.movies.insert_one(data).inserted_id
-        return nextId
+        return data
 
     def get_movie(self, id):
         doc = self.movies.find_one({'id': id})
@@ -73,3 +74,7 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.delete_one({'id': id})
+
+    def truncate(self):
+        self.id = 0
+        return self.movies.drop()
