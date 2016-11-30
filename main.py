@@ -4,9 +4,7 @@ import os
 from blueprints.movies import movies
 from model.movies import Movies
 
-form
-var = blueprints.users
-import users
+from blueprints.users import users
 from model.users import Users
 
 app = Flask(__name__)

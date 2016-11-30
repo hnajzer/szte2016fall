@@ -1,6 +1,15 @@
 from flask import Blueprint, current_app, jsonify, request
+from functools import wraps
 
 movies = Blueprint('movies', __name__)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if sessions.get('login') is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def get_error(message, code):
