@@ -55,19 +55,15 @@ class Movies():
         data = data.copy()
         data['id'] = nextId
 
-        self.movies.insert_one(data).inserted_id
-        return data
+        self.movies.insert_one(data)
+        return self.get_movie(nextId)
 
     def get_movie(self, id):
-        doc = self.movies.find_one({'id': id})
+        doc = self.movies.find_one({'id': id}, {'_id': False})
         if not doc:
             return
 
-        res = {}
-        res['title'] = doc['title']
-        res['year'] = doc['year']
-        res['director'] = doc['director']
-        return res
+        return doc
 
     def update_movie(self, id, data):
         return self.movies.find_one_and_replace({'id': id}, data)
