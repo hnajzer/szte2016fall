@@ -14,22 +14,26 @@ def existing():
     return get_error('Movie already exists!', 409)
 
 
+def ok():
+    return get_error('OK', 200)
+
+
 def not_found():
     return get_error('Movie not found!', 404)
 
 
 def parse_movie(data):
     movie = {}
-    if 'title' in data:
+    if data and 'title' in data:
         movie['title'] = data['title']
-    if 'year' in data:
+    if data and 'year' in data:
         movie['year'] = data['year']
-    if 'director' in data:
+    if data and 'director' in data:
         movie['director'] = data['director']
     return movie
 
 
-@movies.route('/<int:movie_id>', methods=['GET'])
+@movies.route('/<int:movie_id>', methods=['GET'], strict_slashes=False)
 def get_movie(movie_id):
     movie = current_app.movies.get_movie(movie_id)
     if not movie:
@@ -37,7 +41,7 @@ def get_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('/', methods=['POST'])
+@movies.route("", methods=['POST'], strict_slashes=False)
 def post_movie():
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
@@ -46,7 +50,7 @@ def post_movie():
     return jsonify(movie)
 
 
-@movies.route('/<int:movie_id>', methods=['PATCH'])
+@movies.route('/<int:movie_id>', methods=['PATCH'], strict_slashes=False)
 def patch_movie(movie_id):
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.update_movie(movie_id, movie_data)
@@ -55,12 +59,18 @@ def patch_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('/<int:movie_id>', methods=['DELETE'])
+@movies.route('/<int:movie_id>', methods=['DELETE'], strict_slashes=False)
 def delete_movie(movie_id):
     movie = current_app.movies.delete_movie(movie_id)
     if not movie:
         return not_found()
     return jsonify({})
+
+
+@movies.route('/truncate', methods=['GET'], strict_slashes=False)
+def truncate_movie():
+    current_app.movies.truncate()
+    return ok()
 
 
 @movies.app_errorhandler(500)
