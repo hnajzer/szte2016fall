@@ -26,10 +26,14 @@ class Users():
         data['id'] = nextId
         data['pass'] = crypt.crypt(data['pass'], '$6$' + self.salt)
 
-        if self.get_user(data):
+        # check username
+        doc = self.users.find_one({'name': data['name']}, {'_id': False})
+        if doc:
+            print("User already exists: " + data['name'])
             return False
 
         self.users.insert_one(data)
+        print("User registered successfully: " + data['name'])
         return self.get_user(data)
 
     def login_user(self, data):
@@ -45,6 +49,7 @@ class Users():
         login_data = self.get_user(data)
         if login_data:
             Users.logged_username = login_data['name']
+            print("User logged in: " + login_data['name'])
             return login_data
         else:
             return False
@@ -53,6 +58,7 @@ class Users():
         if not self.check_logged_user():
             return False
 
+        print("User logged out: " + Users.logged_username)
         Users.logged_username = ''
         return True
 
