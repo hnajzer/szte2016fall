@@ -47,7 +47,7 @@ class Movies():
 
     def create_movie(self, data):
         existing = self.movies.find_one({'title': data['title']}, {'_id': False})
-        # find_one: { azonosítás kulcs-érték alapján, _id kizárása (így nem hal el a json decode)  }
+        # find_one: { azonositas kulcs-ertek alapjan, _id kizarasa (igy nem hal el a json decode) }
         if existing:
             return existing
 
