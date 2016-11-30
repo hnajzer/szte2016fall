@@ -1,7 +1,12 @@
+from pymongo import MongoClient
+from model.users import Users
+
 class Movies():
     def __init__(self):
-        self.movies = {}
-        self.id = 0
+        client = MongoClient('mongodb://szroli-piank:Eerie2eizeex@ds155747.mlab.com:55747/szroli-piank')
+        db = client['szroli-piank']
+        self.movies = db.movies
+        self.id = self.movies.count()
 
     def _does_movie_exist(self, id):
         return id in self.movies
@@ -11,27 +16,35 @@ class Movies():
         return self.id
 
     def create_movie(self, data):
+        # find_one: { azonositas kulcs-ertek alapjan, _id kizarasa (igy nem hal el a json decode) }
+        if not data or not 'title' in data or not 'year' in data or not 'director' in data:
+            return {
+                'id': '0'
+            }
+
+        existing = self.movies.find_one({'title': data['title'], 'year': data['year'], 'director': data['director']}, {'_id': False})
+        if existing:
+            return existing
+
         nextId = self._get_next_id()
         data = data.copy()
         data['id'] = nextId
-        self.movies[nextId] = data
-        return self.movies[nextId]
+
+        self.movies.insert_one(data)
+        return self.get_movie(nextId)
 
     def get_movie(self, id):
-        if self._does_movie_exist(id):
-            return self.movies[id]
-        return False
+        doc = self.movies.find_one({'id': id}, {'_id': False})
+        if not doc:
+            return False
+        return doc
 
     def update_movie(self, id, data):
-        if not self._does_movie_exist(id):
-            return False
-
-        self.movies[id] = data
-        return self.movies[id]
+        return self.movies.find_one_and_replace({'id': id}, data)
 
     def delete_movie(self, id):
-        if not self._does_movie_exist(id):
-            return False
+        return self.movies.delete_one({'id': id})
 
-        del self.movies[id]
-        return True
+    def truncate(self):
+        self.id = 0
+        return self.movies.drop()
