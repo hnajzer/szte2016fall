@@ -6,7 +6,7 @@ class Movies():
         db = client['szroli-piank']
         self.movies = db.movies
 #        self.movies = {}
-        self.id = 0
+        self.id = self.movies.count()
 
     def _does_movie_exist(self, id):
         return id in self.movies
@@ -46,13 +46,22 @@ class Movies():
 #        return True
 
     def create_movie(self, data):
-        return self.movies.insert_one(data).inserted_id
+        existing = self.movies.find_one({'title': data['title']})
+        if existing:
+            return 
+
+        nextId = self._get_next_id()
+        data = data.copy()
+        data['id'] = nextId
+
+        self.movies.insert_one(data).inserted_id
+        return nextId
 
     def get_movie(self, id):
-        return self.movies.find_one({'_id': id})
+        return self.movies.find_one({'id': id})
 
     def update_movie(self, id, data):
-        return self.movies.find_one_and_replace({'_id': id}, data)
+        return self.movies.find_one_and_replace({'id': id}, data)
 
     def delete_movie(self, id):
-        return self.movies.delete_one({'_id': id})
+        return self.movies.delete_one({'id': id})

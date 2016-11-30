@@ -20,11 +20,11 @@ def not_found():
 
 def parse_movie(data):
     movie = {}
-    if 'title' in data:
+    if data and 'title' in data:
         movie['title'] = data['title']
-    if 'year' in data:
+    if data and 'year' in data:
         movie['year'] = data['year']
-    if 'director' in data:
+    if data and 'director' in data:
         movie['director'] = data['director']
     return movie
 
@@ -37,7 +37,7 @@ def get_movie(movie_id):
     return jsonify(movie)
 
 
-@movies.route('/', methods=['POST'])
+@movies.route('', methods=['POST'])
 def post_movie():
     movie_data = parse_movie(request.get_json())
     movie = current_app.movies.create_movie(movie_data)
