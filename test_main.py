@@ -6,6 +6,7 @@ from mock import Mock
 
 import main
 from model.movies import Movies
+from model.users import Users
 
 
 class MainTest(unittest.TestCase):
@@ -49,6 +50,7 @@ class MainTest(unittest.TestCase):
 
     def test_get_movie_nonexisting(self):
         i = 0
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
             movie = self.movies.get_movie(i+1)
             if movie is False:
@@ -59,6 +61,7 @@ class MainTest(unittest.TestCase):
 
     def test_get_movie_existing(self):
         i = 0
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
             movie = self.movies.get_movie(i+1)
             if movie is False:
@@ -75,6 +78,7 @@ class MainTest(unittest.TestCase):
 
     def test_get_movie_existing_without_post(self):
         i = 0
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
             movie = self.movies.get_movie(i+1)
             if movie is False:
@@ -87,6 +91,7 @@ class MainTest(unittest.TestCase):
 
     def test_get_movie_existing_with_mock(self):
         i = 0
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         while True:
             movie = self.movies.get_movie(i+1)
             if movie is False:
@@ -99,12 +104,14 @@ class MainTest(unittest.TestCase):
             i = i + 1
 
     def test_create_new_movie(self):
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         response = self.app.post('/movies/'
                                  , data=json.dumps(self.movies.get_movie(1))
                                  , content_type='application/json')
         assert response.status_code == 200
 
     def test_create_new_movie_with_mock(self):
+        Users().login_user({"name": "teszt", "pass": "asdf"})
         self.app.application.movies = Mock()
         self.app.application.movies.create_movie = Mock(return_value=self.movie_data[0])
 
