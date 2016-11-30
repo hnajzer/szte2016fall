@@ -7,6 +7,7 @@ from blueprints.series import series
 from model.series import Series
 from blueprints.users import users
 from model.users import Users
+from blueprints.health import health
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ def hello_world():
 app.register_blueprint(movies, url_prefix='/movies')
 app.register_blueprint(series, url_prefix='/series')
 app.register_blueprint(users, url_prefix='/users')
+app.register_blueprint(health, url_prefix='/health')
 
 if __name__ == '__main__':
   app.run(host='127.0.0.1', port=os.getenv('PORT', None))
