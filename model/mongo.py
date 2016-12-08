@@ -29,3 +29,14 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.find_one_and_delete({'id': str(id)}, projection={'_id': False})
+
+
+class Health:
+    def check_connection(self):
+        try:
+            client = MongoClient(getenv('MONGO_SERVER'), int(getenv('MONGO_PORT')))
+            db = client[getenv('MONGO_DB')]
+            db.authenticate(getenv('MONGO_USER'), getenv('MONGO_PASS'))
+        except:
+            return False
+        return True
