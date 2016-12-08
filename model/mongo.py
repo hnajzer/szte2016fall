@@ -29,3 +29,20 @@ class Movies():
 
     def delete_movie(self, id):
         return self.movies.find_one_and_delete({'id': str(id)}, projection={'_id': False})
+
+
+class Users:
+    def __init__(self):
+        client = MongoClient(getenv('MONGO_SERVER'), int(getenv('MONGO_PORT')))
+        db = client[getenv('MONGO_DB')]
+        db.authenticate(getenv('MONGO_USER'), getenv('MONGO_PASS'))
+        self.users = db.users
+
+    def create_user(self, data):
+        if self.get_user(data['username']):
+            return False
+        self.users.insert_one(data)
+        return True
+
+    def get_user(self, username):
+        return self.users.find_one({'username': username}, projection={'_id': False})
