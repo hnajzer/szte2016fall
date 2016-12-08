@@ -1,32 +1,48 @@
 from pymongo import MongoClient
+from os import getenv
+
 
 class Movies():
 
     def __init__(self):
-        client = MongoClient('ds013456.mlab.com', 13456)
-        client['piank-test'].authenticate('test', 'test')
-        db = client['piank-test']
+        client = MongoClient(getenv('MONGO_SERVER'), int(getenv('MONGO_PORT')))
+        db = client[getenv('MONGO_DB')]
+        db.authenticate(getenv('MONGO_USER'), getenv('MONGO_PASS'))
         self.movies = db.movies
+        d = self.movies.find_one(sort=[('_id', -1)])
+        if d is None:
+            self.id = 0
+        else:
+            self.id = int(d['id'])
 
     def create_movie(self, data):
-        return self.movies.insert_one(data).inserted_id
+        self.id += 1
+        data['id'] = str(self.id)
+        self.movies.insert_one(data)
+        return self.movies.find_one(data, projection={'_id': False})
 
     def get_movie(self, id):
-        return self.movies.find_one({'_id': id})
+        return self.movies.find_one({'id': str(id)}, projection={'_id': False})
 
     def update_movie(self, id, data):
-        return self.movies.find_one_and_replace({'_id': id}, data)
+        return self.movies.find_one_and_replace({'id': str(id)}, data)
 
     def delete_movie(self, id):
-        return self.movies.delete_one({'_id': id})
+        return self.movies.find_one_and_delete({'id': str(id)}, projection={'_id': False})
 
-# Only for testing
-if __name__ == "__main__":
-    movies = Movies()
-    new_id = movies.create_movie({"title": "Trainspotting", "year": 1995})
-    print ("Created movie:", new_id)
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Retrieved movie: ", retrieved_movie)
-    movies.update_movie(new_id, {"title": "Trainspotting", "year": 1996})
-    retrieved_movie = movies.get_movie(new_id)
-    print ("Updated movie: ", retrieved_movie)
+
+class Users:
+    def __init__(self):
+        client = MongoClient(getenv('MONGO_SERVER'), int(getenv('MONGO_PORT')))
+        db = client[getenv('MONGO_DB')]
+        db.authenticate(getenv('MONGO_USER'), getenv('MONGO_PASS'))
+        self.users = db.users
+
+    def create_user(self, data):
+        if self.get_user(data['username']):
+            return False
+        self.users.insert_one(data)
+        return True
+
+    def get_user(self, username):
+        return self.users.find_one({'username': username}, projection={'_id': False})
